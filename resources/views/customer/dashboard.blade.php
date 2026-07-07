@@ -77,19 +77,145 @@
         </div>
     @endif
 
-    <!-- Quick Actions -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
-                <div class="card-body text-center text-white py-4">
-                    <h5 class="fw-bold mb-3">Pesan Ojek Sekarang</h5>
-                    <button class="btn btn-light btn-lg px-5" onclick="alert('Fitur booking akan segera hadir! Silakan gunakan API endpoint untuk testing.')">
-                        <i class="fas fa-motorcycle me-2"></i> Mulai Pesan
-                    </button>
+    <!-- Service Menu Icons -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3 text-center">
+                <!-- Ojek/Taxi -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.ojek') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-motorcycle fa-2x text-primary"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">OJEK/TAXI</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Kuliner -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.kuliner') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-utensils fa-2x text-danger"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">KULINER</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Iklan Promosi -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.promosi') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-bullhorn fa-2x text-success"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">IKLAN<br>PROMOSI</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Kesehatan -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.kesehatan') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-hospital fa-2x text-danger"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">KESEHATAN</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Produk -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.produk') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-shopping-bag fa-2x text-info"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">PRODUK</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Pencetakan -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.pencetakan') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-print fa-2x text-dark"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">PENCETAKAN</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Trending -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.trending') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-fire fa-2x text-warning"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">TRENDING</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Sosial -->
+                <div class="col-3 col-md-3 col-lg-1-5">
+                    <a href="{{ route('customer.sosial') }}" class="text-decoration-none">
+                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
+                            <div class="service-icon mb-2">
+                                <i class="fas fa-users fa-2x text-primary"></i>
+                            </div>
+                            <div class="service-label">
+                                <small class="fw-bold text-dark">SOSIAL</small>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .hover-shadow:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        .service-icon-wrapper {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .col-lg-1-5 {
+            flex: 0 0 auto;
+            width: 12.5%;
+        }
+        @media (max-width: 991px) {
+            .col-lg-1-5 {
+                width: 25%;
+            }
+        }
+    </style>
 
     <!-- Recent Orders -->
     <div class="card">
