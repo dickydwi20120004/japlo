@@ -5,7 +5,7 @@
 @section('content')
 <div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
     <div class="container">
-        <a href="{{ route('customer.dashboard') }}" class="btn btn-light btn-sm mb-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
             <i class="fas fa-arrow-left me-1"></i> Kembali
         </a>
         <h2 class="fw-bold mb-2 text-white">Ojek & Taxi Online</h2>
@@ -246,7 +246,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     }
     
     alert('Pesanan berhasil dibuat! Driver akan segera menghubungi Anda.\n\nFitur pemesanan real-time akan segera hadir. Untuk testing, gunakan API endpoint.');
-    window.location.href = '{{ route("customer.dashboard") }}';
+    window.location.href = '{{ route("dashboard") }}';
 });
 </script>
 @endsection

@@ -5,7 +5,7 @@
 @section('content')
 <div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
     <div class="container">
-        <a href="{{ route('customer.dashboard') }}" class="btn btn-light btn-sm mb-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
             <i class="fas fa-arrow-left me-1"></i> Kembali
         </a>
         <h2 class="fw-bold mb-2 text-white">Kuliner</h2>

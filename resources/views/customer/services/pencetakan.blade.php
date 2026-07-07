@@ -5,7 +5,7 @@
 @section('content')
 <div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #343a40 0%, #212529 100%);">
     <div class="container">
-        <a href="{{ route('customer.dashboard') }}" class="btn btn-light btn-sm mb-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
             <i class="fas fa-arrow-left me-1"></i> Kembali
         </a>
         <h2 class="fw-bold mb-2 text-white">Layanan Pencetakan</h2>
@@ -241,7 +241,7 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
     }
     
     alert('Pesanan berhasil dibuat!\n\nTim kami akan memproses pesanan Anda dalam 15 menit.\n\nFitur upload file dan tracking pesanan akan segera hadir.');
-    window.location.href = '{{ route("customer.dashboard") }}';
+    window.location.href = '{{ route("dashboard") }}';
 });
 </script>
 @endsection
