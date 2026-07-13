@@ -80,7 +80,7 @@
     <h5 class="fw-bold mb-3">Produk Pilihan</h5>
     <div class="row">
         @foreach($products as $product)
-        <div class="col-md-3 col-6 mb-4">
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
             <div class="card hover-card h-100">
                 <div class="position-relative">
                     <img src="{{ $product['image'] }}" class="card-img-top" alt="{{ $product['name'] }}" style="height: 200px; object-fit: cover;">
@@ -158,9 +158,12 @@
 </div>
 
 <!-- Shopping Cart Button (Floating) -->
-<button class="btn btn-info btn-lg position-fixed text-white" style="bottom: 20px; right: 20px; border-radius: 50px; padding: 15px 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" onclick="openCart()">
+<button class="btn btn-info btn-lg position-fixed text-white shadow-lg" 
+        style="bottom: 20px; right: 20px; border-radius: 50px; padding: 12px 24px; z-index: 1000;" 
+        onclick="openCart()">
     <i class="fas fa-shopping-cart me-2"></i>
-    Keranjang <span class="badge bg-light text-info ms-2">0</span>
+    <span class="d-none d-sm-inline">Keranjang</span>
+    <span class="badge bg-light text-info ms-2">0</span>
 </button>
 
 <style>

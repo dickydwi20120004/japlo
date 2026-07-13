@@ -3,23 +3,54 @@
 @section('title', 'Dashboard Customer - JAPLO')
 
 @section('content')
-<div class="hero-section" style="padding: 40px 0;">
-    <div class="container">
-        <h2 class="fw-bold mb-2">Halo, {{ auth()->user()->name }}! 👋</h2>
-        <p class="mb-0">Mau kemana hari ini?</p>
+<!-- Hero Section dengan Background -->
+<div class="hero-driver-bg" style="min-height: 400px;">
+    <div class="hero-content-wrapper">
+        <div class="container py-5">
+            <div class="row align-items-center" style="min-height: 300px;">
+                <div class="col-lg-8 text-white">
+                    <h2 class="display-4 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+                        Halo, {{ auth()->user()->name }}! 👋
+                    </h2>
+                    <p class="lead mb-4" style="font-size: 1.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                        Mau kemana hari ini? Pilih layanan yang kamu butuhkan
+                    </p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="row g-3">
+                        <div class="col-6 col-md-3">
+                            <div class="card bg-white bg-opacity-25 border-0 backdrop-blur">
+                                <div class="card-body text-center p-3">
+                                    <h3 class="fw-bold mb-0">{{ $totalOrders }}</h3>
+                                    <small>Total Pesanan</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card bg-white bg-opacity-25 border-0 backdrop-blur">
+                                <div class="card-body text-center p-3">
+                                    <h3 class="fw-bold mb-0">{{ $completedOrders }}</h3>
+                                    <small>Selesai</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="container py-4">
+<div class="container py-4" style="margin-top: -50px; position: relative; z-index: 10;">
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
 
     <!-- Statistics -->
-    <div class="row mb-4">
+    <div class="row mb-4" style="display: none;">
         <div class="col-md-6 mb-3">
             <div class="card">
                 <div class="card-body d-flex align-items-center">
@@ -78,8 +109,8 @@
     @endif
 
     <!-- Service Menu Icons -->
-    <div class="card mb-4">
-        <div class="card-body">
+    <div class="card mb-4 shadow-lg border-0" style="border-radius: 20px;">
+        <div class="card-body p-4">
             <div class="row g-3 text-center">
                 <!-- Ojek/Taxi -->
                 <div class="col-3 col-md-3 col-lg-1-5">

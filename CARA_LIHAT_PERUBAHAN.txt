@@ -1,0 +1,56 @@
+========================================
+CARA MELIHAT PERUBAHAN TERBARU
+========================================
+
+Halaman Register dan Login sudah diperbarui dengan:
+
+✅ Background gradient purple-pink yang menarik
+✅ Efek lingkaran putih dekoratif
+✅ Kartu pemilihan role dengan gambar background
+   - Penumpang: gambar profesional dengan gradient biru
+   - Driver: gambar driver motor dengan gradient hijau
+✅ Input nomor telepon hanya angka (08xxxxxxxxxx)
+✅ Desain modern dengan border radius 12px
+✅ Efek hover yang smooth
+
+LANGKAH UNTUK MELIHAT PERUBAHAN:
+
+1. Pastikan server Laravel sudah berjalan:
+   - Jalankan file: 1_JALANKAN_INI.bat
+   
+2. Buka browser dan hapus cache browser:
+   - Chrome/Edge: Tekan Ctrl + Shift + Delete
+   - Pilih "Cached images and files"
+   - Klik "Clear data"
+   
+3. Atau gunakan mode Incognito/Private:
+   - Chrome/Edge: Ctrl + Shift + N
+   - Firefox: Ctrl + Shift + P
+   
+4. Buka halaman:
+   - Register: http://localhost:8000/register
+   - Login: http://localhost:8000/login
+
+5. Jika masih belum berubah, coba:
+   - Hard refresh: Ctrl + Shift + R
+   - Atau Ctrl + F5
+
+========================================
+Cache Laravel sudah dibersihkan otomatis!
+========================================
+
+FITUR YANG SUDAH AKTIF:
+
+📱 Halaman Register:
+   - Background gradient purple-pink
+   - Pilihan role dengan gambar (Penumpang/Driver)
+   - Form lengkap dengan validasi
+   - Input khusus untuk Driver (Jenis Kendaraan, Merk, Plat, SIM)
+
+🔐 Halaman Login:
+   - Background gradient yang sama
+   - Icon JAPLO di header
+   - Form simple dan clean
+   - Tombol demo untuk testing cepat
+
+Semua sudah siap digunakan!

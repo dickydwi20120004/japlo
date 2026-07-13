@@ -48,16 +48,16 @@
     @foreach($trending as $item)
     <div class="card mb-4 hover-card">
         <div class="row g-0">
-            <div class="col-md-5">
+            <div class="col-12 col-md-5">
                 <div class="position-relative">
-                    <img src="{{ $item['image'] }}" class="img-fluid rounded-start h-100" style="object-fit: cover; min-height: 250px;" alt="{{ $item['title'] }}">
+                    <img src="{{ $item['image'] }}" class="img-fluid w-100 rounded-start" style="object-fit: cover; min-height: 250px; max-height: 350px;" alt="{{ $item['title'] }}">
                     <span class="badge position-absolute" style="top: 15px; left: 15px; background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); font-size: 1.2rem; padding: 10px 15px;">
                         <i class="fas fa-trophy me-2"></i>#{{ $item['trending_rank'] }}
                     </span>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="card-body">
+            <div class="col-12 col-md-7">
+                <div class="card-body p-3 p-md-4">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <span class="badge bg-warning text-dark">{{ $item['category'] }}</span>
                         <span class="text-secondary">
@@ -97,7 +97,7 @@
     <!-- Trending Categories Grid -->
     <h5 class="fw-bold mb-3 mt-5">Konten Lainnya</h5>
     <div class="row">
-        <div class="col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x300?text=Tempat+Instagramable" class="card-img-top" alt="Tempat">
                 <div class="card-body">
@@ -113,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x300?text=Menu+Viral" class="card-img-top" alt="Menu">
                 <div class="card-body">
@@ -129,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x300?text=Tips+Hemat" class="card-img-top" alt="Tips">
                 <div class="card-body">

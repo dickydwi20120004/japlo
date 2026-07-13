@@ -21,7 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
-        'role', // 'user' atau 'driver'
+        'role', // 'user', 'driver', atau 'admin'
         'profile_photo',
         'address',
     ];
@@ -100,5 +100,13 @@ class User extends Authenticatable
     public function isCustomer()
     {
         return $this->role === 'user';
+    }
+
+    /**
+     * Check apakah user adalah admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 }

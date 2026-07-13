@@ -19,7 +19,9 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->isDriver()) {
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->isDriver()) {
             return $this->driverDashboard();
         } else {
             return $this->customerDashboard();

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Halaman Register - JAPLO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Role Card Backgrounds */
+        .role-user {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.8) 0%, rgba(0, 86, 179, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .role-driver {
+            background: linear-gradient(135deg, rgba(0, 168, 89, 0.8) 0%, rgba(0, 143, 74, 0.8) 100%), 
+                        url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .role-card {
+            min-height: 120px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid #e0e0e0;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .role-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+            z-index: 1;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        
+        .role-card.selected {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <div class="min-vh-100 d-flex align-items-center position-relative" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); overflow: hidden;">
+        <!-- Animated Background Shapes -->
+        <div class="position-absolute w-100 h-100" style="top: 0; left: 0; opacity: 0.1; z-index: 0;">
+            <div class="position-absolute rounded-circle" style="width: 300px; height: 300px; background: white; top: -100px; left: -100px;"></div>
+            <div class="position-absolute rounded-circle" style="width: 200px; height: 200px; background: white; bottom: 50px; right: -50px;"></div>
+            <div class="position-absolute rounded-circle" style="width: 150px; height: 150px; background: white; top: 50%; left: 10%;"></div>
+        </div>
+        
+        <div class="container py-5 position-relative" style="z-index: 1;">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-7">
+                    <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                        <div class="card-body p-5">
+                            <!-- Header -->
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold mb-2">TEST Halaman Register</h3>
+                                <p class="text-secondary mb-0">Verifikasi tampilan background</p>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <strong>Status:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li>✅ Background gradient purple-pink</li>
+                                    <li>✅ Lingkaran putih dekoratif</li>
+                                    <li>✅ Card putih dengan shadow</li>
+                                </ul>
+                            </div>
+
+                            <!-- Role Selection -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold small text-secondary">Pilih Role (klik untuk test):</label>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <div class="role-card role-user py-4 d-flex flex-column align-items-center" onclick="selectRole(this, 'user')">
+                                            <div class="role-overlay"></div>
+                                            <i class="fas fa-user fa-3x mb-2 position-relative" style="z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></i>
+                                            <span class="fw-bold position-relative" style="z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Penumpang</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="role-card role-driver py-4 d-flex flex-column align-items-center" onclick="selectRole(this, 'driver')">
+                                            <div class="role-overlay"></div>
+                                            <i class="fas fa-motorcycle fa-3x mb-2 position-relative" style="z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></i>
+                                            <span class="fw-bold position-relative" style="z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Driver</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-success">
+                                <strong>✅ Semua fitur visual sudah aktif!</strong>
+                                <p class="mb-0 mt-2">Jika Anda melihat halaman ini dengan background purple-pink dan kartu role dengan gambar, berarti semuanya berfungsi dengan baik.</p>
+                            </div>
+
+                            <div class="text-center">
+                                <a href="/register" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-arrow-right me-2"></i> Buka Halaman Register Asli
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function selectRole(element, role) {
+            // Remove selected class from all
+            document.querySelectorAll('.role-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            // Add to clicked
+            element.classList.add('selected');
+            alert('Role dipilih: ' + role.toUpperCase());
+        }
+    </script>
+</body>
+</html>

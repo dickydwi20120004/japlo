@@ -35,6 +35,58 @@
             background-color: var(--background);
         }
         
+        /* Hero Background Styles */
+        .hero-background {
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 168, 89, 0.9) 0%, rgba(0, 143, 74, 0.8) 100%);
+            overflow: hidden;
+        }
+        
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        
+        .hero-background-overlay {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-driver-bg {
+            position: relative;
+            min-height: 500px;
+            background: linear-gradient(135deg, rgba(0, 168, 89, 0.85) 0%, rgba(0, 143, 74, 0.75) 100%), 
+                        url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80');
+            background-size: cover;
+            background-position: center right;
+            background-attachment: fixed;
+        }
+        
+        .hero-driver-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, rgba(0, 168, 89, 0.95) 0%, rgba(0, 168, 89, 0.4) 70%, transparent 100%);
+            z-index: 1;
+        }
+        
+        .hero-content-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+        
         .navbar-brand {
             font-weight: 700;
             font-size: 1.5rem;
@@ -176,6 +228,30 @@
             border-radius: 8px;
             border: none;
         }
+        
+        /* Backdrop blur effect */
+        .backdrop-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        /* Modern card shadow */
+        .shadow-modern {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* Animated gradient background */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(135deg, #00A859, #008F4A, #00C16A);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
     </style>
     
     @stack('styles')
@@ -204,7 +280,13 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('dashboard') }}">
+                                @if(auth()->user()->isAdmin())
+                                    <i class="fas fa-shield-alt me-1"></i> Admin
+                                @else
+                                    Dashboard
+                                @endif
+                            </a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">

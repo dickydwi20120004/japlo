@@ -1,0 +1,139 @@
+═══════════════════════════════════════════════════════════
+  📝 CARA DAFTAR - JAPLO APP
+═══════════════════════════════════════════════════════════
+
+🔗 AKSES HALAMAN DAFTAR:
+
+Method 1: Dari Welcome Page
+  1. Buka: http://localhost:8000
+  2. Klik tombol "Daftar Jadi Driver" (kuning)
+     ATAU
+  3. Klik tombol "Daftar sebagai Penumpang" (biru)
+
+Method 2: Direct URL
+  Penumpang: http://localhost:8000/register?role=user
+  Driver:    http://localhost:8000/register?role=driver
+
+Method 3: Dari Login
+  1. Buka: http://localhost:8000/login
+  2. Klik "Daftar di sini"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 DAFTAR SEBAGAI PENUMPANG:
+
+Form yang diisi (5 fields):
+  1. Nama Lengkap      : Ahmad Rizki
+  2. Email             : ahmad@example.com
+  3. Nomor Telepon     : 08123456789
+  4. Password          : password123 (min 8 karakter)
+  5. Konfirmasi Pass   : password123
+
+Klik "Daftar" → Auto Login → Dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏍️ DAFTAR SEBAGAI DRIVER:
+
+Form yang diisi (10 fields):
+
+Basic Info:
+  1. Nama Lengkap      : Budi Santoso
+  2. Email             : budi@example.com
+  3. Nomor Telepon     : 08198765432
+
+Info Kendaraan:
+  4. Jenis Kendaraan   : Motor (atau Mobil)
+  5. Merk Kendaraan    : Honda Vario
+  6. Nomor Plat        : B 1234 XYZ
+  7. Nomor SIM         : 1234567890123
+  8. Alamat            : Jl. Kebon Jeruk No. 123 (optional)
+
+Password:
+  9. Password          : password123
+  10. Konfirmasi Pass  : password123
+
+Klik "Daftar" → Auto Login → Dashboard Driver
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ VALIDASI YANG DICHECK:
+
+Semua User:
+  ✓ Email harus unik (belum terdaftar)
+  ✓ Nomor telepon harus unik
+  ✓ Password minimal 8 karakter
+  ✓ Konfirmasi password harus sama
+
+Driver Tambahan:
+  ✓ Jenis kendaraan harus dipilih
+  ✓ Data kendaraan lengkap
+  ✓ Nomor SIM wajib diisi
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚨 ERROR YANG MUNGKIN MUNCUL:
+
+1. "Email sudah terdaftar"
+   → Gunakan email lain atau login
+
+2. "Nomor telepon sudah terdaftar"
+   → Gunakan nomor lain
+
+3. "Konfirmasi password tidak cocok"
+   → Ketik ulang password yang sama
+
+4. "Password minimal 8 karakter"
+   → Buat password lebih panjang
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 QUICK TEST:
+
+Test Penumpang:
+  1. Buka: http://localhost:8000/register?role=user
+  2. Isi form (5 fields)
+  3. Klik Daftar
+  4. ✅ Redirect ke Dashboard
+
+Test Driver:
+  1. Buka: http://localhost:8000/register?role=driver
+  2. Isi form basic (4 fields)
+  3. Isi form driver (5 fields tambahan)
+  4. Klik Daftar
+  5. ✅ Redirect ke Dashboard Driver
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 DEMO ACCOUNTS (Sudah Ada):
+
+Penumpang:
+  Email: demo@japlo.com
+  Password: password123
+
+Driver:
+  Email: driver@japlo.com
+  Password: password123
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ SETELAH DAFTAR:
+
+Penumpang:
+  ✅ Bisa pesan ojek/taxi
+  ✅ Lihat riwayat pesanan
+  ✅ Rate driver
+
+Driver:
+  ✅ Toggle availability ON/OFF
+  ✅ Terima order
+  ✅ Update lokasi
+  ✅ Lihat penghasilan
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STATUS: ✅ REGISTRASI FULLY FUNCTIONAL
+
+Dokumentasi lengkap: CARA_DAFTAR_LENGKAP.md
+
+═══════════════════════════════════════════════════════════

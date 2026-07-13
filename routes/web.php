@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ServiceController;
+use App\Http\Controllers\Web\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,5 +41,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/pencetakan', [ServiceController::class, 'pencetakan'])->name('pencetakan');
         Route::get('/trending', [ServiceController::class, 'trending'])->name('trending');
         Route::get('/sosial', [ServiceController::class, 'sosial'])->name('sosial');
+    });
+    
+    // Admin Routes
+    Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('users');
+        Route::get('/drivers', [AdminController::class, 'drivers'])->name('drivers');
+        Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
     });
 });

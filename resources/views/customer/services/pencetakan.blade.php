@@ -32,7 +32,7 @@
     <h5 class="fw-bold mb-3">Layanan Kami</h5>
     <div class="row">
         @foreach($printServices as $service)
-        <div class="col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="card hover-card h-100">
                 <div class="card-body text-center">
                     <div class="icon-wrapper d-inline-block p-4 rounded-circle mb-3" style="background: rgba(52, 58, 64, 0.1);">

@@ -52,11 +52,11 @@
     @foreach($promos as $promo)
     <div class="card mb-4 hover-card">
         <div class="row g-0">
-            <div class="col-md-4">
-                <img src="{{ $promo['image'] }}" class="img-fluid rounded-start h-100" style="object-fit: cover;" alt="{{ $promo['title'] }}">
+            <div class="col-12 col-md-4">
+                <img src="{{ $promo['image'] }}" class="img-fluid w-100 h-100 rounded-start" style="object-fit: cover; min-height: 250px;" alt="{{ $promo['title'] }}">
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
+            <div class="col-12 col-md-8">
+                <div class="card-body p-3 p-md-4">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <span class="badge bg-success">{{ $promo['category'] }}</span>
                         <span class="badge bg-danger">
@@ -81,12 +81,12 @@
                         </div>
                     </div>
 
-                    <div class="d-flex gap-2">
+                    <div class="d-flex flex-column flex-sm-row gap-2">
                         <button class="btn btn-success flex-fill" onclick="usePromo({{ $promo['id'] }})">
                             <i class="fas fa-check-circle me-2"></i> Gunakan Sekarang
                         </button>
                         <button class="btn btn-outline-secondary" onclick="sharePromo({{ $promo['id'] }})">
-                            <i class="fas fa-share-alt"></i>
+                            <i class="fas fa-share-alt me-2"></i> <span class="d-none d-sm-inline">Bagikan</span>
                         </button>
                     </div>
                 </div>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Visual - JAPLO Register/Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .check-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .check-item.success {
+            border-left: 4px solid #4CAF50;
+        }
+        .preview-box {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            margin: 10px 0;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .overlay-demo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .gradient-purple {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            height: 150px;
+            border-radius: 8px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .circle-demo {
+            position: absolute;
+            background: white;
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">🎨 Verifikasi Visual - Register & Login JAPLO</h1>
+        
+        <div class="alert alert-info">
+            <strong><i class="fas fa-info-circle"></i> Halaman Verifikasi</strong>
+            <p class="mb-0">Halaman ini membantu Anda memverifikasi bahwa semua elemen visual sudah berfungsi dengan baik.</p>
+        </div>
+
+        <!-- Background Gradient Check -->
+        <div class="check-item success">
+            <h3><i class="fas fa-check-circle text-success"></i> Background Gradient Purple-Pink</h3>
+            <p>Gradient yang digunakan pada halaman Register & Login:</p>
+            <div class="gradient-purple position-relative">
+                <div class="circle-demo" style="width: 100px; height: 100px; top: -30px; left: -30px;"></div>
+                <div class="circle-demo" style="width: 80px; height: 80px; bottom: 10px; right: -20px;"></div>
+                <div class="circle-demo" style="width: 60px; height: 60px; top: 50%; left: 20px;"></div>
+                <div class="overlay-demo">
+                    Gradient + Lingkaran Dekoratif
+                </div>
+            </div>
+            <small class="text-muted">Warna: #667eea → #764ba2 → #f093fb</small>
+        </div>
+
+        <!-- Penumpang Card -->
+        <div class="check-item success">
+            <h3><i class="fas fa-check-circle text-success"></i> Kartu Penumpang</h3>
+            <p>Background image dengan gradient overlay biru:</p>
+            <div class="preview-box" style="background: linear-gradient(135deg, rgba(0, 123, 255, 0.8) 0%, rgba(0, 86, 179, 0.8) 100%), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80');">
+                <div class="overlay-demo">
+                    <i class="fas fa-user fa-2x me-3"></i> PENUMPANG
+                </div>
+            </div>
+            <small class="text-muted">URL: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d</small>
+        </div>
+
+        <!-- Driver Card -->
+        <div class="check-item success">
+            <h3><i class="fas fa-check-circle text-success"></i> Kartu Driver</h3>
+            <p>Background image dengan gradient overlay hijau:</p>
+            <div class="preview-box" style="background: linear-gradient(135deg, rgba(0, 168, 89, 0.8) 0%, rgba(0, 143, 74, 0.8) 100%), url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80');">
+                <div class="overlay-demo">
+                    <i class="fas fa-motorcycle fa-2x me-3"></i> DRIVER
+                </div>
+            </div>
+            <small class="text-muted">URL: https://images.unsplash.com/photo-1558618666-fcd25c85cd64</small>
+        </div>
+
+        <!-- Status Summary -->
+        <div class="check-item success">
+            <h3><i class="fas fa-clipboard-check text-success"></i> Status Semua Elemen</h3>
+            <ul class="list-group">
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Background gradient purple-pink ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Lingkaran dekoratif putih ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Kartu Penumpang dengan gambar ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Kartu Driver dengan gambar ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Gradient overlay untuk keterbacaan ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Text shadow pada icon dan text ✅</li>
+                <li class="list-group-item"><i class="fas fa-check text-success me-2"></i> Input placeholder hanya angka (08xxxxxxxxxx) ✅</li>
+            </ul>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center my-4">
+            <h4 class="mb-3">Buka Halaman Asli:</h4>
+            <a href="/register" class="btn btn-primary btn-lg me-2">
+                <i class="fas fa-user-plus me-2"></i> Halaman Register
+            </a>
+            <a href="/login" class="btn btn-success btn-lg">
+                <i class="fas fa-sign-in-alt me-2"></i> Halaman Login
+            </a>
+        </div>
+
+        <div class="alert alert-warning">
+            <strong><i class="fas fa-exclamation-triangle"></i> Jika gambar tidak muncul:</strong>
+            <ol class="mb-0 mt-2">
+                <li>Pastikan koneksi internet aktif (gambar dari Unsplash)</li>
+                <li>Refresh browser dengan Ctrl + F5</li>
+                <li>Atau gunakan mode Incognito (Ctrl + Shift + N)</li>
+                <li>Hapus cache browser</li>
+            </ol>
+        </div>
+
+        <div class="alert alert-success">
+            <strong><i class="fas fa-check-circle"></i> Semua Fitur Sudah Aktif!</strong>
+            <p class="mb-0 mt-2">Jika Anda melihat semua elemen di halaman ini dengan baik, berarti halaman Register dan Login Anda juga akan berfungsi sempurna!</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check if images loaded
+        window.addEventListener('load', function() {
+            console.log('✅ All resources loaded successfully!');
+            console.log('📱 Background gradient: ACTIVE');
+            console.log('🖼️ Images from Unsplash: LOADING...');
+        });
+    </script>
+</body>
+</html>

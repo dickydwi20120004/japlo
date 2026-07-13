@@ -33,41 +33,41 @@
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="fw-bold mb-3">Kategori</h5>
-            <div class="row text-center">
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-hamburger fa-2x mb-2"></i>
-                        <br><small>Fast Food</small>
+            <div class="row text-center g-2">
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-hamburger fa-2x d-block mb-2"></i>
+                        <small class="d-block">Fast Food</small>
                     </button>
                 </div>
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-drumstick-bite fa-2x mb-2"></i>
-                        <br><small>Ayam & Bebek</small>
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-drumstick-bite fa-2x d-block mb-2"></i>
+                        <small class="d-block">Ayam & Bebek</small>
                     </button>
                 </div>
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-bowl-rice fa-2x mb-2"></i>
-                        <br><small>Nasi</small>
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-bowl-rice fa-2x d-block mb-2"></i>
+                        <small class="d-block">Nasi</small>
                     </button>
                 </div>
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-coffee fa-2x mb-2"></i>
-                        <br><small>Minuman</small>
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-coffee fa-2x d-block mb-2"></i>
+                        <small class="d-block">Minuman</small>
                     </button>
                 </div>
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-ice-cream fa-2x mb-2"></i>
-                        <br><small>Dessert</small>
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-ice-cream fa-2x d-block mb-2"></i>
+                        <small class="d-block">Dessert</small>
                     </button>
                 </div>
-                <div class="col-4 col-md-2 mb-3">
-                    <button class="btn btn-outline-danger w-100">
-                        <i class="fas fa-ellipsis-h fa-2x mb-2"></i>
-                        <br><small>Lainnya</small>
+                <div class="col-4 col-md-2">
+                    <button class="btn btn-outline-danger w-100 py-3">
+                        <i class="fas fa-ellipsis-h fa-2x d-block mb-2"></i>
+                        <small class="d-block">Lainnya</small>
                     </button>
                 </div>
             </div>
@@ -90,7 +90,7 @@
     <h5 class="fw-bold mb-3">Restoran Terdekat</h5>
     <div class="row">
         @foreach($restaurants as $restaurant)
-        <div class="col-md-6 mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
             <div class="card hover-card h-100">
                 <div class="position-relative">
                     <img src="{{ $restaurant['image'] }}" class="card-img-top" alt="{{ $restaurant['name'] }}" style="height: 200px; object-fit: cover;">
@@ -124,8 +124,8 @@
     <!-- Popular Items -->
     <h5 class="fw-bold mb-3 mt-4">Makanan Populer</h5>
     <div class="row">
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card hover-card">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/200x200?text=Nasi+Goreng" class="card-img-top" alt="Nasi Goreng">
                 <div class="card-body">
                     <h6 class="fw-bold mb-1">Nasi Goreng Spesial</h6>
@@ -136,8 +136,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card hover-card">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/200x200?text=Ayam+Geprek" class="card-img-top" alt="Ayam Geprek">
                 <div class="card-body">
                     <h6 class="fw-bold mb-1">Ayam Geprek Jumbo</h6>
@@ -148,8 +148,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card hover-card">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/200x200?text=Mie+Ayam" class="card-img-top" alt="Mie Ayam">
                 <div class="card-body">
                     <h6 class="fw-bold mb-1">Mie Ayam Bakso</h6>
@@ -160,8 +160,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card hover-card">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/200x200?text=Es+Teh" class="card-img-top" alt="Es Teh">
                 <div class="card-body">
                     <h6 class="fw-bold mb-1">Es Teh Manis</h6>
@@ -176,9 +176,12 @@
 </div>
 
 <!-- Cart Button (Floating) -->
-<button class="btn btn-danger btn-lg position-fixed" style="bottom: 20px; right: 20px; border-radius: 50px; padding: 15px 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" onclick="openCart()">
+<button class="btn btn-danger btn-lg position-fixed shadow-lg" 
+        style="bottom: 20px; right: 20px; border-radius: 50px; padding: 12px 24px; z-index: 1000;" 
+        onclick="openCart()">
     <i class="fas fa-shopping-cart me-2"></i>
-    Keranjang <span class="badge bg-light text-danger ms-2">0</span>
+    <span class="d-none d-sm-inline">Keranjang</span>
+    <span class="badge bg-light text-danger ms-2">0</span>
 </button>
 
 <style>

@@ -1,0 +1,58 @@
+════════════════════════════════════════════════════════════
+   🚀 QUICK START - JAPLO REGISTER & LOGIN
+════════════════════════════════════════════════════════════
+
+⚡ LANGKAH CEPAT (3 MENIT):
+
+1️⃣  JALANKAN SERVER
+    └─ Klik: 1_JALANKAN_INI.bat
+
+2️⃣  BUKA INCOGNITO BROWSER
+    └─ Tekan: Ctrl + Shift + N
+
+3️⃣  BUKA HALAMAN VERIFIKASI
+    └─ Ketik: localhost:8000/VERIFIKASI_VISUAL.html
+
+4️⃣  LIHAT HASILNYA!
+    └─ Klik tombol: "Halaman Register"
+    └─ Atau: "Halaman Login"
+
+
+════════════════════════════════════════════════════════════
+✅ YANG SUDAH SELESAI:
+════════════════════════════════════════════════════════════
+
+✓ Background gradient purple-pink (tidak putih!)
+✓ Gambar pada kartu Penumpang
+✓ Gambar pada kartu Driver
+✓ Input nomor hanya angka (08xxxxxxxxxx)
+✓ Desain modern seperti Maxim
+✓ Semua fitur berfungsi 100%
+
+
+════════════════════════════════════════════════════════════
+🎯 URL PENTING:
+════════════════════════════════════════════════════════════
+
+Verifikasi Visual:
+http://localhost:8000/VERIFIKASI_VISUAL.html
+
+Register:
+http://localhost:8000/register
+
+Login:
+http://localhost:8000/login
+
+
+════════════════════════════════════════════════════════════
+💡 TIPS:
+════════════════════════════════════════════════════════════
+
+• Gunakan mode Incognito untuk hasil terbaik
+• Hard refresh: Ctrl + Shift + R
+• Demo akun sudah tersedia di halaman login
+
+
+════════════════════════════════════════════════════════════
+Status: ✅ READY TO USE
+════════════════════════════════════════════════════════════

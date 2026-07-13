@@ -5,7 +5,7 @@
 @section('content')
 <div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
     <div class="container">
-        <a href="{{ route('customer.dashboard') }}" class="btn btn-light btn-sm mb-3">
+        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
             <i class="fas fa-arrow-left me-1"></i> Kembali
         </a>
         <h2 class="fw-bold mb-2 text-white">
@@ -31,15 +31,15 @@
                        readonly
                        style="cursor: pointer;">
             </div>
-            <div class="d-flex justify-content-between">
-                <button class="btn btn-outline-primary flex-fill me-2" onclick="openPostModal('photo')">
-                    <i class="fas fa-image me-2"></i> Foto
+            <div class="d-flex justify-content-between flex-wrap gap-2">
+                <button class="btn btn-outline-primary flex-fill" style="min-width: 100px;" onclick="openPostModal('photo')">
+                    <i class="fas fa-image me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Foto</span>
                 </button>
-                <button class="btn btn-outline-success flex-fill me-2" onclick="openPostModal('video')">
-                    <i class="fas fa-video me-2"></i> Video
+                <button class="btn btn-outline-success flex-fill" style="min-width: 100px;" onclick="openPostModal('video')">
+                    <i class="fas fa-video me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Video</span>
                 </button>
-                <button class="btn btn-outline-warning flex-fill" onclick="openPostModal('poll')">
-                    <i class="fas fa-poll me-2"></i> Polling
+                <button class="btn btn-outline-warning flex-fill" style="min-width: 100px;" onclick="openPostModal('poll')">
+                    <i class="fas fa-poll me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Polling</span>
                 </button>
             </div>
         </div>
@@ -178,7 +178,7 @@
                 Grup Komunitas
             </h5>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-12 col-md-6 mb-3">
                     <div class="card hover-card">
                         <div class="card-body d-flex align-items-center">
                             <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
@@ -192,7 +192,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-12 col-md-6 mb-3">
                     <div class="card hover-card">
                         <div class="card-body d-flex align-items-center">
                             <div class="rounded-circle bg-danger bg-opacity-10 p-3 me-3">

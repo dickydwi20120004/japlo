@@ -32,7 +32,7 @@
     <h5 class="fw-bold mb-3">Layanan Kesehatan</h5>
     <div class="row">
         @foreach($healthServices as $service)
-        <div class="col-md-6 mb-4">
+        <div class="col-12 col-md-6 col-lg-6 mb-4">
             <div class="card hover-card h-100">
                 <div class="card-body">
                     <div class="text-center mb-3">
@@ -65,8 +65,8 @@
     <!-- Health Articles -->
     <h5 class="fw-bold mb-3 mt-4">Artikel Kesehatan</h5>
     <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card hover-card">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x250?text=Tips+Hidup+Sehat" class="card-img-top" alt="Article">
                 <div class="card-body">
                     <span class="badge bg-danger mb-2">Tips Kesehatan</span>
@@ -76,8 +76,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card hover-card">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x250?text=Vaksinasi" class="card-img-top" alt="Article">
                 <div class="card-body">
                     <span class="badge bg-danger mb-2">Informasi</span>
@@ -87,8 +87,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card hover-card">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+            <div class="card hover-card h-100">
                 <img src="https://via.placeholder.com/400x250?text=Nutrisi" class="card-img-top" alt="Article">
                 <div class="card-body">
                     <span class="badge bg-danger mb-2">Nutrisi</span>
@@ -104,15 +104,15 @@
     <div class="card mt-4">
         <div class="card-body">
             <div class="row align-items-center">
-                <div class="col-md-8">
+                <div class="col-12 col-md-8 mb-3 mb-md-0">
                     <h5 class="fw-bold mb-2">
                         <i class="fas fa-heartbeat me-2 text-danger"></i>
                         Cek Kesehatan Rutin
                     </h5>
                     <p class="text-secondary mb-0">Lakukan pemeriksaan kesehatan rutin minimal 6 bulan sekali untuk deteksi dini masalah kesehatan</p>
                 </div>
-                <div class="col-md-4 text-end">
-                    <button class="btn btn-danger btn-lg">
+                <div class="col-12 col-md-4 text-md-end">
+                    <button class="btn btn-danger btn-lg w-100 w-md-auto">
                         <i class="fas fa-calendar-alt me-2"></i> Jadwalkan
                     </button>
                 </div>
