@@ -142,4 +142,89 @@ class AuthController extends Controller
         return redirect()->route('home')
             ->with('success', 'Logout berhasil!');
     }
+
+    public function showForgotPassword()
+    {
+        return view('auth.forgot-password');
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ], [
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Format email tidak valid',
+            'email.exists' => 'Email tidak terdaftar',
+        ]);
+
+        // Generate reset token
+        $token = \Str::random(64);
+        
+        // Store token in database (in real app, use password_resets table)
+        // For demo, we'll use session
+        session([
+            'password_reset_token' => $token,
+            'password_reset_email' => $request->email,
+            'password_reset_expires' => now()->addHour(),
+        ]);
+
+        // In real app, send email here
+        // For demo, we'll just redirect to reset page
+        return redirect()->route('password.reset', ['token' => $token, 'email' => $request->email])
+            ->with('success', 'Link reset password telah dikirim! (Demo: Langsung ke halaman reset)');
+    }
+
+    public function showResetPassword($token)
+    {
+        $email = request('email');
+        
+        // Verify token (in real app, check password_resets table)
+        if (session('password_reset_token') !== $token || session('password_reset_email') !== $email) {
+            return redirect()->route('login')
+                ->with('error', 'Link reset password tidak valid atau sudah expired!');
+        }
+
+        if (now()->gt(session('password_reset_expires'))) {
+            return redirect()->route('login')
+                ->with('error', 'Link reset password sudah expired!');
+        }
+
+        return view('auth.reset-password', compact('token', 'email'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|min:8|confirmed',
+        ], [
+            'email.exists' => 'Email tidak terdaftar',
+            'password.required' => 'Password baru harus diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
+        ]);
+
+        // Verify token
+        if (session('password_reset_token') !== $request->token || session('password_reset_email') !== $request->email) {
+            return back()->with('error', 'Token tidak valid!');
+        }
+
+        if (now()->gt(session('password_reset_expires'))) {
+            return back()->with('error', 'Token sudah expired!');
+        }
+
+        // Update password
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // Clear session
+        session()->forget(['password_reset_token', 'password_reset_email', 'password_reset_expires']);
+
+        return redirect()->route('login')
+            ->with('success', 'Password berhasil direset! Silakan login dengan password baru.');
+    }
 }
+

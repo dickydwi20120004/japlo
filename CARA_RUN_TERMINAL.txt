@@ -1,0 +1,271 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║           📟 CARA RUN SERVER DARI TERMINAL                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+🎯 ADA 2 CARA MENJALANKAN SERVER:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CARA 1: MUDAH - DOUBLE KLIK FILE BAT ⭐ (RECOMMENDED)
+CARA 2: MANUAL - LEWAT TERMINAL/CMD
+
+
+═══════════════════════════════════════════════════════════════
+CARA 1: MUDAH - DOUBLE KLIK FILE BAT ⭐
+═══════════════════════════════════════════════════════════════
+
+LANGKAH 1: Buka Folder Project
+   └─ Buka: C:\xampp\htdocs\Japlo App
+
+LANGKAH 2: Double Klik File
+   └─ Klik 2x file: 1_JALANKAN_INI.bat
+
+LANGKAH 3: Tunggu CMD Terbuka
+   └─ Window Command Prompt akan terbuka
+   └─ Tunggu sampai muncul tulisan:
+      "INFO Server running on [http://127.0.0.1:8000]"
+
+LANGKAH 4: Buka Browser
+   └─ Double klik file: 2_BUKA_BROWSER.bat
+   └─ Atau buka manual: http://localhost:8000
+
+✅ SELESAI! Server berjalan!
+
+
+═══════════════════════════════════════════════════════════════
+CARA 2: MANUAL - LEWAT TERMINAL/CMD
+═══════════════════════════════════════════════════════════════
+
+🖥️ PILIH SALAH SATU TERMINAL:
+
+┌─────────────────────────────────────────────────────────────┐
+│  OPSI A: COMMAND PROMPT (CMD)                               │
+└─────────────────────────────────────────────────────────────┘
+
+LANGKAH 1: Buka CMD
+   Cara 1: Tekan Windows + R → Ketik "cmd" → Enter
+   Cara 2: Search "Command Prompt" di Start Menu
+   Cara 3: Di folder project, ketik "cmd" di address bar
+
+LANGKAH 2: Masuk ke Folder Project
+   cd C:\xampp\htdocs\Japlo App
+
+LANGKAH 3: Jalankan Server
+   php artisan serve
+
+LANGKAH 4: Lihat Output
+   Tunggu sampai muncul:
+   INFO Server running on [http://127.0.0.1:8000]
+
+LANGKAH 5: Buka Browser
+   Buka: http://localhost:8000
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  OPSI B: POWERSHELL                                         │
+└─────────────────────────────────────────────────────────────┘
+
+LANGKAH 1: Buka PowerShell
+   Cara 1: Tekan Windows + X → Pilih "Windows PowerShell"
+   Cara 2: Search "PowerShell" di Start Menu
+   Cara 3: Di folder project, Shift + Klik Kanan → "Open PowerShell here"
+
+LANGKAH 2: Masuk ke Folder Project
+   cd "C:\xampp\htdocs\Japlo App"
+
+LANGKAH 3: Jalankan Server
+   php artisan serve
+
+LANGKAH 4: Lihat Output
+   Tunggu sampai muncul:
+   INFO Server running on [http://127.0.0.1:8000]
+
+LANGKAH 5: Buka Browser
+   Buka: http://localhost:8000
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  OPSI C: GIT BASH (Jika terinstall)                        │
+└─────────────────────────────────────────────────────────────┘
+
+LANGKAH 1: Buka Git Bash
+   Klik kanan di folder project → "Git Bash Here"
+
+LANGKAH 2: Jalankan Server
+   php artisan serve
+
+LANGKAH 3: Buka Browser
+   Buka: http://localhost:8000
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  OPSI D: TERMINAL DI VS CODE                                │
+└─────────────────────────────────────────────────────────────┘
+
+LANGKAH 1: Buka VS Code
+   └─ Buka folder project di VS Code
+
+LANGKAH 2: Buka Terminal
+   Cara 1: Tekan Ctrl + ` (backtick)
+   Cara 2: Menu: Terminal → New Terminal
+   Cara 3: Tekan Ctrl + Shift + `
+
+LANGKAH 3: Jalankan Server
+   php artisan serve
+
+LANGKAH 4: Buka Browser
+   Cara 1: Ctrl + Click di link yang muncul
+   Cara 2: Buka manual: http://localhost:8000
+
+
+═══════════════════════════════════════════════════════════════
+⚙️ PERINTAH ARTISAN YANG BERGUNA:
+═══════════════════════════════════════════════════════════════
+
+JALANKAN SERVER:
+php artisan serve
+   └─ Server di: http://localhost:8000
+
+JALANKAN SERVER DI PORT LAIN:
+php artisan serve --port=8080
+   └─ Server di: http://localhost:8080
+
+JALANKAN DI HOST TERTENTU:
+php artisan serve --host=192.168.1.10 --port=8000
+   └─ Bisa diakses dari IP lokal
+
+CLEAR CACHE:
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+php artisan config:clear
+
+JALANKAN MIGRATION:
+php artisan migrate
+
+JALANKAN SEEDER:
+php artisan db:seed
+php artisan db:seed --class=AdminSeeder
+
+LIHAT SEMUA ROUTE:
+php artisan route:list
+
+
+═══════════════════════════════════════════════════════════════
+❌ CARA STOP SERVER:
+═══════════════════════════════════════════════════════════════
+
+DARI TERMINAL:
+   └─ Tekan: Ctrl + C
+   └─ Server akan berhenti
+
+DARI FILE BAT:
+   └─ Tutup window Command Prompt
+
+PAKSA STOP (Jika Stuck):
+   └─ Buka Task Manager (Ctrl + Shift + Esc)
+   └─ Cari "php.exe"
+   └─ Klik → End Task
+
+
+═══════════════════════════════════════════════════════════════
+🔍 TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+ERROR: "php is not recognized"
+SOLUSI:
+   └─ PHP belum terinstall atau belum masuk PATH
+   └─ Install PHP atau tambahkan ke PATH
+   └─ Atau gunakan: C:\xampp\php\php.exe artisan serve
+
+ERROR: "Address already in use"
+SOLUSI:
+   └─ Port 8000 sudah dipakai
+   └─ Gunakan port lain: php artisan serve --port=8080
+   └─ Atau stop aplikasi yang pakai port 8000
+
+ERROR: "Could not open input file: artisan"
+SOLUSI:
+   └─ Anda tidak di folder project
+   └─ cd ke folder project dulu
+   └─ cd "C:\xampp\htdocs\Japlo App"
+
+ERROR: Database connection
+SOLUSI:
+   └─ Pastikan MySQL/XAMPP berjalan
+   └─ Cek file .env (DB_HOST, DB_DATABASE, dll)
+   └─ Test koneksi: php artisan migrate:status
+
+
+═══════════════════════════════════════════════════════════════
+📌 TIPS & TRIK:
+═══════════════════════════════════════════════════════════════
+
+TIP 1: Buat Shortcut
+   └─ Klik kanan 1_JALANKAN_INI.bat
+   └─ "Create shortcut"
+   └─ Taruh di Desktop
+
+TIP 2: Pin ke Taskbar
+   └─ Drag file BAT ke Taskbar
+   └─ Klik langsung dari Taskbar
+
+TIP 3: Multiple Terminal
+   └─ Terminal 1: php artisan serve (server)
+   └─ Terminal 2: untuk command lain
+
+TIP 4: Auto Reload
+   └─ Gunakan: npm run watch (jika ada)
+   └─ Atau: php artisan serve --watch (Laravel 10+)
+
+TIP 5: Background Mode
+   └─ Di Linux/Mac: php artisan serve &
+   └─ Di Windows: Gunakan file BAT
+
+
+═══════════════════════════════════════════════════════════════
+🎯 QUICK REFERENCE:
+═══════════════════════════════════════════════════════════════
+
+START SERVER:
+   php artisan serve
+
+STOP SERVER:
+   Ctrl + C
+
+CLEAR ALL CACHE:
+   php artisan optimize:clear
+
+REFRESH DATABASE:
+   php artisan migrate:fresh --seed
+
+VIEW LOGS:
+   storage/logs/laravel.log
+
+
+═══════════════════════════════════════════════════════════════
+📱 AKSES DARI HP/DEVICE LAIN:
+═══════════════════════════════════════════════════════════════
+
+LANGKAH 1: Cari IP Komputer
+   CMD: ipconfig
+   Cari: IPv4 Address (contoh: 192.168.1.5)
+
+LANGKAH 2: Jalankan Server dengan Host
+   php artisan serve --host=0.0.0.0 --port=8000
+
+LANGKAH 3: Akses dari HP
+   Buka browser di HP
+   Ketik: http://192.168.1.5:8000
+   (Ganti dengan IP komputer Anda)
+
+CATATAN:
+   └─ HP & Komputer harus 1 jaringan WiFi
+   └─ Firewall mungkin perlu diizinkan
+
+
+════════════════════════════════════════════════════════════════
+Status: ✅ PANDUAN LENGKAP
+Dibuat: 14 Juli 2026
+════════════════════════════════════════════════════════════════

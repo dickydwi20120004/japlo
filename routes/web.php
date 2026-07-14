@@ -23,6 +23,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+    
+    // Forgot Password Routes
+    Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 });
 
 // Authenticated Routes
@@ -30,6 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    Route::post('/profile/photo', [DashboardController::class, 'updatePhoto'])->name('profile.update.photo');
+    Route::put('/profile', [DashboardController::class, 'updateProfile'])->name('profile.update');
+    Route::post('/profile/password', [DashboardController::class, 'changePassword'])->name('profile.change.password');
     
     // Service Routes - Customer
     Route::prefix('customer')->name('customer.')->group(function () {

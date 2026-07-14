@@ -280,6 +280,9 @@
                         </li>
                     @else
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard') }}">
                                 @if(auth()->user()->isAdmin())
                                     <i class="fas fa-shield-alt me-1"></i> Admin
