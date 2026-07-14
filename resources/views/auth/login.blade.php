@@ -93,11 +93,11 @@
                                 
                                 <!-- Email -->
                                 <div class="mb-3">
-                                    <label for="email" class="form-label fw-bold small text-secondary">Email</label>
+                                    <label for="email" class="form-label fw-bold small" style="color: #444;">Email</label>
                                     <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" 
                                            id="email" name="email" value="{{ old('email') }}" 
                                            placeholder="email@contoh.com"
-                                           style="border-radius: 12px;" required>
+                                           style="border-radius: 12px; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -105,14 +105,14 @@
 
                                 <!-- Password -->
                                 <div class="mb-3">
-                                    <label for="password" class="form-label fw-bold small text-secondary">Password</label>
+                                    <label for="password" class="form-label fw-bold small" style="color: #444;">Password</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
                                                id="password" name="password" 
                                                placeholder="••••••••"
-                                               style="border-radius: 12px 0 0 12px; border-right: none;" required>
+                                               style="border-radius: 12px 0 0 12px; border-right: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);" required>
                                         <button type="button" class="btn btn-outline-secondary" 
-                                                style="border-radius: 0 12px 12px 0; border-left: none; background: white;"
+                                                style="border-radius: 0 12px 12px 0; border-left: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);"
                                                 onclick="togglePassword('password', this)">
                                             <i class="fas fa-eye text-secondary"></i>
                                         </button>
@@ -125,7 +125,7 @@
                                 <!-- Remember Me -->
                                 <div class="mb-4 form-check">
                                     <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label text-secondary" for="remember">Ingat saya</label>
+                                    <label class="form-check-label" style="color: #666;" for="remember">Ingat saya</label>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -142,7 +142,7 @@
 
                                 <!-- Register Link -->
                                 <div class="text-center">
-                                    <p class="mb-0 text-secondary">
+                                    <p class="mb-0" style="color: #666;">
                                         Belum punya akun? 
                                         <a href="{{ route('register') }}" class="fw-bold text-decoration-none" style="color: #00A859;">Daftar</a>
                                     </p>
@@ -151,7 +151,7 @@
 
                             <!-- Demo Accounts Info -->
                             <div class="mt-4 pt-4 border-top">
-                                <p class="text-center text-secondary small mb-2">Demo Akun:</p>
+                                <p class="text-center small mb-2" style="color: #666;">Demo Akun:</p>
                                 <div class="d-flex gap-2 justify-content-center flex-wrap">
                                     <button type="button" class="btn btn-sm" style="background: #00A859; color: white; border: none;" onclick="fillDemo('user')">
                                         <i class="fas fa-user me-1"></i> Penumpang
