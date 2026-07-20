@@ -1,0 +1,70 @@
+================================================
+   CEK DATABASE & ROLE USERS - JAPLO APP
+================================================
+
+LANGKAH CEPAT:
+--------------
+
+1. PASTIKAN MYSQL RUNNING:
+   - Buka XAMPP Control Panel
+   - Klik "Start" di MySQL
+   - Tunggu hingga hijau/running
+
+2. CEK DATABASE:
+   php cek_database_users.php
+
+3. LIHAT HASIL:
+   - Total users
+   - Role setiap user (USER / DRIVER / ADMIN)
+   - Demo accounts status
+
+================================================
+
+YANG HARUS ADA:
+---------------
+
+✓ Role USER (Penumpang)
+✓ Role DRIVER (Driver ojek/taxi)  
+✓ Role ADMIN (Administrator)
+
+================================================
+
+DEMO ACCOUNTS:
+--------------
+
+1. Penumpang:
+   Email: demo@japlo.com
+   Pass : password123
+   
+2. Driver:
+   Email: driver@japlo.com
+   Pass : password123
+   
+3. Admin:
+   Email: admin@japlo.com
+   Pass : admin123
+
+================================================
+
+JIKA DATABASE KOSONG:
+---------------------
+
+php artisan db:seed --class=AdminSeeder
+
+================================================
+
+ERROR MYSQL NOT RUNNING?
+------------------------
+
+1. Buka XAMPP Control Panel
+2. Start MySQL
+3. Jalankan script lagi
+
+================================================
+
+BACA DOKUMENTASI LENGKAP:
+--------------------------
+
+CARA_CEK_DATABASE.md
+
+================================================
