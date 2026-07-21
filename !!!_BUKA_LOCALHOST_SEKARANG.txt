@@ -1,0 +1,170 @@
+================================================
+   CARA BUKA LOCALHOST - JAPLO APP
+================================================
+
+SERVER SUDAH RUNNING DI:
+========================
+
+http://127.0.0.1:8000
+http://localhost:8000
+
+KEDUA URL DI ATAS SAMA!
+
+================================================
+
+CARA BUKA DI BROWSER:
+=====================
+
+CARA 1: Ketik Manual
+--------------------
+1. Buka browser baru (Chrome/Edge/Firefox)
+2. Klik di address bar
+3. Ketik: localhost:8000
+4. Tekan Enter
+
+CARA 2: Copy-Paste
+------------------
+1. Copy URL ini: http://localhost:8000
+2. Paste di address bar browser
+3. Tekan Enter
+
+CARA 3: Klik File BAT
+---------------------
+Klik 2x file: 2_BUKA_BROWSER.bat
+
+================================================
+
+HALAMAN YANG TERSEDIA:
+======================
+
+Home/Welcome:
+→ http://localhost:8000
+
+Login:
+→ http://localhost:8000/login
+
+Register/Daftar:
+→ http://localhost:8000/register
+
+Dashboard (setelah login):
+→ http://localhost:8000/dashboard
+
+================================================
+
+TROUBLESHOOTING:
+================
+
+Q: "This site can't be reached"
+A: Server belum jalan
+   → Jalankan: 1_JALANKAN_INI.bat
+   → JANGAN tutup jendela CMD!
+
+Q: "Connection refused"
+A: Server mati
+   → Restart: 1_JALANKAN_INI.bat
+
+Q: "Took too long to respond"
+A: Port salah atau firewall
+   → Pastikan pakai port 8000
+   → Matikan antivirus sementara
+
+Q: Halaman loading terus
+A: Clear cache browser
+   → Ctrl + Shift + Delete
+   → Hard refresh: Ctrl + F5
+
+Q: Error 404 Not Found
+A: Route salah
+   → Pastikan URL benar
+   → Contoh BENAR: localhost:8000/login
+   → Contoh SALAH: localhost/login (tanpa :8000)
+
+================================================
+
+CEK SERVER RUNNING:
+===================
+
+Cek di CMD/Terminal yang terbuka:
+
+Harus ada tulisan:
+"Server running on [http://127.0.0.1:8000]"
+
+Kalau tidak ada:
+→ Server belum jalan
+→ Jalankan: 1_JALANKAN_INI.bat
+
+================================================
+
+LANGKAH LENGKAP DARI AWAL:
+===========================
+
+1. XAMPP Control Panel:
+   □ Apache: HIJAU (Start)
+   □ MySQL : HIJAU (Start)
+
+2. Jalankan Server:
+   □ Klik 2x: 1_JALANKAN_INI.bat
+   □ Tunggu: "Server running on..."
+   □ JANGAN TUTUP jendela CMD!
+
+3. Buka Browser:
+   □ Ketik: localhost:8000
+   □ Atau klik: 2_BUKA_BROWSER.bat
+
+4. Daftar Akun (Pertama kali):
+   □ Klik link "Daftar"
+   □ Atau buka: localhost:8000/register
+   □ Isi form & daftar
+
+5. Login:
+   □ Buka: localhost:8000/login
+   □ Email: (yang Anda daftarkan)
+   □ Pass : (yang Anda buat)
+
+================================================
+
+PORT YANG DIGUNAKAN:
+====================
+
+Laravel Server: 8000
+Apache XAMPP  : 80, 443
+MySQL XAMPP   : 3306
+
+Pastikan port 8000 tidak dipakai aplikasi lain!
+
+Cek port:
+→ netstat -ano | findstr :8000
+
+================================================
+
+URL LENGKAP:
+============
+
+✓ http://localhost:8000          (Home)
+✓ http://localhost:8000/login    (Login)
+✓ http://localhost:8000/register (Daftar)
+✓ http://localhost:8000/dashboard (Dashboard)
+
+✗ http://localhost/japlo         (SALAH - tanpa port)
+✗ http://localhost:8080           (SALAH - port salah)
+✗ http://127.0.0.1                (SALAH - tanpa port)
+
+================================================
+
+TIPS:
+=====
+
+1. Bookmark URL di browser:
+   → localhost:8000
+
+2. Jangan tutup CMD server
+   → Minimize saja
+
+3. Restart server jika error:
+   → Tutup CMD
+   → Klik 1_JALANKAN_INI.bat lagi
+
+4. Clear cache jika tampilan aneh:
+   → Ctrl + Shift + Delete
+
+================================================

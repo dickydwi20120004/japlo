@@ -1,0 +1,125 @@
+================================================
+   CARA PERBARUI DATABASE - JAPLO APP
+================================================
+
+PILIH SALAH SATU METODE:
+========================
+
+METODE 1: PERBARUI LENGKAP (Reset Total)
+=========================================
+Klik 2x file: PERBARUI_DATABASE.bat
+
+✓ Drop semua table
+✓ Migrate ulang (buat table baru)
+✓ Seed admin
+✓ Buat demo users
+
+⚠️ WARNING: Semua data lama akan HILANG!
+
+WAKTU: ~2-3 menit
+
+
+METODE 2: BUAT USER DEMO AJA (Cepat)
+=====================================
+Klik 2x file: BUAT_USER_CEPAT.bat
+
+✓ Cek database connection
+✓ Buat/Update admin user
+✓ Buat/Update penumpang user
+✓ Buat/Update driver user
+
+✓ Data lama tetap ada (tidak hilang)
+
+WAKTU: ~30 detik
+
+
+METODE 3: MANUAL VIA COMMAND
+============================
+Buka Command Prompt:
+
+cd C:\xampp\htdocs\Japlo App
+
+Lalu ketik:
+
+# Reset lengkap:
+php artisan migrate:fresh --seed
+
+# Atau buat user aja:
+php artisan db:seed --class=AdminSeeder
+
+================================================
+
+SETELAH PERBARUI DATABASE:
+==========================
+
+1. Jalankan server:
+   Klik 2x: 1_JALANKAN_INI.bat
+   
+2. Buka browser:
+   http://localhost:8000/login
+
+3. Login dengan:
+   Email: demo@japlo.com
+   Pass : password123
+   
+   Atau klik tombol hijau "Penumpang"
+
+================================================
+
+KREDENSIAL LENGKAP:
+===================
+
+ADMIN:
+  Email   : admin@japlo.com
+  Password: admin123
+  Phone   : 089999999999
+
+PENUMPANG:
+  Email   : demo@japlo.com
+  Password: password123
+  Phone   : 081234567890
+
+DRIVER:
+  Email   : driver@japlo.com
+  Password: password123
+  Phone   : 081234567891
+
+================================================
+
+TROUBLESHOOTING:
+================
+
+Q: Command timeout atau lambat?
+A: Tunggu saja, MySQL baru recovery.
+   Atau restart XAMPP (Stop All > Start All)
+
+Q: Error: SQLSTATE connection refused?
+A: MySQL belum running.
+   Buka XAMPP, Start MySQL
+
+Q: Error: Database 'japlo_db' doesn't exist?
+A: Buat database manual:
+   1. Buka http://localhost/phpmyadmin
+   2. Klik "New"
+   3. Database name: japlo_db
+   4. Create
+
+Q: Error: Table doesn't exist?
+A: Jalankan migration:
+   php artisan migrate
+
+Q: User tidak bisa login?
+A: Jalankan: BUAT_USER_CEPAT.bat
+
+================================================
+
+REKOMENDASI:
+============
+
+Untuk pertama kali setup:
+→ Gunakan METODE 1 (PERBARUI_DATABASE.bat)
+
+Kalau database sudah ada, cuma mau tambah user:
+→ Gunakan METODE 2 (BUAT_USER_CEPAT.bat)
+
+================================================

@@ -1,0 +1,125 @@
+================================================
+   MULAI DISINI - JAPLO APP SETUP
+================================================
+
+LANGKAH MUDAH (PERTAMA KALI):
+==============================
+
+STEP 1: PASTIKAN XAMPP RUNNING
+-------------------------------
+□ Buka XAMPP Control Panel
+□ Apache: Klik "Start" (tunggu HIJAU)
+□ MySQL : Klik "Start" (tunggu HIJAU)
+
+STEP 2: SETUP DATABASE & USERS
+-------------------------------
+□ Klik 2x file: SETUP_LENGKAP.bat
+□ Tunggu sampai selesai (~2-3 menit)
+□ Jangan tutup jendela CMD sampai selesai!
+
+STEP 3: JALANKAN SERVER
+------------------------
+□ Klik 2x file: 1_JALANKAN_INI.bat
+□ Tunggu muncul: "Server running on..."
+□ JANGAN TUTUP jendela CMD ini!
+
+STEP 4: BUKA BROWSER & LOGIN
+-----------------------------
+□ Buka: http://localhost:8000/login
+□ Klik tombol hijau "Penumpang"
+  ATAU
+  Email: demo@japlo.com
+  Pass : password123
+
+SELESAI! ✓
+
+================================================
+
+KREDENSIAL LENGKAP:
+===================
+
+ADMIN:
+  Email   : admin@japlo.com
+  Password: admin123
+
+PENUMPANG:
+  Email   : demo@japlo.com
+  Password: password123
+
+DRIVER:
+  Email   : driver@japlo.com
+  Password: password123
+
+================================================
+
+TROUBLESHOOTING:
+================
+
+Q: "MySQL refused to connect"
+A: MySQL belum running
+   → Buka XAMPP, Start MySQL
+
+Q: "localhost refused to connect"
+A: Laravel server belum jalan
+   → Klik 2x: 1_JALANKAN_INI.bat
+
+Q: "Email atau password salah"
+A: User belum dibuat
+   → Klik 2x: SETUP_LENGKAP.bat
+
+Q: Setup lambat atau hang?
+A: Normal, MySQL baru recovery
+   → Tunggu saja 2-3 menit
+   → Atau restart XAMPP (Stop All > Start All)
+
+Q: Browser loading lama?
+A: Clear cache browser
+   → Ctrl + Shift + Delete
+   → Hard refresh: Ctrl + F5
+
+================================================
+
+FILE PENTING:
+=============
+
+1_JALANKAN_INI.bat      → Start Laravel server
+SETUP_LENGKAP.bat       → Setup database & users
+setup_users.php         → Buat demo users
+PERBARUI_DATABASE.bat   → Reset database
+BUAT_USER_CEPAT.bat     → Tambah user cepat
+
+================================================
+
+URUTAN YANG BENAR:
+==================
+
+1. XAMPP: Apache & MySQL HIJAU
+2. SETUP_LENGKAP.bat (sekali aja)
+3. 1_JALANKAN_INI.bat (setiap mau pakai)
+4. Buka browser: http://localhost:8000/login
+
+================================================
+
+CHECKLIST HARUS CENTANG SEMUA:
+===============================
+
+□ XAMPP Apache  : HIJAU
+□ XAMPP MySQL   : HIJAU
+□ Database      : japlo_db (ada)
+□ Users         : 3 demo users (ada)
+□ Laravel Server: Running (CMD terbuka)
+□ Browser       : Login berhasil
+
+================================================
+
+BUTUH BANTUAN?
+==============
+
+Baca file panduan:
+- !!!_CARA_PERBARUI_DATABASE.txt
+- !!!_FIX_MYSQL_CRASH.txt
+- LANGKAH_CEPAT_FIX.txt
+
+Atau screenshot error dan tanya lagi.
+
+================================================

@@ -1,0 +1,96 @@
+================================================
+   LANGKAH CEPAT FIX MySQL (5 MENIT!)
+================================================
+
+IKUTI URUTAN INI:
+=================
+
+STEP 1: Stop MySQL
+------------------
+□ Buka XAMPP Control Panel
+□ Klik "Stop" di baris MySQL
+□ Tunggu sampai tidak hijau lagi
+
+
+STEP 2: Edit Konfigurasi
+-------------------------
+□ Di XAMPP, klik "Config" (tombol di MySQL)
+□ Pilih "my.ini"
+□ Notepad akan terbuka
+
+
+STEP 3: Tambah Force Recovery
+------------------------------
+□ Cari baris: [mysqld]
+□ Tambah baris baru di bawahnya:
+  
+  innodb_force_recovery = 1
+
+□ Save (Ctrl + S)
+□ Tutup Notepad
+
+
+STEP 4: Start MySQL Lagi
+-------------------------
+□ Kembali ke XAMPP Control Panel
+□ Klik "Start" di MySQL
+□ Tunggu sampai HIJAU ✓
+
+JIKA MASIH ERROR:
+□ Ulangi STEP 2-3
+□ Ganti jadi: innodb_force_recovery = 2
+□ Save dan Start lagi
+
+
+STEP 5: Test Database
+---------------------
+□ Klik "Admin" di MySQL (XAMPP)
+□ Buka phpMyAdmin
+□ Cek database: japlo_db
+□ Kalau tidak ada, buat manual
+
+
+STEP 6: Reset Database (Jika Perlu)
+------------------------------------
+Buka CMD di folder Japlo App:
+
+□ php artisan migrate:fresh --seed
+
+
+STEP 7: Start Laravel Server
+-----------------------------
+□ Klik 2x file: 1_JALANKAN_INI.bat
+□ Tunggu: "Server running on..."
+□ JANGAN tutup jendela CMD!
+
+
+STEP 8: Test Login
+-------------------
+□ Buka browser
+□ Ketik: http://localhost:8000/login
+□ Email: demo@japlo.com
+□ Pass : password123
+□ Klik "Masuk"
+
+SELESAI! ✓
+
+================================================
+
+CHECKLIST HARUS HIJAU SEMUA:
+============================
+
+□ XAMPP Apache  : HIJAU
+□ XAMPP MySQL   : HIJAU
+□ CMD Server    : "Server running..."
+□ Browser       : Login berhasil
+
+================================================
+
+JIKA MASIH ERROR:
+=================
+
+Baca file: !!!_FIX_MYSQL_CRASH.txt
+
+Atau screenshot error dan tanya lagi.
+
+================================================

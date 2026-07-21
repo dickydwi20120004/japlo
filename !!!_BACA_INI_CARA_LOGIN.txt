@@ -1,0 +1,106 @@
+================================================
+   CARA FIX LOGIN - JAPLO APP (SIMPLE!)
+================================================
+
+MASALAH ANDA:
+-------------
+✗ Server Laravel belum jalan
+✗ localhost:8000 tidak bisa diakses
+✗ Error: "localhost refused to connect"
+
+SOLUSI CEPAT (3 LANGKAH):
+==========================
+
+LANGKAH 1: PASTIKAN XAMPP RUNNING
+----------------------------------
+✓ Apache: HIJAU (running)
+✓ MySQL: HIJAU (running)
+
+Kalau belum hijau, klik "Start"
+
+
+LANGKAH 2: JALANKAN FILE INI
+-----------------------------
+Klik 2x file: 1_JALANKAN_INI.bat
+
+Tunggu sampai muncul:
+"Server running on [http://127.0.0.1:8000]"
+
+JANGAN TUTUP JENDELA CMD-NYA!
+
+
+LANGKAH 3: SETUP DATABASE (SEKALI AJA)
+---------------------------------------
+Klik 2x file: FIX_LOGIN_SEKARANG.bat
+
+Tunggu sampai selesai, akan create demo users
+
+
+LANGKAH 4: BUKA BROWSER
+------------------------
+Buka: http://localhost:8000/login
+
+Login dengan:
+- Email: demo@japlo.com
+- Pass : password123
+
+Atau klik tombol hijau "Penumpang"
+
+
+================================================
+   TROUBLESHOOTING
+================================================
+
+1. "localhost refused to connect"
+   → Server belum jalan
+   → Jalankan: 1_JALANKAN_INI.bat
+   → Jangan tutup CMD-nya
+
+2. "SQLSTATE connection refused"
+   → MySQL belum running
+   → Buka XAMPP, klik Start MySQL
+   → Tunggu hijau
+
+3. "Email atau password salah"
+   → User belum ada di database
+   → Jalankan: FIX_LOGIN_SEKARANG.bat
+   → Atau register manual
+
+4. Halaman loading lama
+   → Clear cache browser (Ctrl + Shift + Delete)
+   → Hard refresh (Ctrl + F5)
+   → Restart server
+
+================================================
+   KREDENSIAL LOGIN
+================================================
+
+PENUMPANG:
+  Email: demo@japlo.com
+  Pass : password123
+
+DRIVER:
+  Email: driver@japlo.com
+  Pass : password123
+
+ADMIN:
+  Email: admin@japlo.com
+  Pass : admin123
+
+================================================
+
+KALAU MASIH ERROR, CEK:
+-----------------------
+1. XAMPP Control Panel:
+   Apache: HIJAU ✓
+   MySQL: HIJAU ✓
+
+2. CMD window server:
+   Ada tulisan "Server running on..."
+   JANGAN DITUTUP!
+
+3. Browser:
+   Ketik: http://localhost:8000/login
+   BUKAN: http://localhost/login
+
+================================================

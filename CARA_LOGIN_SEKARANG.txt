@@ -1,0 +1,76 @@
+================================================
+   CARA LOGIN SEKARANG - JAPLO APP
+================================================
+
+PROBLEM: Demo account belum ada di database
+
+SOLUSI: DAFTAR BARU VIA REGISTER! (30 detik)
+
+================================================
+
+LANGKAH MUDAH:
+==============
+
+1. BUKA REGISTER
+   -------------
+   Di browser yang sama, ganti URL jadi:
+   http://localhost:8000/register
+   
+   ATAU
+   
+   Di halaman login, klik link "Daftar"
+
+
+2. ISI FORM REGISTER
+   -----------------
+   ✓ Nama: (terserah Anda)
+   ✓ Email: test@email.com (bebas)
+   ✓ Phone: 08123456789 (angka aja)
+   ✓ Role: Klik card "Penumpang"
+   ✓ Password: 12345678
+   ✓ Konfirmasi: 12345678
+
+
+3. KLIK TOMBOL "DAFTAR"
+   --------------------
+   Tunggu sebentar...
+
+
+4. OTOMATIS LOGIN!
+   ---------------
+   Anda langsung masuk dashboard!
+
+
+SELESAI! ✓
+
+================================================
+
+KENAPA HARUS DAFTAR BARU?
+=========================
+
+- Demo account (demo@japlo.com) belum ada
+- MySQL sedang lambat (recovery)
+- Setup database belum selesai
+- Daftar baru lebih cepat (30 detik)
+
+================================================
+
+KREDENSIAL BARU ANDA:
+=====================
+
+Email   : (yang Anda isi tadi)
+Password: (yang Anda isi tadi)
+
+Simpan untuk login berikutnya!
+
+================================================
+
+UNTUK LOGIN BERIKUTNYA:
+=======================
+
+1. Buka: http://localhost:8000/login
+2. Email: (email Anda)
+3. Pass : (password Anda)
+4. Klik "Masuk"
+
+================================================
