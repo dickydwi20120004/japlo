@@ -190,4 +190,29 @@ class DashboardController extends Controller
 
         return redirect()->route('profile')->with('success', 'Password berhasil diganti!');
     }
+
+    public function orderHistory()
+    {
+        $user = Auth::user();
+
+        // Get all orders for the logged-in customer
+        $orders = Order::where('user_id', $user->id)
+            ->with(['driver', 'rating'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Get statistics
+        $totalOrders = Order::where('user_id', $user->id)->count();
+        $completedOrders = Order::where('user_id', $user->id)->where('status', 'completed')->count();
+        $cancelledOrders = Order::where('user_id', $user->id)->where('status', 'cancelled')->count();
+        $totalSpent = Order::where('user_id', $user->id)->where('status', 'completed')->sum('price');
+
+        return view('order.history', compact(
+            'orders',
+            'totalOrders',
+            'completedOrders',
+            'cancelledOrders',
+            'totalSpent'
+        ));
+    }
 }

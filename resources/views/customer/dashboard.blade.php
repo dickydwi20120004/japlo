@@ -81,7 +81,7 @@
 
     <!-- Active Order -->
     @if($activeOrder)
-        <div class="card mb-4" style="border-left: 4px solid var(--primary-color);">
+        <div class="card mb-4 shadow-lg" style="border-left: 4px solid var(--primary-color); border-radius: 12px;">
             <div class="card-body">
                 <h5 class="fw-bold mb-3">
                     <i class="fas fa-motorcycle me-2 text-primary"></i>
@@ -103,6 +103,11 @@
                             <small class="text-secondary">Driver: {{ $activeOrder->driver->name }}</small>
                         @endif
                     </div>
+                </div>
+                <div class="mt-3 pt-3 border-top">
+                    <a href="{{ route('order.track', $activeOrder->id) }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-map-location-dot me-2"></i> Lihat Tracking GPS
+                    </a>
                 </div>
             </div>
         </div>
@@ -251,7 +256,12 @@
     <!-- Recent Orders -->
     <div class="card">
         <div class="card-body">
-            <h5 class="fw-bold mb-3">Riwayat Pesanan Terakhir</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">Riwayat Pesanan Terakhir</h5>
+                <a href="{{ route('order.history') }}" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-list me-1"></i> Lihat Semua
+                </a>
+            </div>
             
             @if($recentOrders->count() > 0)
                 <div class="table-responsive">
@@ -263,6 +273,7 @@
                                 <th>Harga</th>
                                 <th>Status</th>
                                 <th>Tanggal</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -277,6 +288,17 @@
                                         </span>
                                     </td>
                                     <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
+                                    <td>
+                                        @if(in_array($order->status, ['in_progress', 'picked_up', 'accepted', 'pending']))
+                                            <a href="{{ route('order.track', $order->id) }}" class="btn btn-sm btn-info" title="Lihat Tracking">
+                                                <i class="fas fa-map-location-dot"></i>
+                                            </a>
+                                        @else
+                                            <button class="btn btn-sm btn-outline-secondary" disabled title="Pesanan sudah selesai">
+                                                <i class="fas fa-check-circle"></i>
+                                            </button>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

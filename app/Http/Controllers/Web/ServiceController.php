@@ -10,6 +10,7 @@ class ServiceController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('customer'); // Ensure user is customer
     }
 
     // Ojek/Taxi Service

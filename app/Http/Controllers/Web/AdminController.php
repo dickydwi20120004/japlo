@@ -11,6 +11,10 @@ use App\Models\Rating;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin'); // Ensure user is admin
+    }
     public function dashboard()
     {
         // Statistics

@@ -1,0 +1,70 @@
+================================================
+   STATUS APLIKASI - JAPLO APP
+================================================
+
+✅ SERVER RUNNING!
+==================
+
+URL: http://127.0.0.1:8000
+Port: 8000
+Status: ACTIVE
+
+Buka di browser:
+→ http://localhost:8000
+→ http://127.0.0.1:8000
+
+================================================
+
+⚠️ YANG MASIH PERLU DILAKUKAN:
+===============================
+
+1. DISABLE innodb_force_recovery
+   - Stop MySQL di XAMPP
+   - Edit my.ini
+   - Hapus/comment: innodb_force_recovery = 1
+   - Start MySQL lagi
+   
+2. DAFTAR AKUN
+   - Buka: http://localhost:8000/register
+   - Isi form & daftar
+   - Otomatis login
+   
+3. ATAU SETUP DATABASE
+   - php artisan migrate
+   - php create_admin_simple.php
+   - Login dengan demo account
+
+================================================
+
+URL PENTING:
+============
+
+Home    : http://localhost:8000
+Register: http://localhost:8000/register
+Login   : http://localhost:8000/login
+
+================================================
+
+JANGAN TUTUP:
+=============
+
+CMD/Terminal server HARUS tetap terbuka!
+Kalau ditutup, server mati.
+
+================================================
+
+TROUBLESHOOTING:
+================
+
+Loading lama?
+→ Disable innodb_force_recovery
+→ Clear browser cache (Ctrl+Shift+Delete)
+→ Pakai 127.0.0.1:8000
+
+Server mati?
+→ Jalankan lagi: 1_JALANKAN_INI.bat
+
+Tidak bisa login?
+→ Daftar akun baru di /register
+
+================================================

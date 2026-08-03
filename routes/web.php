@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ServiceController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\TrackingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/password', [DashboardController::class, 'changePassword'])->name('profile.change.password');
     
     // Service Routes - Customer
-    Route::prefix('customer')->name('customer.')->group(function () {
+    Route::prefix('customer')->name('customer.')->middleware('customer')->group(function () {
         Route::get('/ojek', [ServiceController::class, 'ojek'])->name('ojek');
         Route::get('/kuliner', [ServiceController::class, 'kuliner'])->name('kuliner');
         Route::get('/promosi', [ServiceController::class, 'promosi'])->name('promosi');
@@ -58,5 +59,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/users', [AdminController::class, 'users'])->name('users');
         Route::get('/drivers', [AdminController::class, 'drivers'])->name('drivers');
         Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
+    });
+
+    // Order Tracking Routes
+    Route::prefix('order')->name('order.')->group(function () {
+        Route::get('/track/{orderId}', [TrackingController::class, 'track'])->name('track');
+        Route::get('/location/{orderId}', [TrackingController::class, 'getLocationUpdate'])->name('location');
+        Route::post('/location/update', [TrackingController::class, 'updateLocation'])->name('location.update');
+        Route::get('/poll/{orderId}', [TrackingController::class, 'pollLocation'])->name('poll');
+        Route::get('/history', [DashboardController::class, 'orderHistory'])->name('history');
     });
 });
