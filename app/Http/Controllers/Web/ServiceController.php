@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ServiceController extends Controller
 {
@@ -16,7 +17,18 @@ class ServiceController extends Controller
     // Ojek/Taxi Service
     public function ojek()
     {
-        return view('customer.services.ojek');
+        // Debug: Log that method was called
+        Log::info('Ojek service method called', ['user_id' => auth()->id()]);
+        
+        try {
+            return view('customer.services.ojek');
+        } catch (\Exception $e) {
+            Log::error('Ojek view render error: ' . $e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ]);
+            throw $e;
+        }
     }
 
     // Kuliner Service

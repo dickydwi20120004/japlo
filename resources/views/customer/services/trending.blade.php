@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     
-                    <button class="btn btn-warning text-white" onclick="openTrending({{ $item['id'] }})">
+                    <button class="btn btn-warning text-white" onclick="openTrendingDetail({{ $item['id'] }}, '{{ $item['title'] }}')">
                         <i class="fas fa-external-link-alt me-2"></i> Lihat Detail
                     </button>
                 </div>
@@ -108,7 +108,7 @@
                         <span class="text-secondary small">
                             <i class="fas fa-eye me-1"></i> 8.5K views
                         </span>
-                        <a href="#" class="btn btn-sm btn-outline-warning">Baca</a>
+                        <a href="javascript:void(0)" onclick="readTrendingContent('Tempat Instagramable di Jakarta', '10 Spot Instagramable di Jakarta')" class="btn btn-sm btn-outline-warning">Baca</a>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                         <span class="text-secondary small">
                             <i class="fas fa-eye me-1"></i> 7.2K views
                         </span>
-                        <a href="#" class="btn btn-sm btn-outline-warning">Baca</a>
+                        <a href="javascript:void(0)" onclick="readTrendingContent('Menu Viral yang Wajib Dicoba', 'Menu Viral yang Lagi Hits')" class="btn btn-sm btn-outline-warning">Baca</a>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         <span class="text-secondary small">
                             <i class="fas fa-eye me-1"></i> 6.8K views
                         </span>
-                        <a href="#" class="btn btn-sm btn-outline-warning">Baca</a>
+                        <a href="javascript:void(0)" onclick="readTrendingContent('Cara Hemat Ongkos Transportasi', 'Tips Menghemat Pengeluaran Transportasi')" class="btn btn-sm btn-outline-warning">Baca</a>
                     </div>
                 </div>
             </div>
@@ -208,8 +208,12 @@
 </style>
 
 <script>
-function openTrending(id) {
-    alert('Membuka konten trending ID: ' + id + '\n\nFitur detail konten akan segera hadir!');
+function openTrendingDetail(id, title) {
+    alert('📖 Membuka: ' + title + '\n\nKonten detail trending akan ditampilkan di sini.');
+}
+
+function readTrendingContent(title, description) {
+    alert('📖 Membaca: ' + title + '\n\n' + description + '\n\nKonten lengkap akan ditampilkan di modal detail.');
 }
 </script>
 @endsection

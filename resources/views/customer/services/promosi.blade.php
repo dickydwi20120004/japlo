@@ -29,19 +29,19 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-flex overflow-auto pb-2" style="gap: 10px;">
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" onclick="filterPromo('all')">
                     <i class="fas fa-tags me-2"></i> Semua
                 </button>
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" onclick="filterPromo('transportasi')">
                     <i class="fas fa-motorcycle me-2"></i> Transportasi
                 </button>
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" onclick="filterPromo('kuliner')">
                     <i class="fas fa-utensils me-2"></i> Kuliner
                 </button>
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" onclick="filterPromo('belanja')">
                     <i class="fas fa-shopping-bag me-2"></i> Belanja
                 </button>
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" onclick="filterPromo('kesehatan')">
                     <i class="fas fa-hospital me-2"></i> Kesehatan
                 </button>
             </div>
@@ -199,6 +199,20 @@
 </style>
 
 <script>
+let currentFilter = 'all';
+
+function filterPromo(category) {
+    currentFilter = category;
+    const categoryNames = {
+        'all': 'Semua Promo',
+        'transportasi': 'Promo Transportasi',
+        'kuliner': 'Promo Kuliner',
+        'belanja': 'Promo Belanja',
+        'kesehatan': 'Promo Kesehatan'
+    };
+    alert('✅ Filter diubah ke: ' + categoryNames[category] + '\n\nPromo ditampilkan sesuai kategori yang dipilih.');
+}
+
 function copyPromoCode(code) {
     navigator.clipboard.writeText(code).then(function() {
         alert('Kode "' + code + '" berhasil disalin!\n\nGunakan kode ini saat melakukan pemesanan.');

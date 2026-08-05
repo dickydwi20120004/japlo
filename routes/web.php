@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ServiceController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\TrackingController;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,5 +69,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/location/update', [TrackingController::class, 'updateLocation'])->name('location.update');
         Route::get('/poll/{orderId}', [TrackingController::class, 'pollLocation'])->name('poll');
         Route::get('/history', [DashboardController::class, 'orderHistory'])->name('history');
+    });
+    
+    // API Routes for Orders (Web Auth)
+    Route::prefix('api')->name('api.')->group(function () {
+        Route::post('/orders', [OrderController::class, 'createOrder'])->name('orders.create');
     });
 });

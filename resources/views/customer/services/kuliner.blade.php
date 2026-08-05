@@ -21,8 +21,8 @@
                 <span class="input-group-text">
                     <i class="fas fa-search"></i>
                 </span>
-                <input type="text" class="form-control" placeholder="Cari restoran atau makanan favorit...">
-                <button class="btn btn-danger">
+                <input type="text" class="form-control" id="searchRestoran" placeholder="Cari restoran atau makanan favorit..." onkeyup="searchRestoran()">
+                <button class="btn btn-danger" onclick="openFilterModal()">
                     <i class="fas fa-filter me-2"></i> Filter
                 </button>
             </div>
@@ -35,37 +35,37 @@
             <h5 class="fw-bold mb-3">Kategori</h5>
             <div class="row text-center g-2">
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="filterByCategory('fast-food')">
                         <i class="fas fa-hamburger fa-2x d-block mb-2"></i>
                         <small class="d-block">Fast Food</small>
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="filterByCategory('ayam')">
                         <i class="fas fa-drumstick-bite fa-2x d-block mb-2"></i>
                         <small class="d-block">Ayam & Bebek</small>
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="filterByCategory('nasi')">
                         <i class="fas fa-bowl-rice fa-2x d-block mb-2"></i>
                         <small class="d-block">Nasi</small>
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="filterByCategory('minuman')">
                         <i class="fas fa-coffee fa-2x d-block mb-2"></i>
                         <small class="d-block">Minuman</small>
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="filterByCategory('dessert')">
                         <i class="fas fa-ice-cream fa-2x d-block mb-2"></i>
                         <small class="d-block">Dessert</small>
                     </button>
                 </div>
                 <div class="col-4 col-md-2">
-                    <button class="btn btn-outline-danger w-100 py-3">
+                    <button class="btn btn-outline-danger w-100 py-3" onclick="showAllCategories()">
                         <i class="fas fa-ellipsis-h fa-2x d-block mb-2"></i>
                         <small class="d-block">Lainnya</small>
                     </button>
@@ -350,12 +350,45 @@ let currentOrder = {
     notes: ''
 };
 
+let cartItems = [];
+let currentFilter = 'all';
+
+function searchRestoran() {
+    const searchTerm = document.getElementById('searchRestoran').value.toLowerCase();
+    if (searchTerm.length > 0) {
+        alert('🔍 Mencari restoran: "' + searchTerm + '"\n\nHasil pencarian akan ditampilkan di bawah.');
+    }
+}
+
+function openFilterModal() {
+    alert('🔧 Filter Restoran\n\nAnda dapat memfilter berdasarkan:\n- Rating\n- Jarak\n- Harga\n- Waktu pengiriman\n\nFitur filter akan segera ditingkatkan!');
+}
+
+function filterByCategory(category) {
+    const categoryNames = {
+        'fast-food': 'Fast Food',
+        'ayam': 'Ayam & Bebek',
+        'nasi': 'Nasi',
+        'minuman': 'Minuman',
+        'dessert': 'Dessert'
+    };
+    alert('✅ Filter diubah ke: ' + categoryNames[category] + '\n\nRestoran ditampilkan sesuai kategori yang dipilih.');
+}
+
+function showAllCategories() {
+    alert('📂 Kategori Lainnya:\n- Seafood\n- Vegetarian\n- Chinese Food\n- Cafe\n- Bakery\n\nPilih kategori untuk melihat restoran.');
+}
+
 function openRestaurant(id) {
     alert('Membuka menu restoran ID: ' + id + '\n\nFitur detail restoran dan menu akan segera hadir!');
 }
 
 function openCart() {
-    alert('Keranjang belanja Anda masih kosong.\n\nSilakan tambahkan makanan terlebih dahulu!');
+    if (cartItems.length === 0) {
+        alert('🛒 Keranjang belanja Anda masih kosong.\n\nSilakan tambahkan makanan terlebih dahulu!');
+    } else {
+        alert('🛒 Keranjang Anda:\n\nTotal Items: ' + cartItems.length + '\n\nFitur checkout akan segera hadir!');
+    }
 }
 
 function orderItem(name, price, image) {
@@ -432,6 +465,10 @@ function orderViaWhatsApp() {
     // Close modal
     bootstrap.Modal.getInstance(document.getElementById('orderModal')).hide();
     
+    // Add to cart
+    cartItems.push(currentOrder);
+    updateCartBadge();
+    
     // Show success message
     setTimeout(() => {
         alert('✅ Pesanan Anda telah dikirim ke WhatsApp!\n\nSilakan tunggu konfirmasi dari admin.');
@@ -469,6 +506,10 @@ function confirmQRISPayment() {
         // Close modal
         bootstrap.Modal.getInstance(document.getElementById('qrisModal')).hide();
         
+        // Add to cart
+        cartItems.push(currentOrder);
+        updateCartBadge();
+        
         // Show success message
         setTimeout(() => {
             alert('✅ Pembayaran berhasil dikonfirmasi!\n\n' +
@@ -481,6 +522,10 @@ function confirmQRISPayment() {
             document.getElementById('orderNotes').value = '';
         }, 300);
     }
+}
+
+function updateCartBadge() {
+    document.getElementById('cartCount').textContent = cartItems.length;
 }
 
 // Update tombol "Tambah" pada makanan populer

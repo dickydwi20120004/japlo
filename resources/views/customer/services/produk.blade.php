@@ -23,14 +23,14 @@
                         <span class="input-group-text">
                             <i class="fas fa-search"></i>
                         </span>
-                        <input type="text" class="form-control" placeholder="Cari produk yang Anda inginkan...">
-                        <button class="btn btn-info text-white">
+                        <input type="text" class="form-control" id="searchProduct" placeholder="Cari produk yang Anda inginkan..." onkeyup="searchProducts()">
+                        <button class="btn btn-info text-white" onclick="executeSearch()">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-outline-info btn-lg w-100">
+                    <button class="btn btn-outline-info btn-lg w-100" onclick="openProductFilter()">
                         <i class="fas fa-filter me-2"></i> Filter
                     </button>
                 </div>
@@ -43,22 +43,22 @@
         <div class="card-body">
             <h5 class="fw-bold mb-3">Kategori Produk</h5>
             <div class="d-flex overflow-auto pb-2" style="gap: 10px;">
-                <button class="btn btn-info text-white">
+                <button class="btn btn-info text-white" onclick="filterProductCategory('all')">
                     <i class="fas fa-th-large me-2"></i> Semua
                 </button>
-                <button class="btn btn-outline-info">
+                <button class="btn btn-outline-info" onclick="filterProductCategory('elektronik')">
                     <i class="fas fa-laptop me-2"></i> Elektronik
                 </button>
-                <button class="btn btn-outline-info">
+                <button class="btn btn-outline-info" onclick="filterProductCategory('fashion')">
                     <i class="fas fa-tshirt me-2"></i> Fashion
                 </button>
-                <button class="btn btn-outline-info">
+                <button class="btn btn-outline-info" onclick="filterProductCategory('rumah')">
                     <i class="fas fa-home me-2"></i> Rumah Tangga
                 </button>
-                <button class="btn btn-outline-info">
+                <button class="btn btn-outline-info" onclick="filterProductCategory('buku')">
                     <i class="fas fa-book me-2"></i> Buku & Alat Tulis
                 </button>
-                <button class="btn btn-outline-info">
+                <button class="btn btn-outline-info" onclick="filterProductCategory('olahraga')">
                     <i class="fas fa-football-ball me-2"></i> Olahraga
                 </button>
             </div>
@@ -160,10 +160,10 @@
 <!-- Shopping Cart Button (Floating) -->
 <button class="btn btn-info btn-lg position-fixed text-white shadow-lg" 
         style="bottom: 20px; right: 20px; border-radius: 50px; padding: 12px 24px; z-index: 1000;" 
-        onclick="openCart()">
+        onclick="openProductCart()">
     <i class="fas fa-shopping-cart me-2"></i>
     <span class="d-none d-sm-inline">Keranjang</span>
-    <span class="badge bg-light text-info ms-2">0</span>
+    <span class="badge bg-light text-info ms-2" id="productCartCount">0</span>
 </button>
 
 <style>
@@ -179,12 +179,60 @@
 </style>
 
 <script>
-function addToCart(id, name) {
-    alert('Produk "' + name + '" ditambahkan ke keranjang!\n\nFitur keranjang belanja lengkap akan segera hadir.');
+let productCartItems = [];
+let currentProductFilter = 'all';
+
+function searchProducts() {
+    const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
+    if (searchTerm.length > 0) {
+        // This would filter products in real implementation
+    }
 }
 
-function openCart() {
-    alert('Keranjang belanja Anda masih kosong.\n\nSilakan tambahkan produk terlebih dahulu!');
+function executeSearch() {
+    const searchTerm = document.getElementById('searchProduct').value;
+    if (searchTerm.length === 0) {
+        alert('Masukkan kata kunci pencarian!');
+        return;
+    }
+    alert('🔍 Mencari produk: "' + searchTerm + '"\n\nHasil pencarian akan ditampilkan di bawah.');
+}
+
+function openProductFilter() {
+    alert('🔧 Filter Produk\n\nAnda dapat memfilter berdasarkan:\n- Harga (Min-Max)\n- Rating\n- Terjual\n- Pengiriman Gratis\n\nFitur filter akan segera ditingkatkan!');
+}
+
+function filterProductCategory(category) {
+    const categoryNames = {
+        'all': 'Semua Produk',
+        'elektronik': 'Elektronik',
+        'fashion': 'Fashion',
+        'rumah': 'Rumah Tangga',
+        'buku': 'Buku & Alat Tulis',
+        'olahraga': 'Olahraga'
+    };
+    alert('✅ Filter diubah ke: ' + categoryNames[category] + '\n\nProduk ditampilkan sesuai kategori yang dipilih.');
+}
+
+function addToCart(id, name) {
+    productCartItems.push({
+        id: id,
+        name: name,
+        quantity: 1
+    });
+    
+    document.getElementById('productCartCount').textContent = productCartItems.length;
+    alert('✅ Produk "' + name + '" ditambahkan ke keranjang!\n\nTotal items: ' + productCartItems.length);
+}
+
+function openProductCart() {
+    if (productCartItems.length === 0) {
+        alert('🛒 Keranjang belanja Anda masih kosong.\n\nSilakan tambahkan produk terlebih dahulu!');
+    } else {
+        alert('🛒 Keranjang Anda:\n\n' +
+              'Total Produk: ' + productCartItems.length + '\n\n' +
+              'Fitur checkout dan pembayaran akan segera hadir!');
+    }
 }
 </script>
 @endsection

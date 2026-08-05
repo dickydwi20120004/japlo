@@ -1,0 +1,114 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  OJEK FEATURE - QUICK TEST GUIDE                            ║
+║                         Status: ✅ READY                                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📍 ACCESS OJEK FEATURE:
+   1. Open: http://localhost:8000/login
+   2. Login: demo@japlo.com / password123
+   3. Go to: Dashboard → Layanan → Ojek & Taxi
+   
+   OR Direct: http://localhost:8000/customer/ojek (while logged in)
+
+🧪 TEST STEPS:
+   
+   STEP 1 - Select Vehicle
+   ✓ Click "Pilih JaploRide" (Motor)
+   ✓ Green toast shows: "Kendaraan: JaploRide (Motor)"
+
+   STEP 2 - Enter Locations
+   ✓ Pickup: "Jl. Merdeka No. 123"
+   ✓ Destination: "Jl. Sudirman No. 456"
+
+   STEP 3 - Calculate Price
+   ✓ Click "Hitung Estimasi Biaya"
+   ✓ Distance: 2-17 km (random)
+   ✓ Time: calculated from distance
+   ✓ Price: Rp XX,XXX displayed
+   ✓ Green toast: "Estimasi biaya sudah dihitung!"
+
+   STEP 4 - Submit Order
+   ✓ Click "Konfirmasi Pesanan"
+   ✓ Button shows: "Memproses..."
+   ✓ Green toast: "Pesanan berhasil dibuat! Order: JPL..."
+   ✓ Redirects to order history (1.5 second delay)
+
+✅ VERIFICATION:
+   1. Open: http://localhost:8000/order/history
+   2. Your new order should appear at top
+   3. Order number: JPL + 8 digits (date + seq)
+   4. Status: "pending"
+   5. Price: matches estimated amount
+
+🔍 BROWSER CHECKS:
+   1. Press F12 (Developer Tools)
+   2. Network tab: POST /api/orders should show 201 response
+   3. Console tab: No red errors
+   4. Should see JSON response with order data
+
+💾 DATABASE CHECK:
+   1. Terminal in "Japlo App" folder
+   2. Run: php artisan tinker
+   3. Run: App\Models\Order::latest()->first();
+   4. Should show your order with all details
+
+⚠️ TROUBLESHOOTING:
+
+   Issue: Blank page
+   → Clear cache: php artisan cache:clear && php artisan view:clear
+   → Check logs: tail -f storage/logs/laravel.log
+
+   Issue: Form won't submit
+   → Press F12 → Console tab → Check for errors
+   → Press F12 → Network tab → Check POST response
+
+   Issue: "Not Found" error
+   → Verify logged in as demo@japlo.com
+   → Check route: http://localhost:8000/customer/ojek
+
+   Issue: Database error
+   → Run: php artisan migrate
+   → Check MySQL connection in .env
+
+📋 EXPECTED BEHAVIOR SUMMARY:
+
+   Motor (JaploRide):
+   - Base: Rp5,000
+   - Per km: Rp3,000
+   - 5km = Rp20,000
+   - 10km = Rp35,000
+
+   Car (JaploCar):
+   - Base: Rp8,000
+   - Per km: Rp4,000
+   - 5km = Rp28,000
+   - 10km = Rp48,000
+
+🎯 SUCCESS CRITERIA:
+   ✓ Page loads without errors
+   ✓ All form fields work
+   ✓ Price calculation shows random distance
+   ✓ Form submission succeeds
+   ✓ Toast notifications appear
+   ✓ Order in database
+   ✓ Redirect works
+   ✓ Order history shows new order
+
+═══════════════════════════════════════════════════════════════════════════════
+
+DEMO ACCOUNT:
+   Email: demo@japlo.com
+   Password: password123
+   Role: Customer
+   Status: Ready for testing
+
+SERVER:
+   URL: http://localhost:8000
+   Running: Yes (Process #2)
+
+DATABASE:
+   Name: japlo_db
+   Status: Connected
+
+═══════════════════════════════════════════════════════════════════════════════
+Ready to test! 🚀

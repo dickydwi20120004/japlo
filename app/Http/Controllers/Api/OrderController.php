@@ -12,21 +12,38 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     /**
-     * Buat pesanan baru
+     * Buat pesanan baru (dari web form - simplified)
      */
     public function createOrder(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'pickup_address' => 'required|string',
-            'pickup_latitude' => 'required|numeric|between:-90,90',
-            'pickup_longitude' => 'required|numeric|between:-180,180',
-            'destination_address' => 'required|string',
-            'destination_latitude' => 'required|numeric|between:-90,90',
-            'destination_longitude' => 'required|numeric|between:-180,180',
-            'distance' => 'required|numeric|min:0',
-            'payment_method' => 'required|in:cash,ewallet',
-            'customer_notes' => 'nullable|string',
-        ]);
+        // Check if request has coordinates or simplified booking
+        $hasCoordinates = $request->has(['pickup_latitude', 'pickup_longitude', 'destination_latitude', 'destination_longitude']);
+        
+        if ($hasCoordinates) {
+            // Full API validation with coordinates
+            $validator = Validator::make($request->all(), [
+                'pickup_address' => 'required|string',
+                'pickup_latitude' => 'required|numeric|between:-90,90',
+                'pickup_longitude' => 'required|numeric|between:-180,180',
+                'destination_address' => 'required|string',
+                'destination_latitude' => 'required|numeric|between:-90,90',
+                'destination_longitude' => 'required|numeric|between:-180,180',
+                'distance' => 'required|numeric|min:0',
+                'payment_method' => 'required|in:cash,ewallet',
+                'customer_notes' => 'nullable|string',
+            ]);
+        } else {
+            // Simplified booking from web form (without coordinates)
+            $validator = Validator::make($request->all(), [
+                'pickup_address' => 'required|string|min:3',
+                'destination_address' => 'required|string|min:3',
+                'distance' => 'required|numeric|min:1',
+                'price' => 'required|numeric|min:5000',
+                'payment_method' => 'required|in:cash,ewallet',
+                'customer_notes' => 'nullable|string|max:200',
+                'vehicle_type' => 'nullable|in:motor,mobil',
+            ]);
+        }
 
         if ($validator->fails()) {
             return response()->json([
@@ -38,8 +55,14 @@ class OrderController extends Controller
 
         $user = $request->user();
 
-        // Calculate price
-        $price = Order::calculatePrice($request->distance);
+        // If coordinates not provided, use default dummy coordinates
+        $pickupLatitude = $request->pickup_latitude ?? -6.2088;
+        $pickupLongitude = $request->pickup_longitude ?? 106.8456;
+        $destLatitude = $request->destination_latitude ?? -6.2750;
+        $destLongitude = $request->destination_longitude ?? 106.7064;
+        
+        // Calculate price if not provided
+        $price = $request->price ?? Order::calculatePrice($request->distance);
 
         // Estimate time (average 30 km/h)
         $estimatedTime = round(($request->distance / 30) * 60); // dalam menit
@@ -48,14 +71,14 @@ class OrderController extends Controller
             'user_id' => $user->id,
             'order_number' => Order::generateOrderNumber(),
             'pickup_address' => $request->pickup_address,
-            'pickup_latitude' => $request->pickup_latitude,
-            'pickup_longitude' => $request->pickup_longitude,
+            'pickup_latitude' => $pickupLatitude,
+            'pickup_longitude' => $pickupLongitude,
             'destination_address' => $request->destination_address,
-            'destination_latitude' => $request->destination_latitude,
-            'destination_longitude' => $request->destination_longitude,
+            'destination_latitude' => $destLatitude,
+            'destination_longitude' => $destLongitude,
             'distance' => $request->distance,
             'estimated_time' => $estimatedTime,
-            'price' => $price,
+            'price' => (int)$price,
             'payment_method' => $request->payment_method,
             'customer_notes' => $request->customer_notes,
             'status' => 'pending',

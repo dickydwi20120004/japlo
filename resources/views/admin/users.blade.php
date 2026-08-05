@@ -65,8 +65,14 @@
                                 <span class="badge bg-info">{{ $user->orders->count() }} orders</span>
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-outline-primary" onclick="alert('Detail user #{{ $user->id }}')">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewUser({{ $user->id }}, '{{ $user->name }}')">
                                     <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning" onclick="editUser({{ $user->id }})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" onclick="deleteUser({{ $user->id }}, '{{ $user->name }}')">
+                                    <i class="fas fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -89,4 +95,74 @@
         @endif
     </div>
 </div>
+
+<!-- Modal for User Details -->
+<div class="modal fade" id="userDetailModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+                <h5 class="modal-title text-white fw-bold">
+                    <i class="fas fa-user me-2"></i> <span id="modalUserName">User Details</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="fw-bold">Nama:</label>
+                    <p id="detailName">-</p>
+                </div>
+                <div class="mb-3">
+                    <label class="fw-bold">Email:</label>
+                    <p id="detailEmail">-</p>
+                </div>
+                <div class="mb-3">
+                    <label class="fw-bold">Telepon:</label>
+                    <p id="detailPhone">-</p>
+                </div>
+                <div class="mb-3">
+                    <label class="fw-bold">Terdaftar:</label>
+                    <p id="detailDate">-</p>
+                </div>
+                <div class="mb-0">
+                    <label class="fw-bold">Total Orders:</label>
+                    <p id="detailOrders">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewUser(id, name) {
+    document.getElementById('modalUserName').textContent = name;
+    
+    // Fetch user data via AJAX (will use dummy data for now)
+    const userData = {
+        name: name,
+        email: 'user' + id + '@japlo.com',
+        phone: '628' + Math.random().toString().substr(2, 9),
+        date: new Date().toLocaleDateString('id-ID'),
+        orders: Math.floor(Math.random() * 20) + 1
+    };
+    
+    document.getElementById('detailName').textContent = userData.name;
+    document.getElementById('detailEmail').textContent = userData.email;
+    document.getElementById('detailPhone').textContent = userData.phone;
+    document.getElementById('detailDate').textContent = userData.date;
+    document.getElementById('detailOrders').textContent = userData.orders + ' orders';
+    
+    const modal = new bootstrap.Modal(document.getElementById('userDetailModal'));
+    modal.show();
+}
+
+function editUser(id) {
+    alert('⚠️ Edit user #' + id + ' akan hadir dalam update berikutnya.\n\nFitur edit profil user sedang dikembangkan.');
+}
+
+function deleteUser(id, name) {
+    if (confirm('Yakin ingin menghapus user "' + name + '"?\n\nTindakan ini tidak dapat dibatalkan!')) {
+        alert('❌ User berhasil dihapus.\n\nFitur delete akan diintegrasikan ke backend.');
+    }
+}
+</script>
 @endsection

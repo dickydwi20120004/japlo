@@ -126,9 +126,9 @@
             <!-- Post Actions -->
             <div class="d-flex justify-content-around">
                 <button class="btn btn-link text-decoration-none" onclick="likePost({{ $post['id'] }})">
-                    <i class="far fa-heart me-2"></i> Suka
+                    <i class="far fa-heart me-2"></i> <span id="like-{{ $post['id'] }}">Suka</span>
                 </button>
-                <button class="btn btn-link text-decoration-none" onclick="commentPost({{ $post['id'] }})">
+                <button class="btn btn-link text-decoration-none" onclick="toggleComments({{ $post['id'] }})">
                     <i class="far fa-comment me-2"></i> Komentar
                 </button>
                 <button class="btn btn-link text-decoration-none" onclick="sharePost({{ $post['id'] }})">
@@ -221,6 +221,8 @@
 </style>
 
 <script>
+let likedPosts = {};
+
 function openPostModal(type = null) {
     let message = 'Fitur posting akan segera hadir!\n\nAnda akan dapat:\n- Membuat status\n- Upload foto & video\n- Membuat polling\n- Berbagi pengalaman';
     if (type) {
@@ -238,13 +240,25 @@ function viewStory(id) {
 }
 
 function likePost(id) {
-    alert('Post #' + id + ' telah Anda sukai! ❤️');
+    const likeBtn = document.getElementById('like-' + id);
+    if (likedPosts[id]) {
+        likedPosts[id] = false;
+        likeBtn.innerHTML = 'Suka';
+        likeBtn.parentElement.style.color = 'inherit';
+        alert('Post #' + id + ' tidak lagi Anda sukai.');
+    } else {
+        likedPosts[id] = true;
+        likeBtn.innerHTML = 'Disukai ❤️';
+        likeBtn.parentElement.style.color = '#dc3545';
+        alert('Post #' + id + ' telah Anda sukai! ❤️');
+    }
 }
 
-function commentPost(id) {
+function toggleComments(id) {
     const commentSection = document.getElementById('comments-' + id);
     if (commentSection.style.display === 'none') {
         commentSection.style.display = 'block';
+        alert('Buka bagian komentar untuk post #' + id);
     } else {
         commentSection.style.display = 'none';
     }
