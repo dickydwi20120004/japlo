@@ -1,228 +1,264 @@
 @extends('layouts.app')
 
-@section('title', 'Order Tracking - JAPLO')
+@section('title', 'Tracking Pesanan - JAPLO')
 
 @section('content')
-<!-- GPS Navigation Tracking Page -->
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
+<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-2"></i> Kembali
+        <a href="{{ route('order.history') }}" class="btn btn-light btn-sm mb-3" style="border-radius: 25px; padding: 8px 16px;">
+            <i class="fas fa-arrow-left me-1"></i> Kembali
         </a>
-        <h2 class="fw-bold mb-2 text-white" style="font-size: 2.5rem;">📍 Tracking Order</h2>
-        <p class="mb-0 text-white" style="font-size: 1.1rem;">Live tracking dengan GPS</p>
+        <h2 class="fw-bold mb-2 text-white display-5">
+            <i class="fas fa-box me-2"></i> Tracking Pesanan
+        </h2>
+        <p class="mb-0 text-white fs-5">{{ $order->order_number }}</p>
     </div>
 </div>
 
-<div class="container py-4">
+<div class="container py-5">
     <div class="row">
-        <!-- Map Section (Main) -->
+        <!-- Tracking Map & Status -->
         <div class="col-lg-8 mb-4">
-            <div class="card shadow-modern" style="height: 600px; border-radius: 20px; overflow: hidden;">
-                <div id="mapContainer" style="width: 100%; height: 100%;"></div>
-            </div>
-        </div>
-
-        <!-- Info Section (Sidebar) -->
-        <div class="col-lg-4">
-            <!-- Order Status Card -->
-            <div class="card shadow-modern mb-3">
-                <div class="card-body">
-                    <h5 class="fw-bold mb-3">
-                        <i class="fas fa-receipt text-primary me-2"></i>
-                        Order Details
-                    </h5>
-
-                    <div class="mb-3 pb-3 border-bottom">
-                        <small class="text-secondary d-block mb-1">Order Number</small>
-                        <h6 class="fw-bold mb-0" id="orderNumber">JPL20260804001</h6>
-                    </div>
-
-                    <div class="mb-3 pb-3 border-bottom">
-                        <small class="text-secondary d-block mb-1">Status</small>
-                        <div>
-                            <span class="badge bg-success badge-status" id="orderStatus">In Progress</span>
-                        </div>
-                    </div>
-
-                    <div class="mb-3 pb-3 border-bottom">
-                        <small class="text-secondary d-block mb-1">Dari</small>
-                        <p class="mb-0 fw-500" id="pickupLocation">📍 Jl. Merdeka No. 123</p>
-                    </div>
-
-                    <div class="mb-3">
-                        <small class="text-secondary d-block mb-1">Ke</small>
-                        <p class="mb-0 fw-500" id="destinationLocation">🎯 Jl. Sudirman No. 456</p>
+            <!-- Map Placeholder -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px; overflow: hidden;">
+                <div style="height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                    <div class="text-center text-white">
+                        <i class="fas fa-map fa-4x mb-3"></i>
+                        <h5>Peta Tracking Real-time</h5>
+                        <p class="small">Integrasi dengan Google Maps akan ditambahkan</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Driver Info Card -->
-            <div class="card shadow-modern mb-3">
-                <div class="card-body">
-                    <h5 class="fw-bold mb-3">
-                        <i class="fas fa-user-tie text-success me-2"></i>
-                        Driver Info
+            <!-- Order Status Timeline -->
+            <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">
+                        <i class="fas fa-tasks text-primary me-2"></i> Status Pesanan
                     </h5>
 
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="rounded-circle bg-light p-2 me-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-user fa-2x text-secondary"></i>
+                    <div class="timeline">
+                        <!-- Step 1: Confirmed -->
+                        <div class="timeline-item {{ in_array($order->status, ['confirmed', 'accepted', 'picked_up', 'in_progress', 'completed']) ? 'active' : '' }}">
+                            <div class="timeline-marker completed">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="fw-bold mb-1">Pesanan Dikonfirmasi</h6>
+                                <p class="text-muted small mb-0">{{ $order->created_at->format('d M Y H:i') }}</p>
+                            </div>
                         </div>
+
+                        <!-- Step 2: Processing -->
+                        <div class="timeline-item {{ in_array($order->status, ['accepted', 'picked_up', 'in_progress', 'completed']) ? 'active' : '' }}">
+                            <div class="timeline-marker {{ in_array($order->status, ['accepted', 'picked_up', 'in_progress', 'completed']) ? 'completed' : ($order->status === 'confirmed' ? 'current' : '') }}">
+                                <i class="fas fa-{{ in_array($order->status, ['accepted', 'picked_up', 'in_progress', 'completed']) ? 'check' : 'clock' }}"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="fw-bold mb-1">Sedang Diproses</h6>
+                                <p class="text-muted small mb-0">Restoran menyiapkan pesanan Anda</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Picked Up -->
+                        <div class="timeline-item {{ in_array($order->status, ['picked_up', 'in_progress', 'completed']) ? 'active' : '' }}">
+                            <div class="timeline-marker {{ in_array($order->status, ['picked_up', 'in_progress', 'completed']) ? 'completed' : ($order->status === 'accepted' ? 'current' : '') }}">
+                                <i class="fas fa-{{ in_array($order->status, ['picked_up', 'in_progress', 'completed']) ? 'check' : 'clock' }}"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="fw-bold mb-1">Pesanan Diambil Driver</h6>
+                                <p class="text-muted small mb-0">Driver dalam perjalanan ke lokasi Anda</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: In Transit -->
+                        <div class="timeline-item {{ in_array($order->status, ['in_progress', 'completed']) ? 'active' : '' }}">
+                            <div class="timeline-marker {{ in_array($order->status, ['in_progress', 'completed']) ? 'completed' : ($order->status === 'picked_up' ? 'current' : '') }}">
+                                <i class="fas fa-{{ in_array($order->status, ['in_progress', 'completed']) ? 'check' : 'clock' }}"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="fw-bold mb-1">Dalam Perjalanan</h6>
+                                <p class="text-muted small mb-0">Pesanan Anda sedang dalam perjalanan</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Completed -->
+                        <div class="timeline-item {{ $order->status === 'completed' ? 'active' : '' }}">
+                            <div class="timeline-marker {{ $order->status === 'completed' ? 'completed' : ($order->status === 'in_progress' ? 'current' : '') }}">
+                                <i class="fas fa-{{ $order->status === 'completed' ? 'check' : 'clock' }}"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6 class="fw-bold mb-1">Pesanan Diterima</h6>
+                                <p class="text-muted small mb-0">{{ $order->completed_at ? $order->completed_at->format('d M Y H:i') : 'Menunggu pengiriman' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Details & Driver Info -->
+        <div class="col-lg-4">
+            <!-- Order Summary -->
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">
+                        <i class="fas fa-receipt text-primary me-2"></i> Ringkasan Pesanan
+                    </h5>
+
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Nomor Pesanan</small>
+                        <h6 class="fw-bold">{{ $order->order_number }}</h6>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted d-block mb-1">Status</small>
                         <div>
-                            <p class="fw-bold mb-0" id="driverName">Ahmad Sopir</p>
-                            <small class="text-secondary" id="driverRating">⭐ 4.8 (156 trips)</small>
+                            <span class="badge bg-primary" style="border-radius: 20px; padding: 8px 12px; font-size: 12px;">
+                                @switch($order->status)
+                                    @case('pending')
+                                        <i class="fas fa-clock me-1"></i> Menunggu Konfirmasi
+                                        @break
+                                    @case('confirmed')
+                                        <i class="fas fa-check me-1"></i> Dikonfirmasi
+                                        @break
+                                    @case('accepted')
+                                        <i class="fas fa-check-double me-1"></i> Diterima Driver
+                                        @break
+                                    @case('picked_up')
+                                        <i class="fas fa-box me-1"></i> Diambil
+                                        @break
+                                    @case('in_progress')
+                                        <i class="fas fa-truck me-1"></i> Dalam Perjalanan
+                                        @break
+                                    @case('completed')
+                                        <i class="fas fa-check-circle me-1"></i> Selesai
+                                        @break
+                                @endswitch
+                            </span>
                         </div>
                     </div>
 
-                    <div class="mb-3 pb-3 border-bottom">
-                        <small class="text-secondary d-block mb-1">Vehicle</small>
-                        <p class="mb-0 fw-500" id="vehicleInfo">🏍️ Honda Beat - B 1234 ABC</p>
+                    <hr>
+
+                    <!-- Order Items -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-3">
+                            <i class="fas fa-shopping-bag me-2 text-success"></i> Items
+                        </h6>
+                        @forelse($order->items as $item)
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <div>
+                                <p class="small fw-bold mb-0">{{ $item->item_name }}</p>
+                                <small class="text-muted">{{ $item->quantity }}x Rp {{ number_format($item->price, 0, ',', '.') }}</small>
+                            </div>
+                            <span class="fw-bold small">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                        </div>
+                        @empty
+                        <p class="text-muted small">Tidak ada item</p>
+                        @endforelse
                     </div>
 
-                    <div class="mb-3 pb-3 border-bottom">
-                        <small class="text-secondary d-block mb-1">Distance & Time</small>
+                    <hr>
+
+                    <!-- Price Breakdown -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span>Subtotal</span>
+                            <span class="fw-bold">Rp {{ number_format($order->price * 0.826, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 small">
+                            <span>Ongkir</span>
+                            <span class="fw-bold">Rp 10.000</span>
+                        </div>
+                        <div class="d-flex justify-content-between small">
+                            <span>Pajak</span>
+                            <span class="fw-bold">Rp {{ number_format($order->price * 0.09, 0, ',', '.') }}</span>
+                        </div>
+                        <hr>
                         <div class="d-flex justify-content-between">
-                            <div>
-                                <p class="mb-0 fw-bold text-primary" id="distanceInfo">2.5 km</p>
-                                <small class="text-secondary">Distance</small>
-                            </div>
-                            <div>
-                                <p class="mb-0 fw-bold text-primary" id="timeInfo">8 min</p>
-                                <small class="text-secondary">ETA</small>
-                            </div>
+                            <span class="fw-bold">Total</span>
+                            <span class="fw-bold text-primary display-6">Rp {{ number_format($order->price, 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Payment Status -->
+                    <div class="alert alert-success" style="border-radius: 12px;">
+                        <small>
+                            <i class="fas fa-check-circle me-1"></i>
+                            <strong>Pembayaran Berhasil</strong>
+                            <br>
+                            {{ $order->payment ? $order->payment->transaction_id : 'Transaction ID' }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Driver Info (if assigned) -->
+            @if($order->driver)
+            <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">
+                        <i class="fas fa-user-circle text-primary me-2"></i> Info Driver
+                    </h5>
+
+                    <div class="text-center mb-4">
+                        <img src="https://ui-avatars.com/api/?name={{ $order->driver->name }}&size=100&background=random" 
+                             class="rounded-circle mb-3" style="width: 100px; height: 100px;">
+                        <h6 class="fw-bold">{{ $order->driver->name }}</h6>
+                        <div class="mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="small fw-bold">4.8 (245 ulasan)</span>
                         </div>
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" onclick="callDriver()">
-                            <i class="fas fa-phone me-2"></i> Hubungi Driver
-                        </button>
-                        <button class="btn btn-outline-danger" onclick="cancelOrder()">
-                            <i class="fas fa-times me-2"></i> Batalkan
-                        </button>
+                        <a href="tel:08123456789" class="btn btn-outline-primary btn-sm rounded-2">
+                            <i class="fas fa-phone me-1"></i> Hubungi Driver
+                        </a>
+                        <a href="https://api.whatsapp.com/send?phone=628123456789" target="_blank" class="btn btn-outline-success btn-sm rounded-2">
+                            <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                        </a>
                     </div>
                 </div>
             </div>
+            @else
+            <div class="alert alert-info" style="border-radius: 15px;">
+                <i class="fas fa-info-circle me-1"></i>
+                Driver akan ditentukan segera setelah restoran mengkonfirmasi pesanan.
+            </div>
+            @endif
 
-            <!-- Real-time Status Card -->
-            <div class="card shadow-modern">
-                <div class="card-body">
+            <!-- Shipping Address -->
+            <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                <div class="card-body p-4">
                     <h5 class="fw-bold mb-3">
-                        <i class="fas fa-clock text-warning me-2"></i>
-                        Status Timeline
+                        <i class="fas fa-map-marker-alt text-danger me-2"></i> Alamat Pengiriman
                     </h5>
-
-                    <div class="timeline">
-                        <!-- Status 1 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker completed">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <p class="mb-0 fw-bold">Pesanan Dibuat</p>
-                                <small class="text-secondary">Aug 4, 12:00 PM</small>
-                            </div>
-                        </div>
-
-                        <!-- Status 2 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker completed">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <p class="mb-0 fw-bold">Driver Menerima</p>
-                                <small class="text-secondary">Aug 4, 12:02 PM</small>
-                            </div>
-                        </div>
-
-                        <!-- Status 3 (Active) -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker active">
-                                <i class="fas fa-location-dot"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <p class="mb-0 fw-bold">Driver Mengambil</p>
-                                <small class="text-secondary">Aug 4, 12:05 PM</small>
-                            </div>
-                        </div>
-
-                        <!-- Status 4 -->
-                        <div class="timeline-item">
-                            <div class="timeline-marker">
-                                <i class="fas fa-flag-checkered"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <p class="mb-0 fw-bold">Sampai Tujuan</p>
-                                <small class="text-secondary">-</small>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="small mb-0">{{ $order->destination_address }}</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="row mt-5">
+        <div class="col-lg-8">
+            <div class="d-grid gap-2 d-md-flex">
+                @if(in_array($order->status, ['pending', 'confirmed', 'accepted']))
+                <button class="btn btn-outline-danger btn-lg fw-bold" style="border-radius: 12px;" onclick="cancelOrder()">
+                    <i class="fas fa-times me-2"></i> Batalkan Pesanan
+                </button>
+                @endif
+                <a href="{{ route('order.history') }}" class="btn btn-outline-secondary btn-lg fw-bold" style="border-radius: 12px;">
+                    <i class="fas fa-arrow-left me-2"></i> Kembali ke Riwayat
+                </a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Leaflet CSS & JS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-
-<!-- Custom Styles for Tracking -->
 <style>
-    /* Map Styles */
-    #mapContainer {
-        border-radius: 20px;
-        z-index: 1;
-    }
-
-    .leaflet-container {
-        border-radius: 20px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    /* Custom Markers */
-    .marker-icon-pickup {
-        background: linear-gradient(135deg, #00A859 0%, #008F4A 100%);
-        color: white;
-        padding: 10px 15px;
-        border-radius: 50%;
-        font-weight: bold;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0, 168, 89, 0.3);
-    }
-
-    .marker-icon-driver {
-        background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
-        color: white;
-        padding: 10px 15px;
-        border-radius: 50%;
-        font-weight: bold;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
-        animation: pulse 2s ease-in-out infinite;
-    }
-
-    .marker-icon-destination {
-        background: linear-gradient(135deg, #F44336 0%, #D32F2F 100%);
-        color: white;
-        padding: 10px 15px;
-        border-radius: 50%;
-        font-weight: bold;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.1);
-        }
-    }
-
-    /* Timeline Styles */
     .timeline {
         position: relative;
         padding: 20px 0;
@@ -230,271 +266,75 @@
 
     .timeline-item {
         display: flex;
-        margin-bottom: 25px;
+        gap: 20px;
         position: relative;
+        margin-bottom: 30px;
     }
 
-    .timeline-item:not(:last-child)::before {
+    .timeline-item:not(:last-child)::after {
         content: '';
         position: absolute;
-        left: 15px;
-        top: 50px;
-        bottom: -25px;
+        left: 19px;
+        top: 60px;
         width: 2px;
-        background: #E0E0E0;
+        height: 40px;
+        background-color: #e0e0e0;
     }
 
-    .timeline-item:not(:last-child).completed::before {
-        background: #4CAF50;
-    }
-
-    .timeline-item.active:not(:last-child)::before {
-        background: #FFC107;
+    .timeline-item.active:not(:last-child)::after {
+        background-color: #667eea;
     }
 
     .timeline-marker {
-        min-width: 40px;
+        width: 40px;
         height: 40px;
-        background: white;
-        border: 2px solid #E0E0E0;
         border-radius: 50%;
+        background-color: #f0f0f0;
+        border: 2px solid #e0e0e0;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-right: 20px;
-        color: #999;
-        font-weight: bold;
         flex-shrink: 0;
-        transition: all 0.3s;
+        color: #999;
+        font-size: 18px;
     }
 
     .timeline-marker.completed {
-        background: #4CAF50;
-        border-color: #4CAF50;
+        background-color: #28a745;
+        border-color: #28a745;
         color: white;
     }
 
-    .timeline-marker.active {
-        background: #FFC107;
-        border-color: #FFC107;
+    .timeline-marker.current {
+        background-color: #667eea;
+        border-color: #667eea;
         color: white;
-        animation: pulse 2s ease-in-out infinite;
+        animation: pulse 2s infinite;
     }
 
-    .timeline-content {
-        padding-top: 5px;
+    @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+        50% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
     }
 
-    .timeline-content p {
-        font-size: 0.95rem;
-    }
-
-    /* Button Styles */
-    .btn-primary, .btn-outline-danger {
-        border-radius: 12px;
-        font-weight: 600;
-        padding: 12px;
-        transition: all 0.3s;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 168, 89, 0.3);
-    }
-
-    .btn-outline-danger:hover {
-        transform: translateY(-2px);
-    }
-
-    /* Badge Styles */
-    .badge-status {
-        padding: 8px 16px;
-        border-radius: 20px;
-        font-weight: 600;
-    }
-
-    /* Responsive */
-    @media (max-width: 991px) {
-        #mapContainer {
-            height: 400px !important;
-        }
-
-        .card {
-            margin-bottom: 20px;
-        }
-    }
-
-    @media (max-width: 768px) {
-        #mapContainer {
-            height: 300px !important;
-        }
-
-        .row {
-            flex-direction: column-reverse;
-        }
+    .timeline-item.active .timeline-marker {
+        background-color: #667eea;
+        border-color: #667eea;
+        color: white;
     }
 </style>
 
-<!-- Tracking JavaScript -->
 <script>
-    // Initialize Map
-    let map = L.map('mapContainer').setView([-6.2088, 106.8456], 14); // Jakarta Default
-
-    // Add Tile Layer (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19
-    }).addTo(map);
-
-    // Marker Variables
-    let pickupMarker, driverMarker, destinationMarker, routeLine;
-
-    // Sample Data
-    const orderData = {
-        pickupLat: -6.2088,
-        pickupLng: 106.8456,
-        destinationLat: -6.2155,
-        destinationLng: 106.8550,
-        driverLat: -6.2088,
-        driverLng: 106.8456,
-        distance: 2.5,
-        time: 8
-    };
-
-    // Initialize Markers
-    function initializeMap() {
-        // Pickup Marker (Green)
-        pickupMarker = L.marker([orderData.pickupLat, orderData.pickupLng], {
-            icon: L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            })
-        }).addTo(map).bindPopup('<strong>Pickup Location</strong><br>📍 Jl. Merdeka No. 123');
-
-        // Destination Marker (Red)
-        destinationMarker = L.marker([orderData.destinationLat, orderData.destinationLng], {
-            icon: L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            })
-        }).addTo(map).bindPopup('<strong>Destination</strong><br>🎯 Jl. Sudirman No. 456');
-
-        // Driver Marker (Yellow - Animated)
-        driverMarker = L.marker([orderData.driverLat, orderData.driverLng], {
-            icon: L.icon({
-                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png',
-                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                iconSize: [25, 41],
-                iconAnchor: [12, 41],
-                popupAnchor: [1, -34],
-                shadowSize: [41, 41]
-            })
-        }).addTo(map).bindPopup('<strong>Driver Ahmad</strong><br>🏍️ Honda Beat<br>Rating: ⭐ 4.8');
-
-        // Draw Route Line
-        drawRoute();
-
-        // Fit Map to Bounds
-        const group = new L.featureGroup([pickupMarker, driverMarker, destinationMarker]);
-        map.fitBounds(group.getBounds().pad(0.1));
+function cancelOrder() {
+    if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
+        alert('Pesanan dibatalkan.\n\nRefund akan diproses dalam 1-2 hari kerja.');
     }
+}
 
-    // Draw Route Line
-    function drawRoute() {
-        const routeCoordinates = [
-            [orderData.pickupLat, orderData.pickupLng],
-            [orderData.driverLat, orderData.driverLng],
-            [orderData.destinationLat, orderData.destinationLng]
-        ];
-
-        if (routeLine) {
-            map.removeLayer(routeLine);
-        }
-
-        routeLine = L.polyline(routeCoordinates, {
-            color: '#00A859',
-            weight: 3,
-            opacity: 0.7,
-            dashArray: '5, 5',
-            lineCap: 'round'
-        }).addTo(map);
-    }
-
-    // Simulate Real-time Driver Movement
-    function simulateDriverMovement() {
-        let progress = 0;
-        const interval = setInterval(() => {
-            progress += 0.005;
-
-            if (progress >= 1) {
-                clearInterval(interval);
-                Toast.success('Pesanan selesai! Terima kasih telah menggunakan JAPLO.');
-                return;
-            }
-
-            // Linear interpolation (Lerp)
-            const currentLat = orderData.pickupLat + (orderData.destinationLat - orderData.pickupLat) * progress;
-            const currentLng = orderData.pickupLng + (orderData.destinationLng - orderData.pickupLng) * progress;
-
-            // Update driver position
-            driverMarker.setLatLng([currentLat, currentLng]);
-
-            // Update ETA
-            const remainingTime = Math.max(0, Math.round(orderData.time * (1 - progress)));
-            document.getElementById('timeInfo').textContent = remainingTime + ' min';
-
-            // Update remaining distance
-            const remainingDistance = (orderData.distance * (1 - progress)).toFixed(1);
-            document.getElementById('distanceInfo').textContent = remainingDistance + ' km';
-
-            // Auto pan to driver
-            map.setView([currentLat, currentLng], 15);
-        }, 1000); // Update every 1 second
-    }
-
-    // Call Driver Function
-    function callDriver() {
-        Toast.success('Menghubungi driver Ahmad...');
-        // In production, ini akan integrate dengan telephony API
-    }
-
-    // Cancel Order Function
-    function cancelOrder() {
-        if (confirm('Apakah Anda yakin ingin membatalkan order?')) {
-            Toast.warning('Order dibatalkan');
-            setTimeout(() => {
-                window.location.href = '{{ route("dashboard") }}';
-            }, 1500);
-        }
-    }
-
-    // Initialize on Load
-    document.addEventListener('DOMContentLoaded', function() {
-        initializeMap();
-        
-        // Start simulation after 2 seconds
-        setTimeout(() => {
-            Toast.info('🚗 Driver sedang menuju lokasi Anda...');
-            simulateDriverMovement();
-        }, 2000);
-    });
-
-    // Add Toast if not defined globally
-    if (typeof Toast === 'undefined') {
-        window.Toast = {
-            success: function(msg) { alert(msg); },
-            error: function(msg) { alert(msg); },
-            warning: function(msg) { alert(msg); },
-            info: function(msg) { alert(msg); }
-        };
-    }
+// Auto-refresh tracking status every 5 seconds
+setInterval(() => {
+    // In real app, fetch updated status from server
+    // fetch('{{ route("order.track", $order->id) }}')
+}, 5000);
 </script>
 @endsection

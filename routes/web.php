@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ServiceController;
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\TrackingController;
+use App\Http\Controllers\Web\PaymentController;
 use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,9 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('customer')->name('customer.')->middleware('customer')->group(function () {
         Route::get('/ojek', [ServiceController::class, 'ojek'])->name('ojek');
         Route::get('/kuliner', [ServiceController::class, 'kuliner'])->name('kuliner');
+        Route::get('/kuliner/{restaurantId}', [ServiceController::class, 'kulinerDetail'])->name('kuliner.detail');
         Route::get('/promosi', [ServiceController::class, 'promosi'])->name('promosi');
         Route::get('/kesehatan', [ServiceController::class, 'kesehatan'])->name('kesehatan');
+        Route::get('/kesehatan/{serviceId}', [ServiceController::class, 'kesehatanDetail'])->name('kesehatan.detail');
         Route::get('/produk', [ServiceController::class, 'produk'])->name('produk');
+        Route::get('/produk/{productId}', [ServiceController::class, 'produkDetail'])->name('produk.detail');
         Route::get('/pencetakan', [ServiceController::class, 'pencetakan'])->name('pencetakan');
         Route::get('/trending', [ServiceController::class, 'trending'])->name('trending');
         Route::get('/sosial', [ServiceController::class, 'sosial'])->name('sosial');
@@ -69,6 +73,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/location/update', [TrackingController::class, 'updateLocation'])->name('location.update');
         Route::get('/poll/{orderId}', [TrackingController::class, 'pollLocation'])->name('poll');
         Route::get('/history', [DashboardController::class, 'orderHistory'])->name('history');
+    });
+
+    // Payment Routes
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+        Route::post('/process', [PaymentController::class, 'processPayment'])->name('process');
+        Route::get('/success/{orderId}', [PaymentController::class, 'paymentSuccess'])->name('success');
+        Route::get('/failed/{orderId}', [PaymentController::class, 'paymentFailed'])->name('failed');
     });
     
     // API Routes for Orders (Web Auth)

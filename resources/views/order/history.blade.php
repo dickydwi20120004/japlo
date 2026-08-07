@@ -3,281 +3,201 @@
 @section('title', 'Riwayat Pesanan - JAPLO')
 
 @section('content')
-<!-- Hero Section -->
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);">
+<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-2"></i> Kembali
+        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3" style="border-radius: 25px; padding: 8px 16px;">
+            <i class="fas fa-arrow-left me-1"></i> Dashboard
         </a>
-        <h2 class="fw-bold mb-2 text-white" style="font-size: 2.5rem;">📋 Riwayat Pesanan</h2>
-        <p class="mb-0 text-white" style="font-size: 1.1rem;">Lihat semua pesanan dan detail perjalanan Anda</p>
+        <h2 class="fw-bold mb-2 text-white display-5">
+            <i class="fas fa-history me-2"></i> Riwayat Pesanan
+        </h2>
+        <p class="mb-0 text-white fs-5">Lihat semua pesanan Anda di sini</p>
     </div>
 </div>
 
-<div class="container py-4">
-    <!-- Statistics Row -->
-    <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-            <div class="card shadow-sm border-0" style="border-left: 4px solid var(--primary-color);">
-                <div class="card-body text-center p-4">
-                    <h3 class="fw-bold text-primary mb-0">{{ $totalOrders }}</h3>
-                    <small class="text-secondary">Total Pesanan</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card shadow-sm border-0" style="border-left: 4px solid #4CAF50;">
-                <div class="card-body text-center p-4">
-                    <h3 class="fw-bold text-success mb-0">{{ $completedOrders }}</h3>
-                    <small class="text-secondary">Selesai</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card shadow-sm border-0" style="border-left: 4px solid #FF6B35;">
-                <div class="card-body text-center p-4">
-                    <h3 class="fw-bold text-danger mb-0">{{ $cancelledOrders }}</h3>
-                    <small class="text-secondary">Dibatalkan</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card shadow-sm border-0" style="border-left: 4px solid #FFC107;">
-                <div class="card-body text-center p-4">
-                    <h3 class="fw-bold text-warning mb-0">Rp {{ number_format($totalSpent, 0, ',', '.') }}</h3>
-                    <small class="text-secondary">Total Pengeluaran</small>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Filter Buttons -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-body p-3">
-            <div class="d-flex flex-wrap gap-2 align-items-center">
-                <small class="text-secondary fw-bold">Filter:</small>
-                <a href="{{ route('order.history') }}" class="btn btn-sm btn-outline-primary">
+<div class="container py-5">
+    <!-- Filter Tabs -->
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 20px;">
+        <div class="card-body p-4">
+            <div class="nav nav-pills" role="tablist">
+                <button class="nav-link active" onclick="filterOrders('all')" style="border-radius: 20px; margin-right: 10px; margin-bottom: 10px;">
                     <i class="fas fa-list me-1"></i> Semua
-                </a>
-                <a href="{{ route('order.history') }}?status=completed" class="btn btn-sm btn-outline-success">
+                </button>
+                <button class="nav-link" onclick="filterOrders('in_progress')" style="border-radius: 20px; margin-right: 10px; margin-bottom: 10px;">
+                    <i class="fas fa-truck me-1"></i> Sedang Diproses
+                </button>
+                <button class="nav-link" onclick="filterOrders('completed')" style="border-radius: 20px; margin-right: 10px; margin-bottom: 10px;">
                     <i class="fas fa-check-circle me-1"></i> Selesai
-                </a>
-                <a href="{{ route('order.history') }}?status=cancelled" class="btn btn-sm btn-outline-danger">
+                </button>
+                <button class="nav-link" onclick="filterOrders('cancelled')" style="border-radius: 20px;">
                     <i class="fas fa-times-circle me-1"></i> Dibatalkan
-                </a>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Orders Table/List -->
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-            @if($orders->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead style="background: #f8f9fa; border-bottom: 2px solid #e9ecef;">
-                            <tr>
-                                <th class="fw-bold text-secondary">No. Pesanan</th>
-                                <th class="fw-bold text-secondary">Rute</th>
-                                <th class="fw-bold text-secondary">Driver</th>
-                                <th class="fw-bold text-secondary">Harga</th>
-                                <th class="fw-bold text-secondary">Status</th>
-                                <th class="fw-bold text-secondary">Tanggal</th>
-                                <th class="fw-bold text-secondary">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($orders as $order)
-                                <tr style="border-bottom: 1px solid #e9ecef;">
-                                    <td>
-                                        <strong class="text-primary">{{ $order->order_number }}</strong>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div>
-                                                <small class="text-secondary">📍 {{ Str::limit($order->pickup_address, 30) }}</small>
-                                                <br>
-                                                <small class="text-secondary">🎯 {{ Str::limit($order->destination_address, 30) }}</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @if($order->driver)
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div class="rounded-circle bg-light p-2" style="width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
-                                                    <i class="fas fa-user text-secondary" style="font-size: 0.8rem;"></i>
-                                                </div>
-                                                <div>
-                                                    <p class="mb-0 fw-500 small">{{ $order->driver->name }}</p>
-                                                    <small class="text-secondary">⭐ {{ $order->driver->rating ?? 'N/A' }}</small>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <span class="badge bg-secondary">Belum ada driver</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <strong class="text-primary">Rp {{ number_format($order->price, 0, ',', '.') }}</strong>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-{{ strtolower($order->status) }}">
-                                            @switch($order->status)
-                                                @case('pending')
-                                                    <i class="fas fa-hourglass-half me-1"></i> Menunggu
-                                                    @break
-                                                @case('accepted')
-                                                    <i class="fas fa-check me-1"></i> Diterima
-                                                    @break
-                                                @case('picked_up')
-                                                    <i class="fas fa-location-arrow me-1"></i> Diambil
-                                                    @break
-                                                @case('in_progress')
-                                                    <i class="fas fa-motorcycle me-1"></i> Berlangsung
-                                                    @break
-                                                @case('completed')
-                                                    <i class="fas fa-check-circle me-1"></i> Selesai
-                                                    @break
-                                                @case('cancelled')
-                                                    <i class="fas fa-times-circle me-1"></i> Dibatalkan
-                                                    @break
-                                                @default
-                                                    {{ ucfirst($order->status) }}
-                                            @endswitch
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <small class="text-secondary d-block">{{ $order->created_at->format('d M Y') }}</small>
-                                        <small class="text-secondary">{{ $order->created_at->format('H:i') }}</small>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            @if(in_array($order->status, ['in_progress', 'picked_up', 'accepted', 'pending']))
-                                                <a href="{{ route('order.track', $order->id) }}" class="btn btn-info" title="Lihat Tracking">
-                                                    <i class="fas fa-map-location-dot"></i> Tracking
-                                                </a>
-                                            @endif
-                                            <button type="button" class="btn btn-outline-secondary" title="Lihat Detail" onclick="viewOrderDetail({{ $order->id }})">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+    <!-- Orders List -->
+    <div class="row">
+        @forelse($orders as $order)
+        <div class="col-12 mb-4">
+            <div class="card border-0 shadow-sm hover-order" style="border-radius: 20px; overflow: hidden; transition: all 0.3s; cursor: pointer;" onclick="goToTracking({{ $order->id }})">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <!-- Order Info -->
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="d-flex align-items-start gap-3">
+                                <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-shopping-bag text-white fa-2x"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <h6 class="fw-bold mb-1">{{ $order->order_number }}</h6>
+                                    <p class="text-muted small mb-1">{{ $order->created_at->format('d M Y H:i') }}</p>
+                                    <p class="small mb-0">
+                                        {{ $order->items->count() }} item(s) • 
+                                        <span class="fw-bold">Rp {{ number_format($order->price, 0, ',', '.') }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center p-3">
-                    {{ $orders->links() }}
+                        <!-- Status & Actions -->
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Status Badge -->
+                                <div>
+                                    @switch($order->status)
+                                        @case('pending')
+                                            <span class="badge bg-warning" style="border-radius: 20px; padding: 8px 12px;">
+                                                <i class="fas fa-clock me-1"></i> Menunggu
+                                            </span>
+                                            @break
+                                        @case('confirmed')
+                                            <span class="badge bg-info" style="border-radius: 20px; padding: 8px 12px;">
+                                                <i class="fas fa-check me-1"></i> Dikonfirmasi
+                                            </span>
+                                            @break
+                                        @case('accepted')
+                                        @case('picked_up')
+                                        @case('in_progress')
+                                            <span class="badge bg-primary" style="border-radius: 20px; padding: 8px 12px;">
+                                                <i class="fas fa-truck me-1"></i> Dalam Perjalanan
+                                            </span>
+                                            @break
+                                        @case('completed')
+                                            <span class="badge bg-success" style="border-radius: 20px; padding: 8px 12px;">
+                                                <i class="fas fa-check-circle me-1"></i> Selesai
+                                            </span>
+                                            @break
+                                        @case('cancelled')
+                                            <span class="badge bg-danger" style="border-radius: 20px; padding: 8px 12px;">
+                                                <i class="fas fa-times-circle me-1"></i> Dibatalkan
+                                            </span>
+                                            @break
+                                    @endswitch
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="d-flex gap-2">
+                                    <a href="{{ route('order.track', $order->id) }}" class="btn btn-outline-primary btn-sm rounded-2" title="Lihat Detail">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <button class="btn btn-outline-secondary btn-sm rounded-2" title="Ulang Pesanan" onclick="repeatOrder(event, {{ $order->id }})">
+                                        <i class="fas fa-redo"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items Preview -->
+                    <div class="mt-3 pt-3 border-top">
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach($order->items->take(3) as $item)
+                            <small class="badge bg-light text-dark" style="border-radius: 15px; padding: 6px 10px;">
+                                {{ $item->quantity }}x {{ $item->item_name }}
+                            </small>
+                            @endforeach
+                            @if($order->items->count() > 3)
+                            <small class="badge bg-light text-dark" style="border-radius: 15px; padding: 6px 10px;">
+                                +{{ $order->items->count() - 3 }} lainnya
+                            </small>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-            @else
-                <div class="text-center py-5">
-                    <i class="fas fa-inbox fa-5x text-secondary mb-3" style="opacity: 0.3;"></i>
-                    <h5 class="text-secondary fw-bold">Belum ada pesanan</h5>
-                    <p class="text-secondary mb-4">Mulai perjalanan Anda dengan memilih layanan</p>
-                    <a href="{{ route('customer.ojek') }}" class="btn btn-primary">
-                        <i class="fas fa-motorcycle me-2"></i> Pesan Ojek Sekarang
+            </div>
+        </div>
+        @empty
+        <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 20px;">
+                <div class="card-body p-5 text-center">
+                    <i class="fas fa-inbox fa-4x text-secondary mb-3 d-block"></i>
+                    <h5 class="fw-bold mb-2">Belum Ada Pesanan</h5>
+                    <p class="text-muted mb-4">Anda belum memiliki riwayat pesanan. Mulai pesan sekarang!</p>
+                    <a href="{{ route('customer.kuliner') }}" class="btn btn-primary btn-lg rounded-3 px-5">
+                        <i class="fas fa-shopping-cart me-2"></i> Mulai Belanja
                     </a>
                 </div>
-            @endif
+            </div>
         </div>
+        @endforelse
     </div>
-</div>
 
-<!-- Order Detail Modal -->
-<div class="modal fade" id="orderDetailModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-bold">
-                    <i class="fas fa-receipt me-2"></i> Detail Pesanan
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body" id="orderDetailContent">
-                <!-- Content akan diisi via JavaScript -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <a id="trackingLink" href="#" class="btn btn-primary">
-                    <i class="fas fa-map-location-dot me-2"></i> Lihat Tracking
-                </a>
-            </div>
-        </div>
+    <!-- Pagination -->
+    @if($orders->hasPages())
+    <div class="d-flex justify-content-center mt-5">
+        {{ $orders->links() }}
     </div>
+    @endif
 </div>
 
 <style>
-    .badge-pending {
-        background: #FFC107;
-        color: #333;
-    }
-    
-    .badge-accepted {
-        background: #17A2B8;
-        color: white;
-    }
-    
-    .badge-picked_up {
-        background: #20C997;
-        color: white;
-    }
-    
-    .badge-in_progress {
-        background: #FF6B35;
-        color: white;
-    }
-    
-    .badge-completed {
-        background: #4CAF50;
-        color: white;
-    }
-    
-    .badge-cancelled {
-        background: #E74C3C;
-        color: white;
+    .hover-order {
+        transition: all 0.3s ease;
     }
 
-    .table-hover tbody tr:hover {
-        background: #f8f9fa;
+    .hover-order:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(102, 126, 234, 0.15) !important;
     }
 
-    @media (max-width: 768px) {
-        .table-responsive table {
-            font-size: 0.85rem;
-        }
-        
-        .btn-group-sm > .btn {
-            padding: 0.3rem 0.5rem;
-            font-size: 0.75rem;
-        }
+    .nav-link {
+        border-radius: 20px !important;
+        padding: 8px 16px !important;
+        color: #999 !important;
+        transition: all 0.3s;
+    }
+
+    .nav-link.active {
+        background-color: #667eea !important;
+        color: white !important;
+    }
+
+    .nav-link:hover {
+        background-color: rgba(102, 126, 234, 0.1);
+        color: #667eea !important;
     }
 </style>
 
 <script>
-    function viewOrderDetail(orderId) {
-        // In production, ini akan fetch dari API
-        // Untuk sekarang, kita hanya redirect ke tracking jika status in progress
-        const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
-        
-        // Fetch order detail dari server
-        fetch(`/order/${orderId}`)
-            .then(response => response.json())
-            .catch(() => {
-                Toast.error('Tidak dapat memuat detail pesanan');
-            });
-        
-        modal.show();
-    }
+function filterOrders(status) {
+    // Update active button
+    document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+    event.target.closest('.nav-link')?.classList.add('active');
 
-    // Batch actions
-    function rateOrder(orderId) {
-        Toast.info('Fitur rating akan segera tersedia');
-    }
+    // In real app, filter orders via AJAX
+    // fetch(`?status=${status}`).then(...);
+}
 
-    function shareTrip(orderId) {
-        Toast.info('Bagikan perjalanan akan segera tersedia');
-    }
+function goToTracking(orderId) {
+    window.location.href = `/order/track/${orderId}`;
+}
+
+function repeatOrder(event, orderId) {
+    event.stopPropagation();
+    alert('Fitur ulangi pesanan akan menambahkan item yang sama ke keranjang baru.');
+    // In real app: 
+    // fetch(`/order/${orderId}/repeat`, {method: 'POST'})
+}
 </script>
 @endsection

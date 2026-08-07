@@ -80,6 +80,22 @@ class Order extends Model
     }
 
     /**
+     * Relationship dengan OrderItems
+     */
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+    /**
+     * Relationship dengan Payment
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    /**
      * Generate order number
      */
     public static function generateOrderNumber()

@@ -53,8 +53,8 @@
                             @endif
                         </div>
                     </div>
-                    <button class="btn btn-danger w-100" onclick="bookService({{ $service['id'] }}, '{{ $service['name'] }}')">
-                        <i class="fas fa-calendar-check me-2"></i> Pesan Sekarang
+                    <button class="btn btn-danger w-100" onclick="goToHealthDetail({{ $service['id'] }})">
+                        <i class="fas fa-calendar-check me-2"></i> Lihat Detail
                     </button>
                 </div>
             </div>
@@ -136,6 +136,10 @@
 <script>
 function bookService(id, name) {
     alert('Memesan layanan: ' + name + '\n\nAnda akan dihubungi oleh tim medis kami dalam 15 menit.\n\nFitur booking lengkap akan segera hadir!');
+}
+
+function goToHealthDetail(serviceId) {
+    window.location.href = '/customer/kesehatan/' + serviceId;
 }
 </script>
 @endsection
