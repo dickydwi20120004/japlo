@@ -61,48 +61,52 @@ class DashboardController extends Controller
         $user = Auth::user();
         $driver = $user->driver;
 
-        // If driver profile not complete, redirect to complete profile
-        if (!$driver) {
-            return redirect()->route('driver.profile.create')
-                ->with('info', 'Silakan lengkapi profil driver Anda terlebih dahulu.');
-        }
-
-        // Get driver statistics
-        $totalRides = $driver->total_rides;
-        $totalEarnings = $driver->total_earnings;
-        $rating = $driver->rating;
-
-        // Today's statistics
-        $todayOrders = Order::where('driver_id', $user->id)
-            ->where('status', 'completed')
-            ->whereDate('completed_at', today())
-            ->count();
-
-        $todayEarnings = Order::where('driver_id', $user->id)
-            ->where('status', 'completed')
-            ->whereDate('completed_at', today())
-            ->sum('price');
-
-        // Recent orders
-        $recentOrders = Order::where('driver_id', $user->id)
-            ->with(['user'])
-            ->orderBy('created_at', 'desc')
-            ->limit(5)
-            ->get();
-
-        // Pending orders nearby (if driver is available)
+        // Default values
+        $totalRides = 0;
+        $totalEarnings = 0;
+        $rating = 0;
+        $todayOrders = 0;
+        $todayEarnings = 0;
+        $recentOrders = collect();
         $pendingOrders = collect();
-        if ($driver->is_available && $driver->current_latitude && $driver->current_longitude) {
-            $pendingOrders = Order::selectRaw(
-                'orders.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( pickup_latitude ) ) * cos( radians( pickup_longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( pickup_latitude ) ) ) ) AS distance',
-                [$driver->current_latitude, $driver->current_longitude, $driver->current_latitude]
-            )
-                ->with('user')
-                ->where('status', 'pending')
-                ->having('distance', '<=', 15)
-                ->orderBy('distance', 'asc')
-                ->limit(10)
+
+        // If driver profile exists, get statistics
+        if ($driver) {
+            $totalRides = $driver->total_rides ?? 0;
+            $totalEarnings = $driver->total_earnings ?? 0;
+            $rating = $driver->rating ?? 0;
+
+            // Today's statistics
+            $todayOrders = Order::where('driver_id', $user->id)
+                ->where('status', 'completed')
+                ->whereDate('completed_at', today())
+                ->count();
+
+            $todayEarnings = Order::where('driver_id', $user->id)
+                ->where('status', 'completed')
+                ->whereDate('completed_at', today())
+                ->sum('price') ?? 0;
+
+            // Recent orders
+            $recentOrders = Order::where('driver_id', $user->id)
+                ->with(['user'])
+                ->orderBy('created_at', 'desc')
+                ->limit(5)
                 ->get();
+
+            // Pending orders nearby (if driver is available)
+            if ($driver->is_available && $driver->current_latitude && $driver->current_longitude) {
+                $pendingOrders = Order::selectRaw(
+                    'orders.*, ( 6371 * acos( cos( radians(?) ) * cos( radians( pickup_latitude ) ) * cos( radians( pickup_longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( pickup_latitude ) ) ) ) AS distance',
+                    [$driver->current_latitude, $driver->current_longitude, $driver->current_latitude]
+                )
+                    ->with('user')
+                    ->where('status', 'pending')
+                    ->having('distance', '<=', 15)
+                    ->orderBy('distance', 'asc')
+                    ->limit(10)
+                    ->get();
+            }
         }
 
         return view('driver.dashboard', compact(
