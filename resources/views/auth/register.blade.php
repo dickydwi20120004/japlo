@@ -1,4 +1,4 @@
-a@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Daftar - JAPLO')
 
@@ -336,26 +336,52 @@ function togglePassword(inputId, button) {
 }
 
 function toggleDriverFields() {
-    const role = document.querySelector('input[name="role"]:checked').value;
-    const driverFields = document.getElementById('driverFields');
-    const driverInputs = driverFields.querySelectorAll('input, select');
+    const role = document.querySelector('input[name="role"]:checked');
+    if (!role) return;
     
-    if (role === 'driver') {
+    const roleValue = role.value;
+    const driverFields = document.getElementById('driverFields');
+    const driverInputs = driverFields.querySelectorAll('input[required], select[required]');
+    const allInputs = driverFields.querySelectorAll('input, select');
+    
+    if (roleValue === 'driver') {
         driverFields.style.display = 'block';
-        driverInputs.forEach(input => {
-            input.required = true;
+        
+        // Mark fields as required for driver
+        const fieldsToRequire = [
+            'vehicle_type',
+            'vehicle_brand',
+            'license_plate',
+            'license_number'
+        ];
+        
+        fieldsToRequire.forEach(fieldName => {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.setAttribute('required', 'required');
+            }
         });
     } else {
         driverFields.style.display = 'none';
-        driverInputs.forEach(input => {
-            input.required = false;
+        
+        // Remove required from all driver fields
+        allInputs.forEach(input => {
+            input.removeAttribute('required');
         });
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    toggleDriverFields();
+    const roleChecked = document.querySelector('input[name="role"]:checked');
+    if (roleChecked) {
+        toggleDriverFields();
+    }
+    
+    // Add event listeners to radio buttons
+    document.querySelectorAll('input[name="role"]').forEach(radio => {
+        radio.addEventListener('change', toggleDriverFields);
+    });
 });
 </script>
 @endpush
