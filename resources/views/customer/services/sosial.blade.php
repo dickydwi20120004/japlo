@@ -1,283 +1,203 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
+@section('title', 'Komunitas Sosial — JAPLO')
 
-@section('title', 'Sosial - JAPLO')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/services.css') }}">
+@endpush
 
 @section('content')
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);">
+<div class="jp-page-top">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-1"></i> Kembali
-        </a>
-        <h2 class="fw-bold mb-2 text-white">
-            <i class="fas fa-users me-2"></i> Sosial Media Japlo
-        </h2>
-        <p class="mb-0 text-white">Terhubung dengan komunitas pengguna Japlo</p>
-    </div>
-</div>
-
-<div class="container py-4">
-    <!-- Create Post Card -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="d-flex align-items-center mb-3">
-                <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random" 
-                     class="rounded-circle me-3" 
-                     style="width: 50px; height: 50px;" 
-                     alt="{{ auth()->user()->name }}">
-                <input type="text" 
-                       class="form-control form-control-lg" 
-                       placeholder="Apa yang Anda pikirkan, {{ auth()->user()->name }}?" 
-                       onclick="openPostModal()"
-                       readonly
-                       style="cursor: pointer;">
-            </div>
-            <div class="d-flex justify-content-between flex-wrap gap-2">
-                <button class="btn btn-outline-primary flex-fill" style="min-width: 100px;" onclick="openPostModal('photo')">
-                    <i class="fas fa-image me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Foto</span>
-                </button>
-                <button class="btn btn-outline-success flex-fill" style="min-width: 100px;" onclick="openPostModal('video')">
-                    <i class="fas fa-video me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Video</span>
-                </button>
-                <button class="btn btn-outline-warning flex-fill" style="min-width: 100px;" onclick="openPostModal('poll')">
-                    <i class="fas fa-poll me-1 me-sm-2"></i> <span class="d-none d-sm-inline">Polling</span>
-                </button>
-            </div>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm"
+               style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
         </div>
-    </div>
-
-    <!-- Stories -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">Stories</h5>
-            <div class="d-flex overflow-auto pb-2" style="gap: 15px;">
-                <!-- Add Story -->
-                <div class="text-center" style="min-width: 100px;">
-                    <div class="position-relative" style="cursor: pointer;" onclick="addStory()">
-                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random" 
-                             class="rounded-circle" 
-                             style="width: 80px; height: 80px; border: 3px solid #007bff;" 
-                             alt="Add Story">
-                        <div class="position-absolute" style="bottom: 0; right: 0; background: #007bff; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-plus text-white"></i>
-                        </div>
-                    </div>
-                    <small class="d-block mt-2 fw-bold">Tambah Story</small>
-                </div>
-                
-                <!-- User Stories -->
-                @for($i = 1; $i <= 10; $i++)
-                <div class="text-center" style="min-width: 100px;">
-                    <div style="cursor: pointer;" onclick="viewStory({{ $i }})">
-                        <img src="https://ui-avatars.com/api/?name=User+{{ $i }}&background=random" 
-                             class="rounded-circle" 
-                             style="width: 80px; height: 80px; border: 3px solid #28a745;" 
-                             alt="User {{ $i }}">
-                    </div>
-                    <small class="d-block mt-2">User {{ $i }}</small>
-                </div>
-                @endfor
-            </div>
-        </div>
-    </div>
-
-    <!-- Posts Feed -->
-    <h5 class="fw-bold mb-3">Feed</h5>
-    
-    @foreach($posts as $post)
-    <div class="card mb-4 hover-card">
-        <div class="card-body">
-            <!-- Post Header -->
-            <div class="d-flex align-items-center mb-3">
-                <img src="{{ $post['user_avatar'] }}" 
-                     class="rounded-circle me-3" 
-                     style="width: 50px; height: 50px;" 
-                     alt="{{ $post['user_name'] }}">
-                <div class="flex-grow-1">
-                    <h6 class="fw-bold mb-0">{{ $post['user_name'] }}</h6>
-                    <small class="text-secondary">{{ $post['time'] }}</small>
-                </div>
-                <div class="dropdown">
-                    <button class="btn btn-link text-secondary" data-bs-toggle="dropdown">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-bookmark me-2"></i> Simpan</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-flag me-2"></i> Laporkan</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Post Content -->
-            <p class="mb-3">{{ $post['content'] }}</p>
-
-            <!-- Post Image -->
-            @if($post['image'])
-            <img src="{{ $post['image'] }}" class="img-fluid rounded mb-3" alt="Post Image">
-            @endif
-
-            <!-- Post Stats -->
-            <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
-                <span class="text-secondary">
-                    <i class="fas fa-heart text-danger me-1"></i> {{ $post['likes'] }} Suka
-                </span>
-                <span class="text-secondary">{{ $post['comments'] }} Komentar</span>
-            </div>
-
-            <!-- Post Actions -->
-            <div class="d-flex justify-content-around">
-                <button class="btn btn-link text-decoration-none" onclick="likePost({{ $post['id'] }})">
-                    <i class="far fa-heart me-2"></i> <span id="like-{{ $post['id'] }}">Suka</span>
-                </button>
-                <button class="btn btn-link text-decoration-none" onclick="toggleComments({{ $post['id'] }})">
-                    <i class="far fa-comment me-2"></i> Komentar
-                </button>
-                <button class="btn btn-link text-decoration-none" onclick="sharePost({{ $post['id'] }})">
-                    <i class="fas fa-share me-2"></i> Bagikan
-                </button>
-            </div>
-
-            <!-- Comment Section (collapsed by default) -->
-            <div id="comments-{{ $post['id'] }}" class="mt-3" style="display: none;">
-                <div class="border-top pt-3">
-                    <div class="d-flex mb-3">
-                        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=random" 
-                             class="rounded-circle me-2" 
-                             style="width: 40px; height: 40px;" 
-                             alt="{{ auth()->user()->name }}">
-                        <input type="text" class="form-control" placeholder="Tulis komentar...">
-                    </div>
-                    <!-- Sample Comments -->
-                    <div class="d-flex mb-3">
-                        <img src="https://ui-avatars.com/api/?name=User+Demo&background=random" 
-                             class="rounded-circle me-2" 
-                             style="width: 40px; height: 40px;" 
-                             alt="User">
-                        <div class="flex-grow-1 bg-light rounded p-2">
-                            <h6 class="fw-bold mb-1 small">User Demo</h6>
-                            <p class="mb-0 small">Keren banget! 👍</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-
-    <!-- Load More -->
-    <div class="text-center mt-4">
-        <button class="btn btn-outline-primary btn-lg px-5">
-            <i class="fas fa-sync-alt me-2"></i> Muat Lebih Banyak
-        </button>
-    </div>
-
-    <!-- Community Groups -->
-    <div class="card mt-5">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">
-                <i class="fas fa-users me-2 text-primary"></i>
-                Grup Komunitas
-            </h5>
-            <div class="row">
-                <div class="col-12 col-md-6 mb-3">
-                    <div class="card hover-card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
-                                <i class="fas fa-motorcycle fa-2x text-primary"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="fw-bold mb-1">Komunitas Driver Japlo</h6>
-                                <small class="text-secondary">1.234 anggota</small>
-                            </div>
-                            <button class="btn btn-sm btn-primary">Gabung</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 mb-3">
-                    <div class="card hover-card">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="rounded-circle bg-danger bg-opacity-10 p-3 me-3">
-                                <i class="fas fa-utensils fa-2x text-danger"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <h6 class="fw-bold mb-1">Kuliner Lovers Japlo</h6>
-                                <small class="text-secondary">5.678 anggota</small>
-                            </div>
-                            <button class="btn btn-sm btn-primary">Gabung</button>
-                        </div>
-                    </div>
-                </div>
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ asset('images/icons/sosial.svg') }}" width="40" height="40" alt="Sosial">
+            <div>
+                <h1><i class="fas fa-people-group me-2" style="color:rgba(255,255,255,.8)"></i>Komunitas Sosial</h1>
+                <p class="mb-0" style="font-size:.85rem;color:rgba(255,255,255,.8)">Berbagi cerita dan informasi dengan komunitas JAPLO</p>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .hover-card {
-        transition: all 0.3s ease;
-    }
-    .hover-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-</style>
+<div class="page-body">
+    <div class="container">
+        <div class="row g-4">
 
+            {{-- Feed --}}
+            <div class="col-lg-8">
+
+                {{-- Create Post Card --}}
+                <div class="jp-card mb-4">
+                    <div class="jp-card-body">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="post-avatar" style="background:var(--jp-green)">
+                                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                            </div>
+                            <div class="fw-600" style="font-size:.875rem">{{ auth()->user()->name }}</div>
+                        </div>
+
+                        <form action="{{ route('customer.sosial.post') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="compose-area mb-3">
+                                <textarea name="content" class="form-control @error('content') is-invalid @enderror"
+                                          rows="3"
+                                          placeholder="Apa yang ingin Anda bagikan hari ini?">{{ old('content') }}</textarea>
+                                @error('content')<div class="invalid-feedback" style="padding:.35rem .75rem">{{ $message }}</div>@enderror
+                                <div style="padding:.5rem .75rem;display:flex;align-items:center;justify-content:between;gap:.5rem">
+                                    <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.8125rem;color:var(--jp-gray-500);font-weight:500;padding:.25rem .5rem;border-radius:8px;transition:background .15s">
+                                        <i class="fas fa-image" style="color:var(--jp-green)"></i>
+                                        <span>Tambah Foto</span>
+                                        <input type="file" name="image" accept="image/*" style="display:none"
+                                               onchange="previewImage(this)">
+                                    </label>
+                                </div>
+                            </div>
+
+                            {{-- Image Preview --}}
+                            <div id="imagePreview" style="display:none;margin-bottom:.75rem">
+                                <div style="position:relative;display:inline-block">
+                                    <img id="previewImg" style="max-height:200px;border-radius:10px;object-fit:cover">
+                                    <button type="button" onclick="clearImage()"
+                                            style="position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.6);border:none;color:#fff;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center">
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-jp-primary">
+                                    <i class="fas fa-paper-plane me-2"></i> Posting
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                {{-- Posts Feed --}}
+                @if($posts->count() > 0)
+                    @foreach($posts as $post)
+                        <div class="post-card">
+                            <div class="post-card-header">
+                                <div class="post-avatar" style="background: hsl({{ (ord($post->user->name[0] ?? 'A') * 13) % 360 }}, 60%, 45%)">
+                                    {{ strtoupper(substr($post->user->name ?? 'U', 0, 1)) }}
+                                </div>
+                                <div>
+                                    <div class="post-meta-name">{{ $post->user->name ?? 'Pengguna' }}</div>
+                                    <div class="post-meta-time">{{ $post->created_at->diffForHumans() }}</div>
+                                </div>
+                                @if($post->category)
+                                    <span class="ms-auto jp-badge" style="background:var(--jp-green-light);color:var(--jp-green);font-size:.72rem">
+                                        {{ $post->category }}
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="post-content">{{ $post->content }}</div>
+
+                            @if($post->image)
+                                <img src="{{ $post->image_url }}" alt="Post image" class="post-image">
+                            @endif
+
+                            <div class="post-actions">
+                                <button class="post-action-btn">
+                                    <i class="fas fa-heart"></i>
+                                    {{ $post->likes_count > 0 ? number_format($post->likes_count) . ' Suka' : 'Suka' }}
+                                </button>
+                                <button class="post-action-btn">
+                                    <i class="fas fa-comment"></i>
+                                    {{ $post->comments_count > 0 ? $post->comments_count . ' Komentar' : 'Komentar' }}
+                                </button>
+                                <button class="post-action-btn ms-auto"
+                                        onclick="navigator.clipboard?.writeText(window.location.href).then(()=>JapToast.success('Link disalin!'))">
+                                    <i class="fas fa-share"></i> Bagikan
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    {{-- Pagination --}}
+                    <div class="mt-2">
+                        {{ $posts->links() }}
+                    </div>
+
+                @else
+                    <div class="jp-empty">
+                        <div class="empty-icon"><i class="fas fa-people-group"></i></div>
+                        <p>Belum ada postingan. Jadilah yang pertama!</p>
+                    </div>
+                @endif
+
+            </div>
+
+            {{-- Sidebar --}}
+            <div class="col-lg-4">
+                {{-- Community Info --}}
+                <div class="jp-card mb-4">
+                    <div class="jp-card-header">
+                        <span><i class="fas fa-circle-info me-2 text-jp-green"></i>Tentang Komunitas</span>
+                    </div>
+                    <div class="jp-card-body">
+                        <p style="font-size:.875rem;color:var(--jp-gray-600);line-height:1.7;margin:0">
+                            Forum sosial JAPLO adalah tempat berbagi pengalaman, informasi, dan cerita positif bagi seluruh pengguna di Bintan. Yuk ikut berpartisipasi!
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Rules --}}
+                <div class="jp-card">
+                    <div class="jp-card-header">
+                        <span><i class="fas fa-shield-halved me-2 text-jp-green"></i>Panduan Komunitas</span>
+                    </div>
+                    <div class="jp-card-body">
+                        @php
+                            $rules = [
+                                'Bersikap sopan dan saling menghormati',
+                                'Tidak menyebarkan hoaks atau informasi palsu',
+                                'Dilarang konten SARA dan kekerasan',
+                                'Promosi usaha boleh di kategori "Promosi"',
+                                'Laporkan konten yang melanggar aturan',
+                            ];
+                        @endphp
+                        <ul style="list-style:none;padding:0;margin:0">
+                            @foreach($rules as $rule)
+                                <li style="display:flex;align-items:flex-start;gap:.5rem;padding:.35rem 0;font-size:.8125rem;color:var(--jp-gray-600);border-bottom:1px solid var(--jp-gray-100)">
+                                    <i class="fas fa-check" style="color:var(--jp-green);margin-top:3px;font-size:.7rem;flex-shrink:0"></i>
+                                    {{ $rule }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
 <script>
-let likedPosts = {};
-
-function openPostModal(type = null) {
-    let message = 'Fitur posting akan segera hadir!\n\nAnda akan dapat:\n- Membuat status\n- Upload foto & video\n- Membuat polling\n- Berbagi pengalaman';
-    if (type) {
-        message = 'Fitur upload ' + type + ' akan segera hadir!';
-    }
-    alert(message);
-}
-
-function addStory() {
-    alert('Fitur Story akan segera hadir!\n\nBagikan momen Anda dengan komunitas Japlo.');
-}
-
-function viewStory(id) {
-    alert('Melihat story User ' + id + '\n\nFitur story viewer akan segera hadir!');
-}
-
-function likePost(id) {
-    const likeBtn = document.getElementById('like-' + id);
-    if (likedPosts[id]) {
-        likedPosts[id] = false;
-        likeBtn.innerHTML = 'Suka';
-        likeBtn.parentElement.style.color = 'inherit';
-        alert('Post #' + id + ' tidak lagi Anda sukai.');
-    } else {
-        likedPosts[id] = true;
-        likeBtn.innerHTML = 'Disukai ❤️';
-        likeBtn.parentElement.style.color = '#dc3545';
-        alert('Post #' + id + ' telah Anda sukai! ❤️');
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
     }
 }
 
-function toggleComments(id) {
-    const commentSection = document.getElementById('comments-' + id);
-    if (commentSection.style.display === 'none') {
-        commentSection.style.display = 'block';
-        alert('Buka bagian komentar untuk post #' + id);
-    } else {
-        commentSection.style.display = 'none';
-    }
-}
-
-function sharePost(id) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Post dari Japlo',
-            text: 'Lihat post menarik ini!',
-            url: window.location.href
-        }).then(() => {
-            console.log('Berhasil dibagikan');
-        }).catch((error) => {
-            console.log('Gagal membagikan', error);
-        });
-    } else {
-        alert('Post #' + id + ' dibagikan!\n\nFitur berbagi akan segera ditingkatkan.');
-    }
+function clearImage() {
+    document.getElementById('imagePreview').style.display = 'none';
+    document.getElementById('previewImg').src = '';
+    document.querySelector('input[name="image"]').value = '';
 }
 </script>
-@endsection
+@endpush
+

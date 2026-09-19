@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#FFFBEB"/>
+  <!-- Tenda expo / booth -->
+  <path d="M12 46 L40 18 L68 46 Z" fill="#F59E0B"/>
+  <path d="M12 46 L40 18 L68 46" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Badan booth -->
+  <rect x="16" y="46" width="48" height="20" rx="2" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <!-- Stand kiri -->
+  <rect x="20" y="50" width="12" height="12" rx="2" fill="#16A34A"/>
+  <text x="26" y="59" text-anchor="middle" font-size="6" fill="white" font-weight="bold">UMKM</text>
+  <!-- Stand tengah -->
+  <rect x="34" y="50" width="12" height="12" rx="2" fill="#3B82F6"/>
+  <text x="40" y="59" text-anchor="middle" font-size="6" fill="white" font-weight="bold">JUAL</text>
+  <!-- Stand kanan -->
+  <rect x="48" y="50" width="12" height="12" rx="2" fill="#EF4444"/>
+  <text x="54" y="59" text-anchor="middle" font-size="6" fill="white" font-weight="bold">BELI</text>
+  <!-- Banner/spanduk -->
+  <rect x="28" y="28" width="24" height="10" rx="3" fill="#F59E0B" stroke="#D97706" stroke-width="1"/>
+  <text x="40" y="35.5" text-anchor="middle" font-size="6" fill="#78350F" font-weight="bold">EXPO</text>
+  <!-- Bendera kecil -->
+  <line x1="40" y1="18" x2="40" y2="12" stroke="#D97706" stroke-width="1.5"/>
+  <path d="M40 12 L46 14 L40 16 Z" fill="#EF4444"/>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#FEF2F2"/>
+  <!-- Gedung apotek -->
+  <rect x="16" y="32" width="48" height="36" rx="3" fill="#FEE2E2"/>
+  <rect x="16" y="32" width="48" height="36" rx="3" stroke="#EF4444" stroke-width="1.5"/>
+  <!-- Atap -->
+  <rect x="14" y="26" width="52" height="8" rx="2" fill="#EF4444"/>
+  <!-- Tulisan APOTEK -->
+  <rect x="22" y="28" width="36" height="6" rx="1" fill="#DC2626"/>
+  <text x="40" y="33" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="6" fill="white">APOTEK</text>
+  <!-- Palang merah -->
+  <circle cx="40" cy="20" r="8" fill="white" stroke="#EF4444" stroke-width="1.5"/>
+  <rect x="37" y="16" width="6" height="8" rx="1.5" fill="#EF4444"/>
+  <rect x="35" y="18" width="10" height="4" rx="1.5" fill="#EF4444"/>
+  <!-- Pintu -->
+  <rect x="33" y="50" width="14" height="18" rx="2" fill="#FCA5A5"/>
+  <circle cx="45" cy="59" r="1.2" fill="#DC2626"/>
+  <!-- Jendela kiri -->
+  <rect x="20" y="40" width="10" height="8" rx="2" fill="#BFDBFE"/>
+  <line x1="25" y1="40" x2="25" y2="48" stroke="#93C5FD" stroke-width="1"/>
+  <line x1="20" y1="44" x2="30" y2="44" stroke="#93C5FD" stroke-width="1"/>
+  <!-- Jendela kanan -->
+  <rect x="50" y="40" width="10" height="8" rx="2" fill="#BFDBFE"/>
+  <line x1="55" y1="40" x2="55" y2="48" stroke="#93C5FD" stroke-width="1"/>
+  <line x1="50" y1="44" x2="60" y2="44" stroke="#93C5FD" stroke-width="1"/>
+</svg>

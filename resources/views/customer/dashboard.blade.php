@@ -1,316 +1,179 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard Customer - JAPLO')
+@section('title', 'Dashboard — JAPLO')
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/dashboard-customer.css') }}">
+@endpush
 
 @section('content')
-<!-- Hero Section dengan Background -->
-<div class="hero-driver-bg" style="min-height: 400px;">
-    <div class="hero-content-wrapper">
-        <div class="container py-5">
-            <div class="row align-items-center" style="min-height: 300px;">
-                <div class="col-lg-8 text-white">
-                    <h2 class="display-4 fw-bold mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-                        Halo, {{ auth()->user()->name }}! 👋
-                    </h2>
-                    <p class="lead mb-4" style="font-size: 1.3rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
-                        Mau kemana hari ini? Pilih layanan yang kamu butuhkan
-                    </p>
-                    
-                    <!-- Quick Stats -->
-                    <div class="row g-3">
-                        <div class="col-6 col-md-3">
-                            <div class="card bg-white bg-opacity-25 border-0 backdrop-blur">
-                                <div class="card-body text-center p-3">
-                                    <h3 class="fw-bold mb-0">{{ $totalOrders }}</h3>
-                                    <small>Total Pesanan</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <div class="card bg-white bg-opacity-25 border-0 backdrop-blur">
-                                <div class="card-body text-center p-3">
-                                    <h3 class="fw-bold mb-0">{{ $completedOrders }}</h3>
-                                    <small>Selesai</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+{{-- Greeting Banner --}}
+<div class="jp-greeting">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h2>Halo, {{ auth()->user()->name }} 👋</h2>
+                <p>Mau pesan apa hari ini?</p>
+            </div>
+            <div class="d-flex gap-3 text-center d-none d-md-flex">
+                <div>
+                    <div style="font-size:1.4rem;font-weight:800;color:#fff">{{ $totalOrders }}</div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,.7)">Total Pesanan</div>
+                </div>
+                <div style="width:1px;background:rgba(255,255,255,.2)"></div>
+                <div>
+                    <div style="font-size:1.4rem;font-weight:800;color:#fff">{{ $completedOrders }}</div>
+                    <div style="font-size:.75rem;color:rgba(255,255,255,.7)">Selesai</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container py-4" style="margin-top: -50px; position: relative; z-index: 10;">
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
+<div class="jp-dash-body">
+    <div class="container">
 
-    <!-- Statistics -->
-    <div class="row mb-4" style="display: none;">
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
-                        <i class="fas fa-receipt fa-2x text-primary"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bold mb-0">{{ $totalOrders }}</h3>
-                        <p class="text-secondary mb-0">Total Pesanan</p>
-                    </div>
+        {{-- ===== SERVICE MENU ===== --}}
+        <div class="jp-card mb-4">
+            <div class="jp-card-body">
+                <div class="fw-700 mb-3" style="font-size:.875rem;color:var(--jp-gray-600)">PILIH LAYANAN</div>
+                <div class="service-grid">
+                    @php
+                        $svcs = [
+                            ['route'=>'customer.ojek',      'img'=>'ojek.svg',       'label'=>'OJEK/TAXI'],
+                            ['route'=>'customer.kuliner',    'img'=>'kuliner.svg',    'label'=>'KULINER'],
+                            ['route'=>'customer.promosi',    'img'=>'promosi.svg',    'label'=>'IKLAN'],
+                            ['route'=>'customer.kesehatan',  'img'=>'kesehatan.svg',  'label'=>'KESEHATAN'],
+                            ['route'=>'customer.produk',     'img'=>'produk.svg',     'label'=>'PRODUK'],
+                            ['route'=>'customer.paket',      'img'=>'paket.svg',      'label'=>'KIRIM PAKET'],
+                            ['route'=>'customer.pasar',      'img'=>'pasar.svg',      'label'=>'BLN PASAR'],
+                            ['route'=>'customer.pencetakan', 'img'=>'pencetakan.svg', 'label'=>'CETAK'],
+                            ['route'=>'customer.trending',   'img'=>'trending.svg',   'label'=>'TRENDING'],
+                            ['route'=>'customer.mitra',      'img'=>'mitra.svg',      'label'=>'MITRA'],
+                            ['route'=>'customer.expo',       'img'=>'expo.svg',       'label'=>'EXPO'],
+                        ];
+                    @endphp
+                    @foreach($svcs as $s)
+                        <a href="{{ route($s['route']) }}" class="svc-btn">
+                            <div class="svc-icon-wrap">
+                                <img src="{{ asset('images/icons/' . $s['img']) }}"
+                                     alt="{{ $s['label'] }}"
+                                     width="46" height="46"
+                                     style="object-fit:contain">
+                            </div>
+                            <span class="svc-label">{{ $s['label'] }}</span>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
-                        <i class="fas fa-check-circle fa-2x text-success"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bold mb-0">{{ $completedOrders }}</h3>
-                        <p class="text-secondary mb-0">Perjalanan Selesai</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Active Order -->
-    @if($activeOrder)
-        <div class="card mb-4 shadow-lg" style="border-left: 4px solid var(--primary-color); border-radius: 12px;">
-            <div class="card-body">
-                <h5 class="fw-bold mb-3">
-                    <i class="fas fa-motorcycle me-2 text-primary"></i>
+        {{-- ===== ACTIVE ORDER ===== --}}
+        @if($activeOrder)
+            <div class="active-order-card mb-4">
+                <div class="order-status-line">
+                    <span class="jp-badge jp-badge-{{ strtolower($activeOrder->status) }}">
+                        {{ ucfirst($activeOrder->status) }}
+                    </span>
+                    <span>· {{ $activeOrder->order_number }}</span>
+                </div>
+                <div class="fw-700 mb-2" style="font-size:.9375rem;color:var(--jp-gray-900)">
                     Pesanan Aktif
-                </h5>
-                <div class="row">
-                    <div class="col-md-8">
-                        <p class="mb-2"><strong>Nomor Pesanan:</strong> {{ $activeOrder->order_number }}</p>
-                        <p class="mb-2"><strong>Dari:</strong> {{ $activeOrder->pickup_address }}</p>
-                        <p class="mb-2"><strong>Ke:</strong> {{ $activeOrder->destination_address }}</p>
-                        <p class="mb-2"><strong>Harga:</strong> Rp {{ number_format($activeOrder->price, 0, ',', '.') }}</p>
+                </div>
+                <div class="order-route mb-3">
+                    <div class="route-row">
+                        <span class="route-dot green"></span>
+                        <div>
+                            <div style="font-size:.72rem;color:var(--jp-gray-400);margin-bottom:1px">Jemput</div>
+                            <div style="font-size:.875rem;font-weight:500;color:var(--jp-gray-800)">{{ $activeOrder->pickup_address }}</div>
+                        </div>
                     </div>
-                    <div class="col-md-4 text-end">
-                        <span class="badge badge-{{ strtolower($activeOrder->status) }} mb-2">
-                            {{ ucfirst($activeOrder->status) }}
-                        </span>
-                        <br>
-                        @if($activeOrder->driver)
-                            <small class="text-secondary">Driver: {{ $activeOrder->driver->name }}</small>
-                        @endif
+                    <div style="margin-left:4px;width:2px;height:14px;background:var(--jp-gray-200)"></div>
+                    <div class="route-row">
+                        <span class="route-dot red"></span>
+                        <div>
+                            <div style="font-size:.72rem;color:var(--jp-gray-400);margin-bottom:1px">Tujuan</div>
+                            <div style="font-size:.875rem;font-weight:500;color:var(--jp-gray-800)">{{ $activeOrder->destination_address }}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="mt-3 pt-3 border-top">
-                    <a href="{{ route('order.track', $activeOrder->id) }}" class="btn btn-primary btn-sm">
-                        <i class="fas fa-map-location-dot me-2"></i> Lihat Tracking GPS
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <div style="font-size:.8rem;color:var(--jp-gray-400)">Total</div>
+                        <div style="font-size:1rem;font-weight:700;color:var(--jp-green)">
+                            Rp {{ number_format($activeOrder->price, 0, ',', '.') }}
+                        </div>
+                    </div>
+                    <a href="{{ route('order.track', $activeOrder->id) }}" class="btn btn-jp-primary btn-sm">
+                        <i class="fas fa-location-dot me-1"></i> Lacak
                     </a>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
 
-    <!-- Service Menu Icons -->
-    <div class="card mb-4 shadow-lg border-0" style="border-radius: 20px;">
-        <div class="card-body p-4">
-            <div class="row g-3 text-center">
-                <!-- Ojek/Taxi -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.ojek') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-motorcycle fa-2x text-primary"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">OJEK/TAXI</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Kuliner -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.kuliner') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-utensils fa-2x text-danger"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">KULINER</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Iklan Promosi -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.promosi') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-bullhorn fa-2x text-success"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">IKLAN<br>PROMOSI</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Kesehatan -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.kesehatan') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-hospital fa-2x text-danger"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">KESEHATAN</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Produk -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.produk') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-shopping-bag fa-2x text-info"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">PRODUK</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Pencetakan -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.pencetakan') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-print fa-2x text-dark"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">PENCETAKAN</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Trending -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.trending') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-fire fa-2x text-warning"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">TRENDING</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Sosial -->
-                <div class="col-3 col-md-3 col-lg-1-5">
-                    <a href="{{ route('customer.sosial') }}" class="text-decoration-none">
-                        <div class="service-icon-wrapper p-3 rounded-3 bg-light hover-shadow">
-                            <div class="service-icon mb-2">
-                                <i class="fas fa-users fa-2x text-primary"></i>
-                            </div>
-                            <div class="service-label">
-                                <small class="fw-bold text-dark">SOSIAL</small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <style>
-        .hover-shadow:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-            transition: all 0.3s ease;
-        }
-        .service-icon-wrapper {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .col-lg-1-5 {
-            flex: 0 0 auto;
-            width: 12.5%;
-        }
-        @media (max-width: 991px) {
-            .col-lg-1-5 {
-                width: 25%;
-            }
-        }
-    </style>
-
-    <!-- Recent Orders -->
-    <div class="card">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0">Riwayat Pesanan Terakhir</h5>
-                <a href="{{ route('order.history') }}" class="btn btn-outline-primary btn-sm">
-                    <i class="fas fa-list me-1"></i> Lihat Semua
+        {{-- ===== RECENT ORDERS ===== --}}
+        <div class="jp-card">
+            <div class="jp-card-header">
+                <span>Riwayat Terakhir</span>
+                <a href="{{ route('order.history') }}" class="btn btn-jp-ghost btn-sm">
+                    Lihat Semua <i class="fas fa-arrow-right ms-1"></i>
                 </a>
             </div>
-            
-            @if($recentOrders->count() > 0)
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>No. Pesanan</th>
-                                <th>Tujuan</th>
-                                <th>Harga</th>
-                                <th>Status</th>
-                                <th>Tanggal</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($recentOrders as $order)
+            <div class="jp-card-body p-0">
+                @if($recentOrders->count() > 0)
+                    <div class="table-responsive">
+                        <table class="jp-table">
+                            <thead>
                                 <tr>
-                                    <td><strong>{{ $order->order_number }}</strong></td>
-                                    <td>{{ Str::limit($order->destination_address, 40) }}</td>
-                                    <td>Rp {{ number_format($order->price, 0, ',', '.') }}</td>
-                                    <td>
-                                        <span class="badge badge-{{ strtolower($order->status) }}">
-                                            {{ ucfirst($order->status) }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
-                                    <td>
-                                        @if(in_array($order->status, ['in_progress', 'picked_up', 'accepted', 'pending']))
-                                            <a href="{{ route('order.track', $order->id) }}" class="btn btn-sm btn-info" title="Lihat Tracking">
-                                                <i class="fas fa-map-location-dot"></i>
-                                            </a>
-                                        @else
-                                            <button class="btn btn-sm btn-outline-secondary" disabled title="Pesanan sudah selesai">
-                                                <i class="fas fa-check-circle"></i>
-                                            </button>
-                                        @endif
-                                    </td>
+                                    <th>No. Pesanan</th>
+                                    <th>Tujuan</th>
+                                    <th>Harga</th>
+                                    <th>Status</th>
+                                    <th>Tanggal</th>
+                                    <th></th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <div class="text-center py-5">
-                    <i class="fas fa-inbox fa-3x text-secondary mb-3"></i>
-                    <p class="text-secondary">Belum ada pesanan</p>
-                </div>
-            @endif
+                            </thead>
+                            <tbody>
+                                @foreach($recentOrders as $order)
+                                    <tr>
+                                        <td><span style="font-family:monospace;font-weight:600;font-size:.8125rem">{{ $order->order_number }}</span></td>
+                                        <td style="max-width:200px">{{ Str::limit($order->destination_address, 35) }}</td>
+                                        <td class="fw-600">Rp {{ number_format($order->price, 0, ',', '.') }}</td>
+                                        <td>
+                                            <span class="jp-badge jp-badge-{{ strtolower($order->status) }}">
+                                                {{ ucfirst($order->status) }}
+                                            </span>
+                                        </td>
+                                        <td style="color:var(--jp-gray-400);font-size:.8rem;white-space:nowrap">
+                                            {{ $order->created_at->format('d M Y') }}
+                                        </td>
+                                        <td>
+                                            @if(in_array($order->status, ['pending','accepted','picked_up','in_progress']))
+                                                <a href="{{ route('order.track', $order->id) }}" class="btn btn-sm btn-jp-outline">
+                                                    <i class="fas fa-map-location-dot"></i>
+                                                </a>
+                                            @else
+                                                <span style="font-size:.75rem;color:var(--jp-gray-400)">—</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="jp-empty">
+                        <div class="empty-icon"><i class="fas fa-receipt"></i></div>
+                        <p>Belum ada pesanan</p>
+                        <a href="{{ route('customer.ojek') }}" class="btn btn-jp-primary btn-sm">
+                            <i class="fas fa-motorcycle me-2"></i>Pesan Ojek Sekarang
+                        </a>
+                    </div>
+                @endif
+            </div>
         </div>
+
     </div>
 </div>
 @endsection

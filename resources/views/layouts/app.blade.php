@@ -2,935 +2,397 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="theme-color" content="#16A34A">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="JAPLO">
+    <meta name="description" content="Platform jasa pengantar lokal untuk masyarakat Bintan">
     <title>@yield('title', 'JAPLO - Jasa Pengantar Lokal')</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        :root {
-            --primary-color: #00A859;
-            --primary-dark: #008F4A;
-            --accent-color: #FF6B35;
-            --success-color: #4CAF50;
-            --danger-color: #F44336;
-            --warning-color: #FFC107;
-            --info-color: #2196F3;
-            --text-primary: #212121;
-            --text-secondary: #757575;
-            --background: #F5F5F5;
-            --border-color: #E0E0E0;
-        }
-        
-        /* Smooth Transitions */
-        * {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        body {
-            background-color: var(--background);
-            overflow-x: hidden;
-        }
-        
-        /* ============= ANIMATIONS ============= */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* ============= UTILITY CLASSES ============= */
-        .fade-in-up {
-            animation: fadeInUp 0.5s ease-out forwards;
-        }
-        
-        .slide-in-right {
-            animation: slideInRight 0.5s ease-out forwards;
-        }
-        
-        .pulse-animation {
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .bounce-animation {
-            animation: bounce 1s ease-in-out infinite;
-        }
-        
-        .shake-animation {
-            animation: shake 0.5s ease-in-out;
-        }
-        
-        /* ============= HERO BACKGROUNDS ============= */
-        .hero-background {
-            position: relative;
-            background: linear-gradient(135deg, rgba(0, 168, 89, 0.9) 0%, rgba(0, 143, 74, 0.8) 100%);
-            overflow: hidden;
-        }
-        
-        .hero-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.3;
-            z-index: 0;
-        }
-        
-        .hero-background-overlay {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-driver-bg {
-            position: relative;
-            min-height: 500px;
-            background: linear-gradient(135deg, rgba(0, 168, 89, 0.85) 0%, rgba(0, 143, 74, 0.75) 100%), 
-                        url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80');
-            background-size: cover;
-            background-position: center right;
-            background-attachment: fixed;
-        }
-        
-        .hero-driver-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, rgba(0, 168, 89, 0.95) 0%, rgba(0, 168, 89, 0.4) 70%, transparent 100%);
-            z-index: 1;
-        }
-        
-        .hero-content-wrapper {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* ============= NAVBAR STYLES ============= */
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: white !important;
-            transition: all 0.3s;
-        }
-        
-        .navbar-brand:hover {
-            transform: scale(1.05);
-        }
-        
-        .navbar {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            box-shadow: 0 4px 15px rgba(0, 168, 89, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .nav-link {
-            position: relative;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: white;
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s;
-        }
-        
-        .nav-link:hover::after {
-            transform: scaleX(1);
-            transform-origin: left;
-        }
-        
-        /* ============= BUTTON STYLES ============= */
-        .btn {
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn-primary {
-            background: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            color: white;
-            position: relative;
-        }
-        
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 168, 89, 0.4);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 168, 89, 0.3);
-        }
-        
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-accent {
-            background: var(--accent-color);
-            border: 2px solid var(--accent-color);
-            color: white;
-        }
-        
-        .btn-accent:hover {
-            background: #E55A2B;
-            border-color: #E55A2B;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
-        }
-        
-        .btn-success:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
-        }
-        
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            transition: all 0.3s;
-        }
-        
-        .btn-outline-primary:hover {
-            background: var(--primary-color);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* ============= FORM STYLES ============= */
-        .form-control {
-            border-radius: 10px;
-            border: 2px solid var(--border-color);
-            padding: 12px 16px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.3rem rgba(0, 168, 89, 0.1);
-            transform: translateY(-2px);
-        }
-        
-        .form-control.is-invalid {
-            border-color: var(--danger-color);
-            animation: shake 0.5s;
-        }
-        
-        .form-control.is-valid {
-            border-color: var(--success-color);
-        }
-        
-        .form-label {
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .form-floating > .form-control {
-            height: calc(3.5rem + 2px);
-            line-height: 1.25;
-        }
-        
-        .input-group-text {
-            border: 2px solid var(--border-color);
-            transition: all 0.3s;
-        }
-        
-        .input-group:focus-within .input-group-text {
-            border-color: var(--primary-color);
-            background: var(--primary-color) !important;
-        }
-        
-        /* ============= CARD STYLES ============= */
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transform: scaleX(0);
-            transition: transform 0.3s;
-            transform-origin: left;
-        }
-        
-        .card:hover {
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-            transform: translateY(-6px);
-        }
-        
-        .card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        /* ============= ALERT STYLES ============= */
-        .alert {
-            border-radius: 12px;
-            border: none;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            animation: slideInRight 0.3s ease-out;
-        }
-        
-        .alert-success {
-            background: rgba(76, 175, 80, 0.1);
-            color: #388E3C;
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .alert-danger {
-            background: rgba(244, 67, 54, 0.1);
-            color: #D32F2F;
-            border-left: 4px solid #F44336;
-        }
-        
-        .alert-warning {
-            background: rgba(255, 193, 7, 0.1);
-            color: #F57F17;
-            border-left: 4px solid #FFC107;
-        }
-        
-        .alert-info {
-            background: rgba(33, 150, 243, 0.1);
-            color: #1565C0;
-            border-left: 4px solid #2196F3;
-        }
-        
-        /* ============= HERO SECTION ============= */
-        .hero-section {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 60px 0;
-            border-radius: 0 0 30px 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 168, 89, 0.2);
-        }
-        
-        /* ============= FEATURE CARDS ============= */
-        .feature-card {
-            text-align: center;
-            padding: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .feature-card i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            transition: all 0.3s;
-        }
-        
-        .feature-card:hover i {
-            transform: scale(1.2) rotate(10deg);
-        }
-        
-        /* ============= STAT CARD ============= */
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .stat-card:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 8px 20px rgba(0, 168, 89, 0.2);
-        }
-        
-        .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-        
-        .stat-card .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* ============= BADGE STYLES ============= */
-        .badge-status {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-        
-        .badge-pending {
-            background: #FFF3E0;
-            color: #F57C00;
-        }
-        
-        .badge-accepted {
-            background: #E3F2FD;
-            color: #1976D2;
-        }
-        
-        .badge-completed {
-            background: #E8F5E9;
-            color: #388E3C;
-        }
-        
-        .badge-cancelled {
-            background: #FFEBEE;
-            color: #D32F2F;
-        }
-        
-        /* ============= FOOTER ============= */
-        .footer {
-            background: linear-gradient(135deg, var(--text-primary) 0%, #1a1a1a 100%);
-            color: white;
-            padding: 40px 0 20px;
-            margin-top: 60px;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .footer a {
-            transition: all 0.3s;
-            color: #BBB;
-        }
-        
-        .footer a:hover {
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-        
-        /* ============= ADDITIONAL UTILITIES ============= */
-        .backdrop-blur {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        
-        .shadow-modern {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .animated-gradient {
-            background: linear-gradient(135deg, #00A859, #008F4A, #00C16A);
-            background-size: 200% 200%;
-            animation: gradientShift 10s ease infinite;
-        }
-        
-        /* Loading skeleton */
-        .skeleton {
-            animation: pulse 2s ease-in-out infinite;
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-        }
-        
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* ============= RESPONSIVE ============= */
-        @media (max-width: 768px) {
-            .hero-driver-bg {
-                background-attachment: scroll;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .form-control {
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-        }
-    </style>
-    
+
+    {{-- Fonts --}}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {{-- Bootstrap 5 --}}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- Font Awesome 6 --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {{-- JAPLO Global CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     @stack('styles')
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-motorcycle me-2"></i> JAPLO
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">
-                                <i class="fas fa-home me-1"></i> Beranda
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">
-                                <i class="fas fa-sign-in-alt me-1"></i> Masuk
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-accent text-white ms-2" href="{{ route('register') }}">
-                                <i class="fas fa-user-plus me-1"></i> Daftar
-                            </a>
-                        </li>
-                    @else
-                        @if(auth()->user()->isAdmin())
-                            <!-- Admin Navigation -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard') }}">
-                                    <i class="fas fa-chart-line me-1"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-users me-1"></i> Manajemen
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="{{ route('admin.users') }}">
-                                        <i class="fas fa-user-circle me-2"></i> Users
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin.drivers') }}">
-                                        <i class="fas fa-id-card me-2"></i> Drivers
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('admin.orders') }}">
-                                        <i class="fas fa-receipt me-2"></i> Orders
-                                    </a></li>
-                                </ul>
-                            </li>
-                        @elseif(auth()->user()->isCustomer())
-                            <!-- Customer Navigation -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard') }}">
-                                    <i class="fas fa-home me-1"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-th me-1"></i> Layanan
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="{{ route('customer.ojek') }}">
-                                        <i class="fas fa-motorcycle me-2 text-primary"></i> Ojek & Taxi
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.kuliner') }}">
-                                        <i class="fas fa-utensils me-2 text-danger"></i> Kuliner
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.kesehatan') }}">
-                                        <i class="fas fa-hospital me-2 text-danger"></i> Kesehatan
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.produk') }}">
-                                        <i class="fas fa-shopping-bag me-2 text-info"></i> Produk
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.pencetakan') }}">
-                                        <i class="fas fa-print me-2 text-dark"></i> Pencetakan
-                                    </a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.promosi') }}">
-                                        <i class="fas fa-bullhorn me-2 text-success"></i> Promosi
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.trending') }}">
-                                        <i class="fas fa-fire me-2 text-warning"></i> Trending
-                                    </a></li>
-                                    <li><a class="dropdown-item" href="{{ route('customer.sosial') }}">
-                                        <i class="fas fa-users me-2 text-primary"></i> Sosial
-                                    </a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('order.history') }}">
-                                    <i class="fas fa-list me-1"></i> Riwayat Pesanan
-                                </a>
-                            </li>
-                        @endif
 
+{{-- ======================== NAVBAR ======================== --}}
+<nav class="jp-navbar navbar navbar-expand-lg">
+    <div class="container">
+
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <span class="brand-icon"><i class="fas fa-motorcycle"></i></span>
+            JAPLO
+        </a>
+
+        <button class="navbar-toggler border-0 text-white" type="button"
+                data-bs-toggle="collapse" data-bs-target="#jpNav"
+                aria-controls="jpNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="jpNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Masuk</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="nav-link btn-nav-cta" href="{{ route('register') }}">Daftar</a>
+                    </li>
+
+                @else
+                    @php $user = auth()->user(); @endphp
+
+                    {{-- ── ADMIN NAV ── --}}
+                    @if($user->isAdmin())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                <i class="fas fa-gauge-high me-1"></i> Dashboard
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle me-1"></i> {{ auth()->user()->name }}
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-users me-1"></i> Pengguna
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="{{ route('profile') }}">
-                                    <i class="fas fa-edit me-2"></i> Profil
+                                <li><a class="dropdown-item" href="{{ route('admin.users') }}">
+                                    <i class="fas fa-user me-2" style="color:var(--jp-green)"></i> Customer
                                 </a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form action="{{ route('logout') }}" method="POST" class="m-0">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">
-                                            <i class="fas fa-sign-out-alt me-2"></i> Keluar
-                                        </button>
-                                    </form>
-                                </li>
+                                <li><a class="dropdown-item" href="{{ route('admin.drivers') }}">
+                                    <i class="fas fa-id-card me-2" style="color:var(--jp-green)"></i> Driver
+                                </a></li>
                             </ul>
                         </li>
-                    @endguest
-                </ul>
-            </div>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-sliders me-1"></i> Konten
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('admin.restaurants') }}">
+                                    <i class="fas fa-utensils me-2" style="color:#EF4444"></i> Restoran & Menu
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.products') }}">
+                                    <i class="fas fa-bag-shopping me-2" style="color:#8B5CF6"></i> Produk
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.health_services') }}">
+                                    <i class="fas fa-kit-medical me-2" style="color:#3B82F6"></i> Kesehatan
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.promotions') }}">
+                                    <i class="fas fa-tag me-2" style="color:#F59E0B"></i> Promosi
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.articles') }}">
+                                    <i class="fas fa-newspaper me-2" style="color:#F97316"></i> Artikel
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.tariffs') }}">
+                                    <i class="fas fa-coins me-2" style="color:var(--jp-green)"></i> Tarif
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-receipt me-1"></i> Transaksi
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('admin.orders') }}">
+                                    <i class="fas fa-motorcycle me-2" style="color:var(--jp-green)"></i> Ojek/Taksi
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.packages') }}">
+                                    <i class="fas fa-box me-2" style="color:#8B5CF6"></i> Paket
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.market_orders') }}">
+                                    <i class="fas fa-cart-shopping me-2" style="color:var(--jp-green)"></i> Belanja Pasar
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-handshake me-1"></i> Registrasi
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('admin.mitra_registrations') }}">
+                                    <i class="fas fa-handshake me-2" style="color:var(--jp-green)"></i> Mitra Usaha
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('admin.expo_registrations') }}">
+                                    <i class="fas fa-store me-2" style="color:#F59E0B"></i> Tenant Expo
+                                </a></li>
+                            </ul>
+                        </li>
+
+                    {{-- ── DRIVER NAV ── --}}
+                    @elseif($user->isDriver())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard') }}">
+                                <i class="fas fa-gauge me-1"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.history') }}">
+                                <i class="fas fa-list me-1"></i> Riwayat
+                            </a>
+                        </li>
+
+                    {{-- ── CUSTOMER NAV ── --}}
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard') }}">
+                                <i class="fas fa-house me-1"></i> Beranda
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-grid-2 me-1"></i> Layanan
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{{ route('customer.ojek') }}">
+                                    <i class="fas fa-motorcycle me-2" style="color:#16A34A"></i> Ojek / Taksi
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.kuliner') }}">
+                                    <i class="fas fa-bowl-food me-2" style="color:#EF4444"></i> Kuliner
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.paket') }}">
+                                    <i class="fas fa-box me-2" style="color:#8B5CF6"></i> Kirim Paket
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.pasar') }}">
+                                    <i class="fas fa-cart-shopping me-2" style="color:#16A34A"></i> Belanja Pasar
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.kesehatan') }}">
+                                    <i class="fas fa-kit-medical me-2" style="color:#3B82F6"></i> Kesehatan
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.produk') }}">
+                                    <i class="fas fa-bag-shopping me-2" style="color:#8B5CF6"></i> Produk
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.pencetakan') }}">
+                                    <i class="fas fa-print me-2" style="color:#6B7280"></i> Percetakan
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.promosi') }}">
+                                    <i class="fas fa-tag me-2" style="color:#F59E0B"></i> Promosi
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.trending') }}">
+                                    <i class="fas fa-fire me-2" style="color:#F97316"></i> Trending
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.sosial') }}">
+                                    <i class="fas fa-people-group me-2" style="color:#0EA5E9"></i> Sosial
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.mitra') }}">
+                                    <i class="fas fa-handshake me-2" style="color:#16A34A"></i> Daftar Mitra
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('customer.expo') }}">
+                                    <i class="fas fa-store me-2" style="color:#F59E0B"></i> Daftar Expo
+                                </a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.history') }}">
+                                <i class="fas fa-clock-rotate-left me-1"></i> Riwayat
+                            </a>
+                        </li>
+                    @endif
+
+                    {{-- ── USER MENU ── --}}
+                    <li class="nav-item dropdown ms-lg-2">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#"
+                           role="button" data-bs-toggle="dropdown">
+                            <span class="nav-avatar">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                            <span class="d-none d-lg-inline">{{ Str::limit($user->name, 14) }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <div class="px-3 py-2" style="border-bottom:1px solid var(--jp-gray-200)">
+                                    <div style="font-size:.875rem;font-weight:600;color:var(--jp-gray-900)">
+                                        {{ $user->name }}
+                                    </div>
+                                    <div style="font-size:.78rem;color:var(--jp-gray-400)">{{ $user->email }}</div>
+                                </div>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('profile') }}">
+                                <i class="fas fa-user me-2" style="color:var(--jp-green)"></i> Profil Saya
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" class="m-0">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="fas fa-right-from-bracket me-2"></i> Keluar
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                @endguest
+
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
+{{-- ======================== END NAVBAR ======================== --}}
 
-    <!-- Content -->
-    <main>
-        @yield('content')
-    </main>
+{{-- Toast container --}}
+<div id="jp-toast-container"></div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-motorcycle me-2"></i> JAPLO</h5>
-                    <p class="text-light">Jasa Pengantar Lokal - Platform ojek online terpercaya.</p>
-                </div>
-                <div class="col-md-4">
-                    <h6>Menu</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="/" class="text-light text-decoration-none">Beranda</a></li>
-                        <li><a href="/tentang" class="text-light text-decoration-none">Tentang Kami</a></li>
-                        <li><a href="/bantuan" class="text-light text-decoration-none">Bantuan</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h6>Kontak</h6>
-                    <p class="text-light mb-1"><i class="fas fa-envelope me-2"></i> support@japlo.id</p>
-                    <p class="text-light mb-1"><i class="fas fa-phone me-2"></i> +62 xxx xxx xxxx</p>
-                    <div class="mt-3">
-                        <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-lg"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="bg-light">
-            <div class="text-center text-light">
-                <p class="mb-0">&copy; 2024 JAPLO. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <!-- Toast Notifications Script -->
+{{-- Flash messages --}}
+@if(session('success'))
     <script>
-        // Toast Notification System
-        class Toast {
-            static show(message, type = 'info', duration = 3000) {
-                const toastContainer = document.getElementById('toastContainer') || this.createContainer();
-                
-                const toastId = 'toast-' + Date.now();
-                const toastHTML = `
-                    <div id="${toastId}" class="toast-notification toast-${type} fade-in-up" role="alert">
-                        <div class="toast-content">
-                            <i class="fas fa-check-circle toast-icon"></i>
-                            <span class="toast-message">${message}</span>
-                            <button type="button" class="toast-close" onclick="this.parentElement.parentElement.remove()">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                toastContainer.insertAdjacentHTML('beforeend', toastHTML);
-                
-                if (duration > 0) {
-                    setTimeout(() => {
-                        const toast = document.getElementById(toastId);
-                        if (toast) toast.classList.add('fade-out');
-                        setTimeout(() => {
-                            toast?.remove();
-                        }, 300);
-                    }, duration);
-                }
-            }
-            
-            static success(message, duration = 3000) {
-                this.show(message, 'success', duration);
-            }
-            
-            static error(message, duration = 5000) {
-                this.show(message, 'error', duration);
-            }
-            
-            static warning(message, duration = 4000) {
-                this.show(message, 'warning', duration);
-            }
-            
-            static info(message, duration = 3000) {
-                this.show(message, 'info', duration);
-            }
-            
-            static createContainer() {
-                const container = document.createElement('div');
-                container.id = 'toastContainer';
-                container.className = 'toast-container';
-                document.body.appendChild(container);
-                return container;
-            }
-        }
-        
-        // Initialize toast container on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            Toast.createContainer();
-        });
-        
-        // Global form validation
-        class FormValidator {
-            static validateEmail(email) {
-                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return re.test(email);
-            }
-            
-            static validatePhone(phone) {
-                const re = /^(\+62|0)[0-9]{9,12}$/;
-                return re.test(phone.replace(/\s/g, ''));
-            }
-            
-            static validatePassword(password) {
-                return password.length >= 6;
-            }
-            
-            static validateRequired(value) {
-                return value.trim().length > 0;
-            }
-        }
-        
-        // Auto-dismiss alerts after 5 seconds
-        document.addEventListener('DOMContentLoaded', function() {
-            const alerts = document.querySelectorAll('.alert:not(.alert-permanent)');
-            alerts.forEach(alert => {
-                setTimeout(() => {
-                    alert.classList.add('fade-out');
-                    setTimeout(() => alert.remove(), 300);
-                }, 5000);
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            JapToast.success('{{ addslashes(session('success')) }}');
         });
     </script>
-    
-    <!-- Toast Styles -->
-    <style>
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 400px;
-        }
-        
-        .toast-notification {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 300px;
-            border-left: 4px solid #2196F3;
-            animation: slideInRight 0.3s ease-out;
-        }
-        
-        .toast-notification.toast-success {
-            border-left-color: #4CAF50;
-        }
-        
-        .toast-notification.toast-success .toast-icon {
-            color: #4CAF50;
-        }
-        
-        .toast-notification.toast-error {
-            border-left-color: #F44336;
-        }
-        
-        .toast-notification.toast-error .toast-icon {
-            color: #F44336;
-        }
-        
-        .toast-notification.toast-warning {
-            border-left-color: #FFC107;
-        }
-        
-        .toast-notification.toast-warning .toast-icon {
-            color: #FFC107;
-        }
-        
-        .toast-notification.toast-info {
-            border-left-color: #2196F3;
-        }
-        
-        .toast-notification.toast-info .toast-icon {
-            color: #2196F3;
-        }
-        
-        .toast-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
-        
-        .toast-icon {
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-        
-        .toast-message {
-            color: #333;
-            font-weight: 500;
-            flex: 1;
-        }
-        
-        .toast-close {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 1rem;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s;
-        }
-        
-        .toast-close:hover {
-            color: #333;
-        }
-        
-        .fade-out {
-            animation: fadeOut 0.3s ease-out forwards;
-        }
-        
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .toast-container {
-                left: 10px;
-                right: 10px;
-                max-width: none;
-            }
-            
-            .toast-notification {
-                min-width: auto;
-            }
-        }
-    </style>
-    
-    @stack('scripts')
+@endif
+@if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            JapToast.error('{{ addslashes(session('error')) }}');
+        });
+    </script>
+@endif
+@if(session('warning'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            JapToast.warning('{{ addslashes(session('warning')) }}');
+        });
+    </script>
+@endif
+
+{{-- Main content --}}
+<main>@yield('content')</main>
+
+{{-- ======================== FOOTER ======================== --}}
+<footer class="jp-footer">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="footer-brand mb-2">
+                    <i class="fas fa-motorcycle me-2"></i>JAPLO
+                </div>
+                <p style="font-size:.85rem;color:#9CA3AF;max-width:260px;line-height:1.6">
+                    Platform jasa pengantar lokal untuk masyarakat Bintan.
+                    Cepat, aman, dan terpercaya. Berdiri sejak 2018.
+                </p>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div style="font-weight:600;color:#fff;margin-bottom:.75rem;font-size:.875rem">Layanan</div>
+                <ul class="list-unstyled" style="line-height:2">
+                    <li><a href="{{ route('customer.ojek') }}">Ojek / Taksi</a></li>
+                    <li><a href="{{ route('customer.kuliner') }}">Kuliner</a></li>
+                    <li><a href="{{ route('customer.paket') }}">Kirim Paket</a></li>
+                    <li><a href="{{ route('customer.pasar') }}">Belanja Pasar</a></li>
+                    <li><a href="{{ route('customer.kesehatan') }}">Kesehatan</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <div style="font-weight:600;color:#fff;margin-bottom:.75rem;font-size:.875rem">Bergabung</div>
+                <ul class="list-unstyled" style="line-height:2">
+                    <li><a href="{{ route('register') }}?role=driver">Daftar Driver</a></li>
+                    <li><a href="{{ route('customer.mitra') }}">Daftar Mitra</a></li>
+                    <li><a href="{{ route('customer.expo') }}">Daftar Expo</a></li>
+                    <li><a href="#">Tentang Kami</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <div style="font-weight:600;color:#fff;margin-bottom:.75rem;font-size:.875rem">Kontak</div>
+                <p style="font-size:.85rem;color:#9CA3AF;margin-bottom:.5rem">
+                    <i class="fas fa-envelope me-2" style="color:var(--jp-green)"></i>support@japlo.id
+                </p>
+                <p style="font-size:.85rem;color:#9CA3AF;margin-bottom:.5rem">
+                    <i class="fas fa-phone me-2" style="color:var(--jp-green)"></i>+62 771 xxx xxxx
+                </p>
+                <p style="font-size:.85rem;color:#9CA3AF">
+                    <i class="fas fa-location-dot me-2" style="color:var(--jp-green)"></i>Tanjung Uban, Bintan, Kepri
+                </p>
+            </div>
+        </div>
+        <hr class="jp-divider">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <p class="footer-copy mb-0">&copy; {{ date('Y') }} JAPLO. Hak cipta dilindungi.</p>
+            <div class="d-flex gap-3" style="font-size:.8125rem">
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+            </div>
+        </div>
+    </div>
+</footer>
+{{-- ======================== END FOOTER ======================== --}}
+
+{{-- ======================== BOTTOM NAV MOBILE ======================== --}}
+@auth
+<nav class="jp-bottom-nav d-lg-none">
+    <a href="{{ route('dashboard') }}"
+       class="jp-bottom-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+        <i class="fas fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    @if(auth()->user()->isCustomer())
+        <a href="{{ route('customer.ojek') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('customer.ojek') ? 'active' : '' }}">
+            <i class="fas fa-motorcycle"></i>
+            <span>Ojek</span>
+        </a>
+        <a href="{{ route('customer.kuliner') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('customer.kuliner*') ? 'active' : '' }}">
+            <i class="fas fa-bowl-food"></i>
+            <span>Kuliner</span>
+        </a>
+        <a href="{{ route('order.history') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('order.history') ? 'active' : '' }}">
+            <i class="fas fa-clock-rotate-left"></i>
+            <span>Riwayat</span>
+        </a>
+
+    @elseif(auth()->user()->isDriver())
+        <a href="{{ route('order.history') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('order.history') ? 'active' : '' }}">
+            <i class="fas fa-list"></i>
+            <span>Riwayat</span>
+        </a>
+
+    @elseif(auth()->user()->isAdmin())
+        <a href="{{ route('admin.orders') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('admin.orders') ? 'active' : '' }}">
+            <i class="fas fa-receipt"></i>
+            <span>Pesanan</span>
+        </a>
+        <a href="{{ route('admin.drivers') }}"
+           class="jp-bottom-nav-item {{ request()->routeIs('admin.drivers') ? 'active' : '' }}">
+            <i class="fas fa-id-card"></i>
+            <span>Driver</span>
+        </a>
+    @endif
+
+    <a href="{{ route('profile') }}"
+       class="jp-bottom-nav-item {{ request()->routeIs('profile') ? 'active' : '' }}">
+        <i class="fas fa-user-circle"></i>
+        <span>Profil</span>
+    </a>
+</nav>
+@endauth
+{{-- ======================== END BOTTOM NAV ======================== --}}
+
+{{-- Bootstrap JS --}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+{{-- JAPLO Global JS --}}
+<script src="{{ asset('js/app.js') }}"></script>
+
+@stack('scripts')
 </body>
 </html>

@@ -1,238 +1,141 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
+@section('title', 'Produk — JAPLO')
 
-@section('title', 'Produk - JAPLO')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/services.css') }}">
+@endpush
 
 @section('content')
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+<div class="jp-page-top">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-1"></i> Kembali
-        </a>
-        <h2 class="fw-bold mb-2 text-white">Belanja Produk</h2>
-        <p class="mb-0 text-white">Temukan produk terbaik dengan harga terjangkau</p>
-    </div>
-</div>
-
-<div class="container py-4">
-    <!-- Search & Filter -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-9 mb-3 mb-md-0">
-                    <div class="input-group input-group-lg">
-                        <span class="input-group-text">
-                            <i class="fas fa-search"></i>
-                        </span>
-                        <input type="text" class="form-control" id="searchProduct" placeholder="Cari produk yang Anda inginkan..." onkeyup="searchProducts()">
-                        <button class="btn btn-info text-white" onclick="executeSearch()">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-outline-info btn-lg w-100" onclick="openProductFilter()">
-                        <i class="fas fa-filter me-2"></i> Filter
-                    </button>
-                </div>
-            </div>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm"
+               style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
         </div>
-    </div>
-
-    <!-- Categories -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">Kategori Produk</h5>
-            <div class="d-flex overflow-auto pb-2" style="gap: 10px;">
-                <button class="btn btn-info text-white" onclick="filterProductCategory('all')">
-                    <i class="fas fa-th-large me-2"></i> Semua
-                </button>
-                <button class="btn btn-outline-info" onclick="filterProductCategory('elektronik')">
-                    <i class="fas fa-laptop me-2"></i> Elektronik
-                </button>
-                <button class="btn btn-outline-info" onclick="filterProductCategory('fashion')">
-                    <i class="fas fa-tshirt me-2"></i> Fashion
-                </button>
-                <button class="btn btn-outline-info" onclick="filterProductCategory('rumah')">
-                    <i class="fas fa-home me-2"></i> Rumah Tangga
-                </button>
-                <button class="btn btn-outline-info" onclick="filterProductCategory('buku')">
-                    <i class="fas fa-book me-2"></i> Buku & Alat Tulis
-                </button>
-                <button class="btn btn-outline-info" onclick="filterProductCategory('olahraga')">
-                    <i class="fas fa-football-ball me-2"></i> Olahraga
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Flash Sale Banner -->
-    <div class="card mb-4" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); border: none;">
-        <div class="card-body text-center text-white py-4">
-            <h4 class="fw-bold mb-2">
-                <i class="fas fa-bolt me-2"></i>
-                FLASH SALE! Diskon hingga 70%
-            </h4>
-            <p class="mb-0">Buruan sebelum kehabisan!</p>
-        </div>
-    </div>
-
-    <!-- Products Grid -->
-    <h5 class="fw-bold mb-3">Produk Pilihan</h5>
-    <div class="row">
-        @foreach($products as $product)
-        <div class="col-6 col-md-4 col-lg-3 mb-4">
-            <div class="card hover-card h-100">
-                <div class="position-relative">
-                    <img src="{{ $product['image'] }}" class="card-img-top" alt="{{ $product['name'] }}" style="height: 200px; object-fit: cover;">
-                    @php
-                        $discount = round((($product['original_price'] - $product['price']) / $product['original_price']) * 100);
-                    @endphp
-                    @if($discount > 0)
-                    <span class="badge bg-danger position-absolute" style="top: 10px; left: 10px;">
-                        -{{ $discount }}%
-                    </span>
-                    @endif
-                </div>
-                <div class="card-body">
-                    <small class="text-secondary">{{ $product['category'] }}</small>
-                    <h6 class="fw-bold mb-2" style="height: 40px; overflow: hidden;">{{ $product['name'] }}</h6>
-                    
-                    @if($product['original_price'] > $product['price'])
-                    <p class="text-decoration-line-through text-secondary small mb-1">
-                        Rp {{ number_format($product['original_price'], 0, ',', '.') }}
-                    </p>
-                    @endif
-                    <h5 class="fw-bold text-info mb-2">Rp {{ number_format($product['price'], 0, ',', '.') }}</h5>
-                    
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-warning small">
-                            <i class="fas fa-star"></i> {{ $product['rating'] }}
-                        </span>
-                        <span class="text-secondary small">Terjual {{ $product['sold'] }}</span>
-                    </div>
-                    
-                    <button class="btn btn-info text-white w-100" onclick="addToCart({{ $product['id'] }}, '{{ $product['name'] }}')">
-                        <i class="fas fa-shopping-cart me-2"></i> Beli
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- Load More -->
-    <div class="text-center mt-4">
-        <button class="btn btn-outline-info btn-lg px-5">
-            <i class="fas fa-sync-alt me-2"></i> Muat Lebih Banyak
-        </button>
-    </div>
-
-    <!-- Features -->
-    <div class="card mt-5">
-        <div class="card-body">
-            <h5 class="fw-bold mb-4 text-center">Kenapa Belanja di Japlo?</h5>
-            <div class="row text-center">
-                <div class="col-md-3 col-6 mb-3">
-                    <i class="fas fa-shield-alt fa-3x text-info mb-3"></i>
-                    <h6 class="fw-bold">100% Aman</h6>
-                    <p class="text-secondary small">Transaksi dijamin aman</p>
-                </div>
-                <div class="col-md-3 col-6 mb-3">
-                    <i class="fas fa-shipping-fast fa-3x text-info mb-3"></i>
-                    <h6 class="fw-bold">Gratis Ongkir</h6>
-                    <p class="text-secondary small">Untuk pembelian tertentu</p>
-                </div>
-                <div class="col-md-3 col-6 mb-3">
-                    <i class="fas fa-undo-alt fa-3x text-info mb-3"></i>
-                    <h6 class="fw-bold">Mudah Return</h6>
-                    <p class="text-secondary small">30 hari pengembalian</p>
-                </div>
-                <div class="col-md-3 col-6 mb-3">
-                    <i class="fas fa-headset fa-3x text-info mb-3"></i>
-                    <h6 class="fw-bold">CS 24/7</h6>
-                    <p class="text-secondary small">Siap membantu Anda</p>
-                </div>
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ asset('images/icons/produk.svg') }}" width="40" height="40" alt="Produk">
+            <div>
+                <h1><i class="fas fa-bag-shopping me-2" style="color:rgba(255,255,255,.8)"></i>Produk</h1>
+                <p class="mb-0" style="font-size:.85rem;color:rgba(255,255,255,.8)">Temukan produk terbaik dari penjual lokal Bintan</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Shopping Cart Button (Floating) -->
-<button class="btn btn-info btn-lg position-fixed text-white shadow-lg" 
-        style="bottom: 20px; right: 20px; border-radius: 50px; padding: 12px 24px; z-index: 1000;" 
-        onclick="openProductCart()">
-    <i class="fas fa-shopping-cart me-2"></i>
-    <span class="d-none d-sm-inline">Keranjang</span>
-    <span class="badge bg-light text-info ms-2" id="productCartCount">0</span>
-</button>
+<div class="page-body">
+    <div class="container">
 
-<style>
-    .hover-card {
-        transition: all 0.3s ease;
-        border: 2px solid #f0f0f0;
-    }
-    .hover-card:hover {
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        transform: translateY(-4px);
-        border-color: #17a2b8;
-    }
-</style>
+        {{-- Search & Filter --}}
+        <div class="jp-card mb-4">
+            <div class="jp-card-body">
+                <form method="GET" action="{{ route('customer.produk') }}">
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" name="search" class="form-control"
+                                   placeholder="Cari produk..."
+                                   value="{{ request('search') }}">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="category" class="form-select">
+                                <option value="">Semua Kategori</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>
+                                        {{ $cat }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-jp-primary w-100">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<script>
-let productCartItems = [];
-let currentProductFilter = 'all';
+        {{-- Product Grid --}}
+        @if($products->count() > 0)
+            <div class="row g-3">
+                @foreach($products as $product)
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="{{ route('customer.produk.detail', $product) }}" class="product-card">
+                            <div style="position:relative">
+                                @if($product->image)
+                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-img">
+                                @else
+                                    <div class="product-img-placeholder">📦</div>
+                                @endif
+                                @if($product->discount_percent > 0)
+                                    <span class="discount-badge">-{{ $product->discount_percent }}%</span>
+                                @endif
+                            </div>
+                            <div class="product-body">
+                                <div class="product-name">{{ $product->name }}</div>
 
-function searchProducts() {
-    const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
-    if (searchTerm.length > 0) {
-        // This would filter products in real implementation
-    }
-}
+                                {{-- Rating --}}
+                                @if($product->rating)
+                                    <div class="d-flex align-items-center gap-1 mb-1">
+                                        <span class="star-rating">
+                                            @for($s = 1; $s <= 5; $s++)
+                                                @if($s <= floor($product->rating))
+                                                    <i class="fas fa-star"></i>
+                                                @elseif($s - 0.5 <= $product->rating)
+                                                    <i class="fas fa-star-half-stroke"></i>
+                                                @else
+                                                    <i class="far fa-star"></i>
+                                                @endif
+                                            @endfor
+                                        </span>
+                                        <span style="font-size:.72rem;color:var(--jp-gray-500)">
+                                            {{ number_format($product->rating, 1) }}
+                                        </span>
+                                    </div>
+                                @endif
 
-function executeSearch() {
-    const searchTerm = document.getElementById('searchProduct').value;
-    if (searchTerm.length === 0) {
-        alert('Masukkan kata kunci pencarian!');
-        return;
-    }
-    alert('🔍 Mencari produk: "' + searchTerm + '"\n\nHasil pencarian akan ditampilkan di bawah.');
-}
+                                {{-- Price --}}
+                                <div class="mt-auto">
+                                    <div class="product-price">
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    </div>
+                                    @if($product->original_price && $product->original_price > $product->price)
+                                        <div class="product-original">
+                                            Rp {{ number_format($product->original_price, 0, ',', '.') }}
+                                        </div>
+                                    @endif
+                                    @if($product->sold_count > 0)
+                                        <div style="font-size:.72rem;color:var(--jp-gray-400);margin-top:.2rem">
+                                            {{ $product->sold_count > 1000
+                                                ? number_format($product->sold_count / 1000, 1) . 'rb'
+                                                : $product->sold_count }} terjual
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
 
-function openProductFilter() {
-    alert('🔧 Filter Produk\n\nAnda dapat memfilter berdasarkan:\n- Harga (Min-Max)\n- Rating\n- Terjual\n- Pengiriman Gratis\n\nFitur filter akan segera ditingkatkan!');
-}
+            {{-- Pagination --}}
+            <div class="mt-4">
+                {{ $products->withQueryString()->links() }}
+            </div>
 
-function filterProductCategory(category) {
-    const categoryNames = {
-        'all': 'Semua Produk',
-        'elektronik': 'Elektronik',
-        'fashion': 'Fashion',
-        'rumah': 'Rumah Tangga',
-        'buku': 'Buku & Alat Tulis',
-        'olahraga': 'Olahraga'
-    };
-    alert('✅ Filter diubah ke: ' + categoryNames[category] + '\n\nProduk ditampilkan sesuai kategori yang dipilih.');
-}
+        @else
+            <div class="jp-empty">
+                <div class="empty-icon"><i class="fas fa-bag-shopping"></i></div>
+                <p>Tidak ada produk ditemukan</p>
+                @if(request('search') || request('category'))
+                    <a href="{{ route('customer.produk') }}" class="btn btn-jp-ghost btn-sm">Reset Filter</a>
+                @endif
+            </div>
+        @endif
 
-function addToCart(id, name) {
-    productCartItems.push({
-        id: id,
-        name: name,
-        quantity: 1
-    });
-    
-    document.getElementById('productCartCount').textContent = productCartItems.length;
-    alert('✅ Produk "' + name + '" ditambahkan ke keranjang!\n\nTotal items: ' + productCartItems.length);
-}
-
-function openProductCart() {
-    if (productCartItems.length === 0) {
-        alert('🛒 Keranjang belanja Anda masih kosong.\n\nSilakan tambahkan produk terlebih dahulu!');
-    } else {
-        alert('🛒 Keranjang Anda:\n\n' +
-              'Total Produk: ' + productCartItems.length + '\n\n' +
-              'Fitur checkout dan pembayaran akan segera hadir!');
-    }
-}
-</script>
+    </div>
+</div>
 @endsection
+

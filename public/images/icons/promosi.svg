@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#FFFBEB"/>
+  <!-- Toko -->
+  <rect x="18" y="38" width="44" height="26" rx="3" fill="#FEF3C7"/>
+  <rect x="18" y="38" width="44" height="26" rx="3" stroke="#F59E0B" stroke-width="1.5"/>
+  <!-- Atap toko -->
+  <path d="M14 38 L40 20 L66 38 Z" fill="#F59E0B"/>
+  <path d="M14 38 L40 20 L66 38" stroke="#D97706" stroke-width="1.5"/>
+  <!-- Pintu -->
+  <rect x="34" y="50" width="12" height="14" rx="2" fill="#D97706"/>
+  <circle cx="44" cy="57" r="1.2" fill="#FEF3C7"/>
+  <!-- Jendela kiri -->
+  <rect x="22" y="44" width="9" height="8" rx="2" fill="#BFDBFE"/>
+  <line x1="26.5" y1="44" x2="26.5" y2="52" stroke="#93C5FD" stroke-width="1"/>
+  <line x1="22" y1="48" x2="31" y2="48" stroke="#93C5FD" stroke-width="1"/>
+  <!-- Jendela kanan -->
+  <rect x="49" y="44" width="9" height="8" rx="2" fill="#BFDBFE"/>
+  <line x1="53.5" y1="44" x2="53.5" y2="52" stroke="#93C5FD" stroke-width="1"/>
+  <line x1="49" y1="48" x2="58" y2="48" stroke="#93C5FD" stroke-width="1"/>
+  <!-- Tag iklan -->
+  <rect x="28" y="24" width="24" height="10" rx="5" fill="#EF4444"/>
+  <text x="40" y="32" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="7" fill="white">IKLAN</text>
+  <!-- Bintang -->
+  <text x="63" y="30" font-size="10" fill="#F59E0B">★</text>
+  <text x="15" y="36" font-size="8" fill="#F59E0B">★</text>
+</svg>

@@ -1,0 +1,58 @@
+/*
+ * JAPLO — Admin Dashboard & Pages
+ * File: public/css/dashboard-admin.css
+ */
+
+.jp-admin-header {
+    background: linear-gradient(135deg, #15803D, #16A34A);
+    padding: 1.75rem 0 3.5rem;
+    color: #fff;
+}
+.jp-admin-header h1 { font-size: 1.35rem; font-weight: 700; margin: 0; }
+.jp-admin-header p  { font-size: .85rem; color: rgba(255,255,255,.75); margin: .25rem 0 0; }
+
+/* Reusable untuk semua admin pages */
+.jp-admin-top {
+    background: linear-gradient(135deg, #15803D, #16A34A);
+    padding: 1.5rem 0 3rem;
+    color: #fff;
+}
+.jp-admin-top h1 { font-size: 1.35rem; font-weight: 700; margin: 0; }
+
+.jp-dash-body {
+    margin-top: -2rem;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 2rem;
+}
+
+/* Quick action card */
+.quick-action {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid var(--jp-gray-200);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--jp-gray-800);
+    transition: border-color .15s, box-shadow .15s;
+}
+.quick-action:hover {
+    border-color: var(--jp-green);
+    box-shadow: 0 4px 12px rgba(22,163,74,.1);
+    color: var(--jp-gray-900);
+}
+.quick-action .qa-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+.quick-action .qa-label { font-weight: 600; font-size: .875rem; }
+.quick-action .qa-desc  { font-size: .78rem; color: var(--jp-gray-400); }

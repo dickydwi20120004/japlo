@@ -1,0 +1,53 @@
+/*
+ * JAPLO — Driver Dashboard
+ * File: public/css/dashboard-driver.css
+ */
+
+.jp-driver-header {
+    background: linear-gradient(135deg, #15803D, #16A34A);
+    padding: 2rem 0 4rem;
+    color: #fff;
+}
+.jp-driver-header .driver-name { font-size: 1.35rem; font-weight: 700; margin-bottom: .2rem; }
+.jp-driver-header .driver-sub  { font-size: .85rem; color: rgba(255,255,255,.75); }
+
+.status-toggle-wrap { display: flex; align-items: center; gap: .75rem; }
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.status-dot.online  { background: #4ADE80; box-shadow: 0 0 0 3px rgba(74,222,128,.3); }
+.status-dot.offline { background: #9CA3AF; }
+
+.jp-dash-body {
+    margin-top: -2.5rem;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 2rem;
+}
+
+.pending-order-item {
+    background: #fff;
+    border: 1px solid var(--jp-gray-200);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: border-color .15s, box-shadow .15s;
+}
+.pending-order-item:hover {
+    border-color: var(--jp-green);
+    box-shadow: 0 4px 12px rgba(22,163,74,.1);
+}
+.route-mini {
+    font-size: .8125rem;
+    color: var(--jp-gray-400);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+}

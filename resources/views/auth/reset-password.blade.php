@@ -1,176 +1,119 @@
 @extends('layouts.app')
+@section('title', 'Reset Password — JAPLO')
 
-@section('title', 'Reset Password - JAPLO')
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@endpush
 
 @section('content')
-<div class="min-vh-100 d-flex align-items-center" style="background: #f0f2f5;">
+<div class="min-vh-100 d-flex align-items-center auth-page">
     <div class="container-fluid">
         <div class="row g-0 min-vh-100">
-            <!-- Left Side - Illustration -->
-            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center position-relative" 
-                 style="background: linear-gradient(135deg, #00C16A 0%, #00A859 50%, #008F4A 100%); overflow: hidden;">
-                
-                <!-- Decorative Shapes -->
-                <div class="position-absolute w-100 h-100" style="opacity: 0.1;">
-                    <div class="position-absolute rounded-circle" style="width: 400px; height: 400px; background: white; top: -100px; left: -100px;"></div>
-                    <div class="position-absolute rounded-circle" style="width: 300px; height: 300px; background: white; bottom: -80px; right: -80px;"></div>
-                    <div class="position-absolute rounded-circle" style="width: 200px; height: 200px; background: white; top: 40%; right: 10%;"></div>
-                </div>
 
-                <!-- Content -->
-                <div class="text-center text-white position-relative px-5">
-                    <div class="mb-4">
-                        <i class="fas fa-key" style="font-size: 8rem; text-shadow: 0 10px 30px rgba(0,0,0,0.3);"></i>
-                    </div>
-                    <h1 class="fw-bold mb-3" style="font-size: 3rem; text-shadow: 0 4px 10px rgba(0,0,0,0.2);">Password Baru</h1>
-                    <h3 class="mb-4" style="text-shadow: 0 2px 8px rgba(0,0,0,0.2);">Buat password yang kuat</h3>
-                    <p class="lead" style="font-size: 1.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.2);">
-                        Pastikan password baru Anda aman dan mudah diingat
-                    </p>
-                    
-                    <!-- Features -->
-                    <div class="row g-3 mt-4">
-                        <div class="col-6">
-                            <div class="p-3 rounded" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                                <i class="fas fa-lock fa-2x mb-2"></i>
-                                <div class="fw-bold">Minimal 8 karakter</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="p-3 rounded" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                                <i class="fas fa-check-circle fa-2x mb-2"></i>
-                                <div class="fw-bold">Password aman</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="p-3 rounded" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                                <i class="fas fa-shield-alt fa-2x mb-2"></i>
-                                <div class="fw-bold">Akun terlindungi</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="p-3 rounded" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                                <i class="fas fa-thumbs-up fa-2x mb-2"></i>
-                                <div class="fw-bold">Siap digunakan</div>
-                            </div>
-                        </div>
+            {{-- Kiri --}}
+            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center auth-left">
+                <div class="auth-circles">
+                    <div class="circle circle-1"></div>
+                    <div class="circle circle-2"></div>
+                    <div class="circle circle-3"></div>
+                </div>
+                <div class="text-center text-white position-relative px-5" style="z-index:2">
+                    <i class="fas fa-key mb-4" style="font-size:7rem;text-shadow:0 10px 30px rgba(0,0,0,.3)"></i>
+                    <h1 class="fw-700 mb-2" style="font-size:2.5rem">Password Baru</h1>
+                    <p style="font-size:1rem;opacity:.85;line-height:1.65">Buat password yang kuat untuk melindungi akun Anda</p>
+                    <div class="row g-3 mt-3">
+                        <div class="col-6"><div class="auth-feature-pill"><i class="fas fa-lock"></i><div>Min. 8 karakter</div></div></div>
+                        <div class="col-6"><div class="auth-feature-pill"><i class="fas fa-check-circle"></i><div>Password aman</div></div></div>
+                        <div class="col-6"><div class="auth-feature-pill"><i class="fas fa-shield-alt"></i><div>Akun terlindungi</div></div></div>
+                        <div class="col-6"><div class="auth-feature-pill"><i class="fas fa-thumbs-up"></i><div>Siap digunakan</div></div></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side - Reset Password Form -->
+            {{-- Kanan --}}
             <div class="col-lg-6 d-flex align-items-center justify-content-center py-5">
-                <div class="w-100" style="max-width: 450px; padding: 0 2rem;">
-                    <!-- Logo for Mobile -->
+                <div class="w-100" style="max-width:440px;padding:0 2rem">
                     <div class="text-center mb-4 d-lg-none">
-                        <i class="fas fa-motorcycle" style="font-size: 3rem; color: #00A859;"></i>
-                        <h3 class="fw-bold mt-2" style="color: #00A859;">JAPLO</h3>
+                        <i class="fas fa-motorcycle" style="font-size:2.5rem;color:#16A34A"></i>
+                        <h3 class="fw-700 mt-2" style="color:#16A34A">JAPLO</h3>
                     </div>
-
-                    <div class="card border-0 shadow-lg" style="border-radius: 20px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);">
-                        <div class="card-body p-5">
-                            <!-- Header -->
+                    <div class="card auth-card">
+                        <div class="card-body">
                             <div class="text-center mb-4">
+                                <i class="fas fa-key" style="font-size:3rem;color:#16A34A"></i>
+                                <h3 class="fw-700 mt-3 mb-1">Reset Password</h3>
+                                <p style="font-size:.875rem;color:#666">Masukkan password baru Anda</p>
+                            </div>
+
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            @endif
+
+                            <form action="{{ route('password.update') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="token" value="{{ $token }}">
+                                <input type="hidden" name="email" value="{{ $email }}">
+
                                 <div class="mb-3">
-                                    <i class="fas fa-key text-success" style="font-size: 3.5rem;"></i>
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control auth-input"
+                                           value="{{ $email }}" readonly
+                                           style="opacity:.7;cursor:not-allowed">
                                 </div>
-                                <h3 class="fw-bold mb-2" style="color: #212121;">Reset Password</h3>
-                                <p class="mb-0" style="color: #666;">Masukkan password baru Anda</p>
-                            </div>
 
-                        @if(session('error'))
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <i class="fas fa-exclamation-circle me-2"></i>
-                                {{ session('error') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        @endif
-
-                        <form action="{{ route('password.update') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="token" value="{{ $token }}">
-                            <input type="hidden" name="email" value="{{ $email }}">
-                            
-                            <!-- Email (readonly) -->
-                            <div class="mb-3">
-                                <label for="email_display" class="form-label fw-bold small" style="color: #444;">Email</label>
-                                <input type="email" class="form-control form-control-lg" 
-                                       id="email_display" value="{{ $email }}" 
-                                       readonly style="border-radius: 12px; background: rgba(0, 168, 89, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
-                            </div>
-
-                            <!-- New Password -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label fw-bold small" style="color: #444;">Password Baru <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" 
-                                           id="password" name="password" 
-                                           placeholder="••••••••"
-                                           style="border-radius: 12px 0 0 12px; border-right: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);" required>
-                                    <button type="button" class="btn btn-outline-secondary" 
-                                            style="border-radius: 0 12px 12px 0; border-left: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);"
-                                            onclick="togglePassword('password', this)">
-                                        <i class="fas fa-eye text-secondary"></i>
-                                    </button>
+                                <div class="mb-3">
+                                    <label class="form-label">Password Baru <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="password" id="password" name="password"
+                                               class="form-control auth-input @error('password') is-invalid @enderror"
+                                               placeholder="Min. 8 karakter"
+                                               style="border-radius:12px 0 0 12px;border-right:none"
+                                               required minlength="8">
+                                        <button type="button" class="btn btn-outline-secondary btn-eye"
+                                                onclick="togglePassword('password', this)">
+                                            <i class="fas fa-eye text-secondary"></i>
+                                        </button>
+                                    </div>
+                                    @error('password')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 </div>
-                                <small style="color: #666;">Minimal 8 karakter</small>
-                                @error('password')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
 
-                            <!-- Confirm Password -->
-                            <div class="mb-4">
-                                <label for="password_confirmation" class="form-label fw-bold small" style="color: #444;">Konfirmasi Password <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control form-control-lg" 
-                                           id="password_confirmation" name="password_confirmation" 
-                                           placeholder="••••••••"
-                                           style="border-radius: 12px 0 0 12px; border-right: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);" required>
-                                    <button type="button" class="btn btn-outline-secondary" 
-                                            style="border-radius: 0 12px 12px 0; border-left: none; background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(0, 0, 0, 0.1);"
-                                            onclick="togglePassword('password_confirmation', this)">
-                                        <i class="fas fa-eye text-secondary"></i>
-                                    </button>
+                                <div class="mb-4">
+                                    <label class="form-label">Konfirmasi Password <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="password" id="password_confirmation" name="password_confirmation"
+                                               class="form-control auth-input"
+                                               placeholder="Ulangi password baru"
+                                               style="border-radius:12px 0 0 12px;border-right:none"
+                                               required>
+                                        <button type="button" class="btn btn-outline-secondary btn-eye"
+                                                onclick="togglePassword('password_confirmation', this)">
+                                            <i class="fas fa-eye text-secondary"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- Submit Button -->
-                            <button type="submit" class="btn btn-lg w-100 fw-bold mb-3" style="background: #00A859; color: white; border: none; border-radius: 12px; padding: 14px;">
-                                <i class="fas fa-check-circle me-2"></i> Reset Password
-                            </button>
+                                <button type="submit" class="btn-auth-submit">
+                                    <i class="fas fa-check-circle me-2"></i>Simpan Password Baru
+                                </button>
 
-                            <!-- Back to Login Link -->
-                            <div class="text-center">
-                                <a href="{{ route('login') }}" class="text-decoration-none d-flex align-items-center justify-content-center" style="color: #00A859;">
-                                    <i class="fas fa-arrow-left me-2"></i> Kembali ke Login
-                                </a>
-                            </div>
-                        </form>
+                                <div class="text-center mt-3">
+                                    <a href="{{ route('login') }}" class="auth-link" style="font-size:.875rem">
+                                        <i class="fas fa-arrow-left me-1"></i>Kembali ke Login
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+@endsection
 
 @push('scripts')
-<script>
-function togglePassword(inputId, button) {
-    const input = document.getElementById(inputId);
-    const icon = button.querySelector('i');
-    
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-</script>
+    <script src="{{ asset('js/auth.js') }}"></script>
 @endpush
-@endsection

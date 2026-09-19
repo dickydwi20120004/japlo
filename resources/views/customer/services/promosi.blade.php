@@ -1,277 +1,178 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
+@section('title', 'Iklan & Promosi — JAPLO')
 
-@section('title', 'Iklan & Promosi - JAPLO')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/services.css') }}">
+@endpush
 
 @section('content')
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #28a745 0%, #218838 100%);">
+<div class="jp-page-top">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-1"></i> Kembali
-        </a>
-        <h2 class="fw-bold mb-2 text-white">Iklan & Promosi</h2>
-        <p class="mb-0 text-white">Jangan lewatkan penawaran menarik untuk Anda!</p>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm"
+               style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ asset('images/icons/promosi.svg') }}" width="40" height="40" alt="Promosi">
+            <div>
+                <h1><i class="fas fa-tag me-2" style="color:#F59E0B"></i>Promo & Penawaran</h1>
+                <p class="mb-0" style="font-size:.85rem;color:rgba(255,255,255,.8)">
+                    {{ $promos->count() }} promo aktif tersedia untuk Anda
+                </p>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="container py-4">
-    <!-- Active Promo Count -->
-    <div class="card mb-4" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%); border: none;">
-        <div class="card-body text-center text-white py-4">
-            <h1 class="fw-bold mb-2">
-                <i class="fas fa-gift me-3"></i>
-                {{ count($promos) }}
-            </h1>
-            <h5 class="mb-0">Promo Aktif Tersedia Untukmu!</h5>
-        </div>
-    </div>
+<div class="page-body">
+    <div class="container">
 
-    <!-- Promo Categories -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="d-flex overflow-auto pb-2" style="gap: 10px;">
-                <button class="btn btn-primary" onclick="filterPromo('all')">
-                    <i class="fas fa-tags me-2"></i> Semua
-                </button>
-                <button class="btn btn-outline-primary" onclick="filterPromo('transportasi')">
-                    <i class="fas fa-motorcycle me-2"></i> Transportasi
-                </button>
-                <button class="btn btn-outline-primary" onclick="filterPromo('kuliner')">
-                    <i class="fas fa-utensils me-2"></i> Kuliner
-                </button>
-                <button class="btn btn-outline-primary" onclick="filterPromo('belanja')">
-                    <i class="fas fa-shopping-bag me-2"></i> Belanja
-                </button>
-                <button class="btn btn-outline-primary" onclick="filterPromo('kesehatan')">
-                    <i class="fas fa-hospital me-2"></i> Kesehatan
-                </button>
-            </div>
-        </div>
-    </div>
+        @if($promos->count() > 0)
+            <div class="row g-3">
+                @foreach($promos as $promo)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="promo-card">
 
-    <!-- Promo List -->
-    @foreach($promos as $promo)
-    <div class="card mb-4 hover-card">
-        <div class="row g-0">
-            <div class="col-12 col-md-4">
-                <img src="{{ $promo['image'] }}" class="img-fluid w-100 h-100 rounded-start" style="object-fit: cover; min-height: 250px;" alt="{{ $promo['title'] }}">
-            </div>
-            <div class="col-12 col-md-8">
-                <div class="card-body p-3 p-md-4">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="badge bg-success">{{ $promo['category'] }}</span>
-                        <span class="badge bg-danger">
-                            <i class="fas fa-clock me-1"></i>
-                            Berakhir: {{ \Carbon\Carbon::parse($promo['valid_until'])->format('d M Y') }}
-                        </span>
-                    </div>
-                    <h4 class="fw-bold mb-2">{{ $promo['title'] }}</h4>
-                    <p class="text-secondary mb-3">{{ $promo['description'] }}</p>
-                    
-                    <div class="card bg-light mb-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small class="text-secondary d-block mb-1">Kode Promo</small>
-                                    <h5 class="fw-bold mb-0 text-primary">PROMO{{ $promo['id'] }}{{ date('md') }}</h5>
+                            {{-- Banner Image --}}
+                            @if($promo->image)
+                                <img src="{{ $promo->image_url }}" alt="{{ $promo->title }}" class="promo-banner">
+                            @else
+                                @php
+                                    $placeholderBg = match($promo->type ?? 'info') {
+                                        'discount'       => 'linear-gradient(135deg,#FEF3C7,#FCD34D)',
+                                        'cashback'       => 'linear-gradient(135deg,#DBEAFE,#93C5FD)',
+                                        'free_delivery'  => 'linear-gradient(135deg,#DCFCE7,#6EE7B7)',
+                                        default          => 'linear-gradient(135deg,#F3F4F6,#E5E7EB)',
+                                    };
+                                    $placeholderIcon = match($promo->type ?? 'info') {
+                                        'discount'       => '🏷️',
+                                        'cashback'       => '💰',
+                                        'free_delivery'  => '🛵',
+                                        default          => '📢',
+                                    };
+                                @endphp
+                                <div class="promo-banner-placeholder" style="background:{{ $placeholderBg }}">
+                                    {{ $placeholderIcon }}
                                 </div>
-                                <button class="btn btn-primary" onclick="copyPromoCode('PROMO{{ $promo['id'] }}{{ date('md') }}')">
-                                    <i class="fas fa-copy me-2"></i> Salin Kode
-                                </button>
+                            @endif
+
+                            <div style="padding:.85rem">
+                                {{-- Type Badge --}}
+                                <div class="d-flex align-items-center justify-content-between mb-1">
+                                    <span class="jp-badge promo-type-{{ $promo->type ?? 'info' }}"
+                                          style="font-size:.72rem">
+                                        {{ match($promo->type ?? 'info') {
+                                            'discount'       => '💸 Diskon',
+                                            'cashback'       => '💰 Cashback',
+                                            'free_delivery'  => '🛵 Gratis Ongkir',
+                                            default          => '📢 Info',
+                                        } }}
+                                    </span>
+                                    @if($promo->end_date)
+                                        <span style="font-size:.72rem;color:var(--jp-gray-400)">
+                                            <i class="fas fa-clock me-1"></i>
+                                            Hingga {{ $promo->end_date->format('d M Y') }}
+                                        </span>
+                                    @endif
+                                </div>
+
+                                {{-- Title --}}
+                                <div style="font-weight:700;font-size:.9rem;margin:.4rem 0 .3rem;line-height:1.35">
+                                    {{ $promo->title }}
+                                </div>
+
+                                {{-- Description --}}
+                                @if($promo->description)
+                                    <p style="font-size:.78rem;color:var(--jp-gray-500);margin-bottom:.65rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">
+                                        {{ $promo->description }}
+                                    </p>
+                                @endif
+
+                                {{-- Discount Value --}}
+                                @if($promo->discount_value)
+                                    <div style="font-size:.9rem;font-weight:700;color:var(--jp-green);margin-bottom:.5rem">
+                                        @if($promo->discount_type === 'percent')
+                                            Hemat {{ number_format($promo->discount_value, 0) }}%
+                                        @else
+                                            Hemat Rp {{ number_format($promo->discount_value, 0, ',', '.') }}
+                                        @endif
+                                        @if($promo->min_purchase)
+                                            <span style="font-size:.72rem;color:var(--jp-gray-400);font-weight:400">
+                                                · Min. Rp {{ number_format($promo->min_purchase, 0, ',', '.') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                {{-- Promo Code --}}
+                                @if($promo->promo_code)
+                                    <div class="promo-code-box mb-2"
+                                         onclick="copyCode('{{ $promo->promo_code }}')">
+                                        <i class="fas fa-copy" style="color:var(--jp-green);font-size:.8rem"></i>
+                                        <span class="promo-code-text">{{ $promo->promo_code }}</span>
+                                        <span style="font-size:.72rem;color:var(--jp-green);font-weight:600">Salin</span>
+                                    </div>
+                                @endif
+
+                                {{-- Quota --}}
+                                @if($promo->quota)
+                                    @php
+                                        $used = $promo->used_count ?? 0;
+                                        $remaining = max(0, $promo->quota - $used);
+                                        $pct = min(100, ($used / $promo->quota) * 100);
+                                        $fillClass = $pct >= 80 ? 'danger' : ($pct >= 50 ? 'warning' : '');
+                                    @endphp
+                                    <div>
+                                        <div class="d-flex justify-content-between" style="font-size:.72rem;color:var(--jp-gray-400)">
+                                            <span>Sisa kuota</span>
+                                            <span>{{ $remaining }} / {{ $promo->quota }}</span>
+                                        </div>
+                                        <div class="quota-bar">
+                                            <div class="quota-fill {{ $fillClass }}" style="width:{{ $pct }}%"></div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
-
-                    <div class="d-flex flex-column flex-sm-row gap-2">
-                        <button class="btn btn-success flex-fill" onclick="usePromo({{ $promo['id'] }})">
-                            <i class="fas fa-check-circle me-2"></i> Gunakan Sekarang
-                        </button>
-                        <button class="btn btn-outline-secondary" onclick="sharePromo({{ $promo['id'] }})">
-                            <i class="fas fa-share-alt me-2"></i> <span class="d-none d-sm-inline">Bagikan</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-
-    <!-- Flash Sale Banner -->
-    <div class="card mb-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none;">
-        <div class="card-body text-center text-white py-5">
-            <h2 class="fw-bold mb-3">
-                <i class="fas fa-bolt me-3"></i>
-                FLASH SALE HARIAN!
-            </h2>
-            <p class="mb-3">Setiap hari jam 10:00 - 16:00 WIB</p>
-            <div class="d-flex justify-content-center gap-3 mb-3">
-                <div class="text-center">
-                    <div class="bg-white text-dark rounded p-3" style="min-width: 60px;">
-                        <h3 class="fw-bold mb-0" id="hours">00</h3>
-                    </div>
-                    <small class="mt-2 d-block">Jam</small>
-                </div>
-                <div class="text-center align-self-center">
-                    <h3 class="fw-bold">:</h3>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white text-dark rounded p-3" style="min-width: 60px;">
-                        <h3 class="fw-bold mb-0" id="minutes">00</h3>
-                    </div>
-                    <small class="mt-2 d-block">Menit</small>
-                </div>
-                <div class="text-center align-self-center">
-                    <h3 class="fw-bold">:</h3>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white text-dark rounded p-3" style="min-width: 60px;">
-                        <h3 class="fw-bold mb-0" id="seconds">00</h3>
-                    </div>
-                    <small class="mt-2 d-block">Detik</small>
-                </div>
-            </div>
-            <button class="btn btn-light btn-lg px-5">
-                <i class="fas fa-bell me-2"></i> Ingatkan Saya
-            </button>
-        </div>
-    </div>
-
-    <!-- Referral Program -->
-    <div class="card">
-        <div class="card-body">
-            <h5 class="fw-bold mb-3">
-                <i class="fas fa-user-friends me-2 text-primary"></i>
-                Program Referral
-            </h5>
-            <p class="text-secondary mb-3">Ajak temanmu dan dapatkan bonus untuk setiap teman yang bergabung!</p>
-            
-            <div class="row mb-3">
-                <div class="col-md-6 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-body text-center">
-                            <i class="fas fa-gift fa-3x text-success mb-3"></i>
-                            <h4 class="fw-bold text-success">Rp 50.000</h4>
-                            <p class="mb-0">Bonus untuk Anda</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="card bg-light">
-                        <div class="card-body text-center">
-                            <i class="fas fa-gift fa-3x text-primary mb-3"></i>
-                            <h4 class="fw-bold text-primary">Rp 50.000</h4>
-                            <p class="mb-0">Bonus untuk Teman</p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
-            <div class="card bg-light mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <small class="text-secondary d-block mb-1">Kode Referral Anda</small>
-                            <h5 class="fw-bold mb-0 text-primary">JAPLO{{ auth()->user()->id }}REF</h5>
-                        </div>
-                        <button class="btn btn-primary" onclick="copyPromoCode('JAPLO{{ auth()->user()->id }}REF')">
-                            <i class="fas fa-copy me-2"></i> Salin
-                        </button>
-                    </div>
-                </div>
-            </div>
+            {{-- Pagination --}}
+            @if(method_exists($promos, 'links'))
+                <div class="mt-4">{{ $promos->links() }}</div>
+            @endif
 
-            <button class="btn btn-success btn-lg w-100">
-                <i class="fas fa-share-alt me-2"></i> Bagikan ke Teman
-            </button>
-        </div>
+        @else
+            <div class="jp-empty" style="padding:5rem 1rem">
+                <div class="empty-icon">🏷️</div>
+                <p>Belum ada promo aktif saat ini</p>
+                <p style="font-size:.8rem;color:var(--jp-gray-400)">Pantau terus halaman ini untuk penawaran terbaru!</p>
+            </div>
+        @endif
+
     </div>
 </div>
+@endsection
 
-<style>
-    .hover-card {
-        transition: all 0.3s ease;
-        border: 2px solid #f0f0f0;
-    }
-    .hover-card:hover {
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        transform: translateY(-4px);
-        border-color: var(--primary-color);
-    }
-</style>
-
+@push('scripts')
 <script>
-let currentFilter = 'all';
-
-function filterPromo(category) {
-    currentFilter = category;
-    const categoryNames = {
-        'all': 'Semua Promo',
-        'transportasi': 'Promo Transportasi',
-        'kuliner': 'Promo Kuliner',
-        'belanja': 'Promo Belanja',
-        'kesehatan': 'Promo Kesehatan'
-    };
-    alert('✅ Filter diubah ke: ' + categoryNames[category] + '\n\nPromo ditampilkan sesuai kategori yang dipilih.');
-}
-
-function copyPromoCode(code) {
-    navigator.clipboard.writeText(code).then(function() {
-        alert('Kode "' + code + '" berhasil disalin!\n\nGunakan kode ini saat melakukan pemesanan.');
-    }, function(err) {
-        alert('Gagal menyalin kode. Silakan salin manual: ' + code);
+function copyCode(code) {
+    navigator.clipboard?.writeText(code).then(() => {
+        JapToast.success('Kode promo <strong>' + code + '</strong> disalin!');
+    }).catch(() => {
+        // fallback
+        const el = document.createElement('textarea');
+        el.value = code;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        JapToast.success('Kode promo ' + code + ' disalin!');
     });
 }
-
-function usePromo(id) {
-    alert('Promo ID: ' + id + ' akan digunakan.\n\nAnda akan diarahkan ke halaman layanan yang sesuai.');
-    window.location.href = '{{ route("dashboard") }}';
-}
-
-function sharePromo(id) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Promo Japlo',
-            text: 'Cek promo menarik di Japlo App!',
-            url: window.location.href
-        }).then(() => {
-            console.log('Berhasil dibagikan');
-        }).catch((error) => {
-            console.log('Gagal membagikan', error);
-        });
-    } else {
-        alert('Fitur berbagi tidak didukung di browser ini.');
-    }
-}
-
-// Flash Sale Countdown
-function updateCountdown() {
-    const now = new Date();
-    const flashSaleStart = new Date();
-    flashSaleStart.setHours(10, 0, 0, 0);
-    
-    const flashSaleEnd = new Date();
-    flashSaleEnd.setHours(16, 0, 0, 0);
-    
-    let targetTime;
-    if (now < flashSaleStart) {
-        targetTime = flashSaleStart;
-    } else if (now < flashSaleEnd) {
-        targetTime = flashSaleEnd;
-    } else {
-        flashSaleStart.setDate(flashSaleStart.getDate() + 1);
-        targetTime = flashSaleStart;
-    }
-    
-    const diff = targetTime - now;
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-}
-
-setInterval(updateCountdown, 1000);
-updateCountdown();
 </script>
-@endsection
+@endpush
+

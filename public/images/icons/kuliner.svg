@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#FEF2F2"/>
+  <!-- Piring -->
+  <circle cx="40" cy="44" r="20" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1.5"/>
+  <circle cx="40" cy="44" r="15" fill="#FEE2E2"/>
+  <!-- Makanan di piring -->
+  <ellipse cx="40" cy="44" rx="10" ry="7" fill="#EF4444"/>
+  <ellipse cx="37" cy="42" rx="3" ry="2" fill="#FCA5A5"/>
+  <ellipse cx="43" cy="46" rx="2.5" ry="1.5" fill="#FCA5A5"/>
+  <!-- Garpu -->
+  <rect x="22" y="18" width="2.5" height="18" rx="1.25" fill="#6B7280"/>
+  <line x1="21" y1="18" x2="21" y2="24" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="23.25" y1="18" x2="23.25" y2="24" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="25.5" y1="18" x2="25.5" y2="24" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Sendok -->
+  <rect x="55" y="26" width="2.5" height="18" rx="1.25" fill="#6B7280"/>
+  <ellipse cx="56.25" cy="20" rx="3.5" ry="5" fill="#9CA3AF"/>
+  <!-- Tutup kubah -->
+  <path d="M24 38 Q40 22 56 38" stroke="#D1D5DB" stroke-width="1.5" fill="none" stroke-dasharray="3 2"/>
+</svg>

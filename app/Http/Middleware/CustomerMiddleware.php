@@ -9,18 +9,14 @@ use Symfony\Component\HttpFoundation\Response;
 class CustomerMiddleware
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Semua user yang sudah login bisa akses customer pages.
+     * Hanya tamu (guest) yang diblokir.
      */
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
-        }
-
-        if (!auth()->user()->isCustomer()) {
-            abort(403, 'Unauthorized - Customer access only');
+            return redirect()->route('login')
+                ->with('error', 'Silakan login terlebih dahulu.');
         }
 
         return $next($request);

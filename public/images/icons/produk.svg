@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#F5F3FF"/>
+  <!-- Kardus besar -->
+  <rect x="18" y="34" width="30" height="28" rx="3" fill="#8B5CF6"/>
+  <rect x="18" y="34" width="30" height="28" rx="3" stroke="#7C3AED" stroke-width="1.5"/>
+  <!-- Tutup kardus -->
+  <path d="M18 34 L22 28 L44 28 L48 34" fill="#A78BFA"/>
+  <path d="M18 34 L22 28 L44 28 L48 34" stroke="#7C3AED" stroke-width="1.5"/>
+  <!-- Lipatan tengah tutup -->
+  <line x1="33" y1="28" x2="33" y2="34" stroke="#7C3AED" stroke-width="1.5"/>
+  <!-- Garis lakban kardus -->
+  <rect x="29" y="34" width="8" height="28" rx="1" fill="#7C3AED" opacity="0.4"/>
+  <!-- Kardus kecil kanan atas -->
+  <rect x="44" y="22" width="20" height="18" rx="3" fill="#DDD6FE"/>
+  <rect x="44" y="22" width="20" height="18" rx="3" stroke="#8B5CF6" stroke-width="1.5"/>
+  <path d="M44 22 L46 18 L62 18 L64 22" fill="#EDE9FE"/>
+  <path d="M44 22 L46 18 L62 18 L64 22" stroke="#8B5CF6" stroke-width="1.5"/>
+  <!-- Tanda panah -->
+  <circle cx="54" cy="32" r="5" fill="#8B5CF6"/>
+  <path d="M52 32 L54 29 L56 32" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="54" y1="29" x2="54" y2="35" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

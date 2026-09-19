@@ -8,78 +8,77 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // Create Admin User
+        // ── Users ──────────────────────────────────────────
         if (!User::where('email', 'admin@japlo.com')->exists()) {
             User::create([
-                'name' => 'Admin JAPLO',
-                'email' => 'admin@japlo.com',
-                'password' => Hash::make('admin123'),
-                'phone' => '089999999999',
-                'role' => 'admin',
-                'email_verified_at' => now(),
+                'name'               => 'Admin JAPLO',
+                'email'              => 'admin@japlo.com',
+                'password'           => Hash::make('admin123'),
+                'phone'              => '089999999999',
+                'role'               => 'admin',
+                'email_verified_at'  => now(),
             ]);
-            echo "✓ Admin user created\n";
+            $this->command->info('✓ Admin user created');
         }
 
-        // Create Customer/Penumpang User
         if (!User::where('email', 'demo@japlo.com')->exists()) {
             User::create([
-                'name' => 'Budi Penumpang',
-                'email' => 'demo@japlo.com',
-                'password' => Hash::make('password123'),
-                'phone' => '081234567890',
-                'role' => 'user',
-                'email_verified_at' => now(),
+                'name'               => 'Budi Santoso',
+                'email'              => 'demo@japlo.com',
+                'password'           => Hash::make('password123'),
+                'phone'              => '081234567890',
+                'role'               => 'user',
+                'email_verified_at'  => now(),
             ]);
-            echo "✓ Customer (Penumpang) user created\n";
+            $this->command->info('✓ Customer user created');
         }
 
-        // Create Driver User
         if (!User::where('email', 'driver@japlo.com')->exists()) {
-            $driver = User::create([
-                'name' => 'Ahmad Driver',
-                'email' => 'driver@japlo.com',
-                'password' => Hash::make('password123'),
-                'phone' => '081987654321',
-                'role' => 'driver',
-                'email_verified_at' => now(),
+            $driverUser = User::create([
+                'name'               => 'Ahmad Fauzi',
+                'email'              => 'driver@japlo.com',
+                'password'           => Hash::make('password123'),
+                'phone'              => '081987654321',
+                'role'               => 'driver',
+                'email_verified_at'  => now(),
             ]);
-
-            // Create driver profile
-            $driver->driver()->create([
-                'vehicle_type' => 'motor',
-                'vehicle_brand' => 'Honda Beat',
-                'license_plate' => 'B 1234 ABC',
+            $driverUser->driver()->create([
+                'vehicle_type'   => 'motor',
+                'vehicle_brand'  => 'Honda Beat',
+                'license_plate'  => 'BP 1234 AX',
                 'license_number' => '1234567890987654',
-                'address' => 'Jl. Merdeka No. 123, Jakarta',
-                'is_available' => true,
-                'is_verified' => true,
-                'rating' => 4.8,
-                'total_rides' => 156,
+                'address'        => 'Jl. Trikora No. 5, Tanjung Uban, Bintan',
+                'is_available'   => true,
+                'is_verified'    => true,
+                'rating'         => 4.8,
+                'total_rides'    => 156,
                 'total_earnings' => 4680000,
             ]);
-            echo "✓ Driver user created\n";
+            $this->command->info('✓ Driver user created');
         }
 
-        echo "\n✅ Database seeded successfully!\n\n";
-        echo "Demo Users Created:\n";
-        echo "===================\n\n";
-        echo "1. ADMIN:\n";
-        echo "   Email: admin@japlo.com\n";
-        echo "   Password: admin123\n";
-        echo "   Role: Admin (dapat akses admin dashboard)\n\n";
-        echo "2. CUSTOMER (Penumpang):\n";
-        echo "   Email: demo@japlo.com\n";
-        echo "   Password: password123\n";
-        echo "   Role: Penumpang (dapat akses customer services)\n\n";
-        echo "3. DRIVER:\n";
-        echo "   Email: driver@japlo.com\n";
-        echo "   Password: password123\n";
-        echo "   Role: Driver (dapat akses driver dashboard)\n\n";
+        // ── Service Data ───────────────────────────────────
+        $this->call([
+            TariffSeeder::class,
+            RestaurantSeeder::class,
+            HealthServiceSeeder::class,
+            ProductSeeder::class,
+            PromotionSeeder::class,
+            ArticleSeeder::class,
+        ]);
+
+        $this->command->newLine();
+        $this->command->info('✅ Semua data berhasil di-seed!');
+        $this->command->table(
+            ['Role', 'Email', 'Password'],
+            [
+                ['Admin',    'admin@japlo.com',  'admin123'],
+                ['Customer', 'demo@japlo.com',   'password123'],
+                ['Driver',   'driver@japlo.com', 'password123'],
+            ]
+        );
     }
 }
+

@@ -1,0 +1,437 @@
+/*
+ * JAPLO — Global Design System
+ * File: public/css/app.css
+ * Dipakai oleh: layouts/app.blade.php (semua halaman)
+ *
+ * Brand: #16A34A (green-600), #15803D (green-700)
+ * Accent: #F59E0B (amber-500)
+ */
+
+/* ─────────────────────────────────────────
+   CSS VARIABLES
+───────────────────────────────────────── */
+:root {
+    --jp-green:       #16A34A;
+    --jp-green-dark:  #15803D;
+    --jp-green-light: #DCFCE7;
+    --jp-amber:       #F59E0B;
+    --jp-amber-dark:  #D97706;
+    --jp-red:         #EF4444;
+    --jp-blue:        #3B82F6;
+    --jp-gray-50:     #F9FAFB;
+    --jp-gray-100:    #F3F4F6;
+    --jp-gray-200:    #E5E7EB;
+    --jp-gray-400:    #9CA3AF;
+    --jp-gray-600:    #4B5563;
+    --jp-gray-700:    #374151;
+    --jp-gray-800:    #1F2937;
+    --jp-gray-900:    #111827;
+    --jp-white:       #FFFFFF;
+    --jp-radius:      12px;
+    --jp-radius-sm:   8px;
+    --jp-radius-lg:   16px;
+    --jp-shadow-sm:   0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --jp-shadow:      0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+    --jp-shadow-lg:   0 10px 15px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05);
+}
+
+/* ─────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9375rem;
+    color: var(--jp-gray-800);
+    background: var(--jp-gray-50);
+    -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 { font-weight: 700; letter-spacing: -0.02em; }
+.text-muted { color: var(--jp-gray-400) !important; }
+
+/* ─────────────────────────────────────────
+   NAVBAR
+───────────────────────────────────────── */
+.jp-navbar {
+    background: var(--jp-green);
+    padding: 0.75rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    box-shadow: 0 2px 8px rgba(22,163,74,.25);
+}
+.jp-navbar .navbar-brand {
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: #fff !important;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.jp-navbar .navbar-brand .brand-icon {
+    width: 34px;
+    height: 34px;
+    background: rgba(255,255,255,.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+.jp-navbar .nav-link {
+    color: rgba(255,255,255,.85) !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: var(--jp-radius-sm);
+    transition: background .15s, color .15s;
+}
+.jp-navbar .nav-link:hover,
+.jp-navbar .nav-link.active {
+    background: rgba(255,255,255,.15);
+    color: #fff !important;
+}
+.jp-navbar .btn-nav-cta {
+    background: var(--jp-amber);
+    color: var(--jp-gray-900) !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.4rem 1.1rem !important;
+    border-radius: 999px;
+    border: none;
+    transition: background .15s, transform .1s;
+}
+.jp-navbar .btn-nav-cta:hover {
+    background: var(--jp-amber-dark);
+    transform: translateY(-1px);
+}
+.jp-navbar .dropdown-menu {
+    border: none;
+    border-radius: var(--jp-radius);
+    box-shadow: var(--jp-shadow-lg);
+    padding: 0.5rem;
+    min-width: 210px;
+}
+.jp-navbar .dropdown-item {
+    border-radius: var(--jp-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    color: var(--jp-gray-700);
+    transition: background .12s;
+}
+.jp-navbar .dropdown-item:hover { background: var(--jp-gray-100); }
+.jp-navbar .dropdown-divider { margin: 0.3rem 0; border-color: var(--jp-gray-200); }
+.jp-navbar .nav-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-right: 6px;
+}
+
+/* ─────────────────────────────────────────
+   CARDS
+───────────────────────────────────────── */
+.jp-card {
+    background: var(--jp-white);
+    border: 1px solid var(--jp-gray-200);
+    border-radius: var(--jp-radius);
+    box-shadow: var(--jp-shadow-sm);
+}
+.jp-card .jp-card-header {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--jp-gray-200);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--jp-gray-800);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.jp-card .jp-card-body { padding: 1.25rem; }
+
+/* Stat card */
+.jp-stat-card {
+    background: var(--jp-white);
+    border: 1px solid var(--jp-gray-200);
+    border-radius: var(--jp-radius);
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--jp-shadow-sm);
+    text-decoration: none;
+}
+.jp-stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+.jp-stat-card .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--jp-gray-900);
+}
+.jp-stat-card .stat-label {
+    font-size: 0.8125rem;
+    color: var(--jp-gray-400);
+    margin-top: 2px;
+}
+
+/* Icon color variants */
+.icon-green  { background: var(--jp-green-light); color: var(--jp-green); }
+.icon-amber  { background: #FEF3C7; color: var(--jp-amber-dark); }
+.icon-red    { background: #FEE2E2; color: var(--jp-red); }
+.icon-blue   { background: #DBEAFE; color: var(--jp-blue); }
+.icon-purple { background: #EDE9FE; color: #7C3AED; }
+
+/* ─────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────── */
+.btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: var(--jp-radius-sm);
+    transition: background .15s, transform .1s, box-shadow .15s;
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-jp-primary { background: var(--jp-green); color: #fff; border: none; }
+.btn-jp-primary:hover {
+    background: var(--jp-green-dark);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(22,163,74,.35);
+}
+
+.btn-jp-amber { background: var(--jp-amber); color: var(--jp-gray-900); border: none; }
+.btn-jp-amber:hover { background: var(--jp-amber-dark); color: var(--jp-gray-900); }
+
+.btn-jp-outline {
+    background: transparent;
+    border: 1.5px solid var(--jp-green);
+    color: var(--jp-green);
+}
+.btn-jp-outline:hover { background: var(--jp-green); color: #fff; }
+
+.btn-jp-ghost {
+    background: transparent;
+    border: 1.5px solid var(--jp-gray-200);
+    color: var(--jp-gray-600);
+}
+.btn-jp-ghost:hover { background: var(--jp-gray-100); color: var(--jp-gray-800); }
+
+/* ─────────────────────────────────────────
+   FORM CONTROLS
+───────────────────────────────────────── */
+.form-control,
+.form-select {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    border: 1.5px solid var(--jp-gray-200);
+    border-radius: var(--jp-radius-sm);
+    padding: 0.6rem 0.85rem;
+    color: var(--jp-gray-800);
+    background: var(--jp-white);
+    transition: border-color .15s, box-shadow .15s;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--jp-green);
+    box-shadow: 0 0 0 3px rgba(22,163,74,.15);
+    outline: none;
+}
+.form-control.is-invalid { border-color: var(--jp-red); }
+.form-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--jp-gray-700);
+    margin-bottom: 6px;
+}
+
+/* ─────────────────────────────────────────
+   BADGES / STATUS
+───────────────────────────────────────── */
+.jp-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+}
+.jp-badge-pending   { background: #FEF3C7; color: #D97706; }
+.jp-badge-accepted  { background: #DBEAFE; color: #2563EB; }
+.jp-badge-pickup    { background: #EDE9FE; color: #7C3AED; }
+.jp-badge-progress  { background: #FEF9C3; color: #A16207; }
+.jp-badge-completed { background: #DCFCE7; color: #15803D; }
+.jp-badge-cancelled { background: #FEE2E2; color: #DC2626; }
+
+/* ─────────────────────────────────────────
+   ALERTS
+───────────────────────────────────────── */
+.alert {
+    border: none;
+    border-radius: var(--jp-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert-success { background: #DCFCE7; color: #15803D; }
+.alert-danger  { background: #FEE2E2; color: #DC2626; }
+.alert-warning { background: #FEF3C7; color: #D97706; }
+.alert-info    { background: #DBEAFE; color: #2563EB; }
+
+/* ─────────────────────────────────────────
+   TOAST NOTIFICATION
+───────────────────────────────────────── */
+#jp-toast-container {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+.jp-toast {
+    background: var(--jp-white);
+    border-radius: var(--jp-radius);
+    box-shadow: var(--jp-shadow-lg);
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 280px;
+    max-width: 360px;
+    pointer-events: all;
+    animation: toast-in .25s ease;
+    border-left: 4px solid var(--jp-green);
+}
+.jp-toast.toast-success { border-left-color: var(--jp-green); }
+.jp-toast.toast-error   { border-left-color: var(--jp-red); }
+.jp-toast.toast-warning { border-left-color: var(--jp-amber); }
+.jp-toast.toast-info    { border-left-color: var(--jp-blue); }
+.jp-toast .toast-icon   { font-size: 1.1rem; }
+.jp-toast.toast-success .toast-icon { color: var(--jp-green); }
+.jp-toast.toast-error   .toast-icon { color: var(--jp-red); }
+.jp-toast.toast-warning .toast-icon { color: var(--jp-amber-dark); }
+.jp-toast.toast-info    .toast-icon { color: var(--jp-blue); }
+.jp-toast .toast-msg {
+    flex: 1;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--jp-gray-800);
+}
+.jp-toast .toast-close {
+    background: none;
+    border: none;
+    color: var(--jp-gray-400);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0;
+    line-height: 1;
+}
+.jp-toast.toast-out { animation: toast-out .25s ease forwards; }
+
+@keyframes toast-in  { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
+@keyframes toast-out { from { opacity:1; transform:translateX(0); }  to { opacity:0; transform:translateX(20px); } }
+
+/* ─────────────────────────────────────────
+   TABLE
+───────────────────────────────────────── */
+.jp-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.jp-table thead th {
+    background: var(--jp-gray-50);
+    color: var(--jp-gray-600);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--jp-gray-200);
+    white-space: nowrap;
+}
+.jp-table tbody td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--jp-gray-100);
+    vertical-align: middle;
+    color: var(--jp-gray-800);
+}
+.jp-table tbody tr:last-child td { border-bottom: none; }
+.jp-table tbody tr:hover { background: var(--jp-gray-50); }
+
+/* ─────────────────────────────────────────
+   EMPTY STATE
+───────────────────────────────────────── */
+.jp-empty {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    color: var(--jp-gray-400);
+}
+.jp-empty .empty-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: .5;
+}
+.jp-empty p { font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+.jp-footer {
+    background: var(--jp-gray-900);
+    color: #D1D5DB;
+    padding: 2.5rem 0 1.5rem;
+    margin-top: 3rem;
+    font-size: 0.875rem;
+}
+.jp-footer a { color: #9CA3AF; text-decoration: none; transition: color .15s; }
+.jp-footer a:hover { color: #fff; }
+.jp-footer .footer-brand { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.jp-footer hr { border-color: #374151; margin: 1.5rem 0 1rem; }
+.jp-footer .footer-copy { font-size: 0.8125rem; color: #6B7280; }
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+.jp-divider { border-color: var(--jp-gray-200); }
+.text-jp-green     { color: var(--jp-green) !important; }
+.bg-jp-green       { background: var(--jp-green) !important; }
+.bg-jp-green-light { background: var(--jp-green-light) !important; }
+.fw-600            { font-weight: 600 !important; }
+.fw-700            { font-weight: 700 !important; }
+.fw-800            { font-weight: 800 !important; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+    .jp-navbar .navbar-collapse {
+        background: var(--jp-green-dark);
+        border-radius: var(--jp-radius);
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+    }
+    .jp-stat-card { flex-direction: column; align-items: flex-start; }
+}

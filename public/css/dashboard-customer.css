@@ -1,0 +1,111 @@
+/*
+ * JAPLO — Customer Dashboard
+ * File: public/css/dashboard-customer.css
+ */
+
+.jp-greeting {
+    background: linear-gradient(135deg, #15803D, #16A34A);
+    padding: 2rem 0 4rem;
+    color: #fff;
+}
+.jp-greeting h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: .25rem; }
+.jp-greeting p  { font-size: .875rem; color: rgba(255,255,255,.8); margin: 0; }
+
+.jp-dash-body {
+    margin-top: -2.5rem;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 2rem;
+}
+
+/* Service icon grid */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .65rem;
+}
+@media (min-width: 576px) {
+    .service-grid { grid-template-columns: repeat(6, 1fr); }
+}
+@media (min-width: 992px) {
+    .service-grid { grid-template-columns: repeat(11, 1fr); gap: .5rem; }
+}
+
+.svc-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    text-decoration: none;
+    padding: .85rem .4rem .75rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1.5px solid var(--jp-gray-200);
+    transition: border-color .15s, box-shadow .15s, transform .15s;
+    cursor: pointer;
+}
+.svc-btn:hover {
+    border-color: var(--jp-green);
+    box-shadow: 0 6px 18px rgba(22,163,74,.13);
+    transform: translateY(-3px);
+}
+.svc-btn:active { transform: translateY(0); }
+.svc-btn .svc-icon-wrap {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: #F9FAFB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--jp-gray-100);
+}
+.svc-btn .svc-icon-wrap img {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+}
+.svc-btn .svc-label {
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--jp-gray-700);
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: .01em;
+}
+
+/* Active order card */
+.active-order-card {
+    background: #fff;
+    border: 1.5px solid var(--jp-green);
+    border-radius: 14px;
+    padding: 1.25rem;
+}
+.order-status-line {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .8rem;
+    color: var(--jp-gray-400);
+    margin-bottom: .5rem;
+}
+.order-route {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background: var(--jp-gray-50);
+    border-radius: 10px;
+    padding: .85rem 1rem;
+    font-size: .875rem;
+}
+.order-route .route-row { display: flex; align-items: flex-start; gap: .75rem; }
+.route-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+.route-dot.green { background: var(--jp-green); }
+.route-dot.red   { background: var(--jp-red); }

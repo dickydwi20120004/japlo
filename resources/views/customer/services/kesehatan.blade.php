@@ -1,145 +1,103 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
+@section('title', 'Layanan Kesehatan — JAPLO')
 
-@section('title', 'Kesehatan - JAPLO')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/services.css') }}">
+@endpush
 
 @section('content')
-<div class="hero-section" style="padding: 40px 0; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+<div class="jp-page-top">
     <div class="container">
-        <a href="{{ route('dashboard') }}" class="btn btn-light btn-sm mb-3">
-            <i class="fas fa-arrow-left me-1"></i> Kembali
-        </a>
-        <h2 class="fw-bold mb-2 text-white">Layanan Kesehatan</h2>
-        <p class="mb-0 text-white">Kesehatan Anda adalah prioritas kami</p>
-    </div>
-</div>
-
-<div class="container py-4">
-    <!-- Emergency Banner -->
-    <div class="card mb-4" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none;">
-        <div class="card-body text-center text-white py-4">
-            <h4 class="fw-bold mb-2">
-                <i class="fas fa-ambulance me-2"></i>
-                Darurat Medis?
-            </h4>
-            <p class="mb-3">Hubungi layanan darurat 24/7</p>
-            <a href="tel:119" class="btn btn-light btn-lg px-5">
-                <i class="fas fa-phone me-2"></i> Hubungi 119
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm"
+               style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
             </a>
         </div>
-    </div>
-
-    <!-- Health Services -->
-    <h5 class="fw-bold mb-3">Layanan Kesehatan</h5>
-    <div class="row">
-        @foreach($healthServices as $service)
-        <div class="col-12 col-md-6 col-lg-6 mb-4">
-            <div class="card hover-card h-100">
-                <div class="card-body">
-                    <div class="text-center mb-3">
-                        <div class="icon-wrapper d-inline-block p-4 rounded-circle" style="background: rgba(220, 53, 69, 0.1);">
-                            <i class="fas {{ $service['icon'] }} fa-3x text-danger"></i>
-                        </div>
-                    </div>
-                    <h5 class="fw-bold text-center mb-2">{{ $service['name'] }}</h5>
-                    <p class="text-secondary text-center mb-3">{{ $service['description'] }}</p>
-                    <div class="card bg-light mb-3">
-                        <div class="card-body text-center">
-                            @if($service['price'] > 0)
-                                <small class="text-secondary d-block">Mulai dari</small>
-                                <h4 class="fw-bold text-danger mb-0">Rp {{ number_format($service['price'], 0, ',', '.') }}</h4>
-                            @else
-                                <h5 class="fw-bold text-success mb-0">Harga Bervariasi</h5>
-                                <small class="text-secondary">Sesuai produk yang dipilih</small>
-                            @endif
-                        </div>
-                    </div>
-                    <button class="btn btn-danger w-100" onclick="goToHealthDetail({{ $service['id'] }})">
-                        <i class="fas fa-calendar-check me-2"></i> Lihat Detail
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    </div>
-
-    <!-- Health Articles -->
-    <h5 class="fw-bold mb-3 mt-4">Artikel Kesehatan</h5>
-    <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card hover-card h-100">
-                <img src="https://via.placeholder.com/400x250?text=Tips+Hidup+Sehat" class="card-img-top" alt="Article">
-                <div class="card-body">
-                    <span class="badge bg-danger mb-2">Tips Kesehatan</span>
-                    <h6 class="fw-bold mb-2">10 Tips Hidup Sehat di Era Modern</h6>
-                    <p class="text-secondary small mb-3">Pelajari kebiasaan sehat yang bisa Anda terapkan setiap hari...</p>
-                    <a href="#" class="btn btn-outline-danger btn-sm">Baca Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card hover-card h-100">
-                <img src="https://via.placeholder.com/400x250?text=Vaksinasi" class="card-img-top" alt="Article">
-                <div class="card-body">
-                    <span class="badge bg-danger mb-2">Informasi</span>
-                    <h6 class="fw-bold mb-2">Pentingnya Vaksinasi untuk Keluarga</h6>
-                    <p class="text-secondary small mb-3">Vaksinasi melindungi Anda dan keluarga dari penyakit berbahaya...</p>
-                    <a href="#" class="btn btn-outline-danger btn-sm">Baca Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="card hover-card h-100">
-                <img src="https://via.placeholder.com/400x250?text=Nutrisi" class="card-img-top" alt="Article">
-                <div class="card-body">
-                    <span class="badge bg-danger mb-2">Nutrisi</span>
-                    <h6 class="fw-bold mb-2">Panduan Nutrisi Seimbang</h6>
-                    <p class="text-secondary small mb-3">Makanan bergizi adalah kunci hidup sehat dan produktif...</p>
-                    <a href="#" class="btn btn-outline-danger btn-sm">Baca Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Health Check Reminder -->
-    <div class="card mt-4">
-        <div class="card-body">
-            <div class="row align-items-center">
-                <div class="col-12 col-md-8 mb-3 mb-md-0">
-                    <h5 class="fw-bold mb-2">
-                        <i class="fas fa-heartbeat me-2 text-danger"></i>
-                        Cek Kesehatan Rutin
-                    </h5>
-                    <p class="text-secondary mb-0">Lakukan pemeriksaan kesehatan rutin minimal 6 bulan sekali untuk deteksi dini masalah kesehatan</p>
-                </div>
-                <div class="col-12 col-md-4 text-md-end">
-                    <button class="btn btn-danger btn-lg w-100 w-md-auto">
-                        <i class="fas fa-calendar-alt me-2"></i> Jadwalkan
-                    </button>
-                </div>
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ asset('images/icons/kesehatan.svg') }}" width="40" height="40" alt="Kesehatan">
+            <div>
+                <h1><i class="fas fa-kit-medical me-2" style="color:rgba(255,255,255,.8)"></i>Layanan Kesehatan</h1>
+                <p class="mb-0" style="font-size:.85rem;color:rgba(255,255,255,.8)">Akses layanan kesehatan terpercaya di Bintan</p>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-    .hover-card {
-        transition: all 0.3s ease;
-        border: 2px solid #f0f0f0;
-    }
-    .hover-card:hover {
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        transform: translateY(-4px);
-        border-color: #dc3545;
-    }
-</style>
+<div class="page-body">
+    <div class="container">
 
-<script>
-function bookService(id, name) {
-    alert('Memesan layanan: ' + name + '\n\nAnda akan dihubungi oleh tim medis kami dalam 15 menit.\n\nFitur booking lengkap akan segera hadir!');
-}
+        {{-- Emergency Banner --}}
+        <div class="jp-card mb-4" style="border-color:#FCA5A5;background:linear-gradient(135deg,#FEE2E2,#FECACA)">
+            <div class="jp-card-body d-flex align-items-center gap-3">
+                <div style="font-size:2rem;flex-shrink:0">🚨</div>
+                <div class="flex-grow-1">
+                    <div style="font-weight:700;color:#DC2626;margin-bottom:.2rem">Darurat Medis?</div>
+                    <div style="font-size:.8375rem;color:#EF4444">Hubungi layanan darurat segera</div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="tel:119" class="btn btn-sm" style="background:#DC2626;color:#fff;font-weight:700">
+                        <i class="fas fa-phone me-1"></i> 119
+                    </a>
+                    <a href="tel:112" class="btn btn-sm btn-jp-ghost">
+                        <i class="fas fa-phone me-1"></i> 112
+                    </a>
+                </div>
+            </div>
+        </div>
 
-function goToHealthDetail(serviceId) {
-    window.location.href = '/customer/kesehatan/' + serviceId;
-}
-</script>
+        {{-- Health Services Grid --}}
+        @if($healthServices->count() > 0)
+            <div class="row g-3">
+                @foreach($healthServices as $service)
+                    <div class="col-md-6 col-lg-4">
+                        <div class="health-card">
+                            <div class="d-flex align-items-start gap-3">
+                                <div class="health-icon-wrap">
+                                    @if($service->icon)
+                                        <img src="{{ asset('storage/' . $service->icon) }}" width="32" height="32"
+                                             alt="{{ $service->name }}" style="object-fit:contain">
+                                    @else
+                                        <i class="fas fa-kit-medical" style="color:var(--jp-green)"></i>
+                                    @endif
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div class="health-name">{{ $service->name }}</div>
+                                    @if($service->provider)
+                                        <div style="font-size:.75rem;color:var(--jp-gray-400);margin-bottom:.35rem">
+                                            <i class="fas fa-building me-1"></i>{{ $service->provider }}
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="health-desc">{{ $service->description }}</div>
+
+                            <div class="health-price {{ !$service->price || $service->price == 0 ? 'free' : '' }}">
+                                @if(!$service->price || $service->price == 0)
+                                    <i class="fas fa-check-circle me-1"></i> Gratis
+                                @else
+                                    Mulai Rp {{ number_format($service->price, 0, ',', '.') }}
+                                @endif
+                            </div>
+
+                            <a href="{{ route('customer.kesehatan.detail', $service) }}"
+                               class="btn btn-jp-outline w-100 mt-auto">
+                                <i class="fas fa-arrow-right me-2"></i> Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+        @else
+            <div class="jp-empty">
+                <div class="empty-icon"><i class="fas fa-kit-medical"></i></div>
+                <p>Belum ada layanan kesehatan tersedia</p>
+            </div>
+        @endif
+
+    </div>
+</div>
 @endsection
+

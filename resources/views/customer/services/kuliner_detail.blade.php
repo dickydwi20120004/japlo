@@ -1,411 +1,197 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
+@section('title', $restaurant->name . ' — JAPLO')
 
-@section('title', $restaurant['name'] . ' - JAPLO')
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/services.css') }}">
+@endpush
 
 @section('content')
-<div class="hero-section" style="padding: 50px 0; background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+<div class="jp-page-top">
     <div class="container">
-        <a href="{{ route('customer.kuliner') }}" class="btn btn-light btn-sm mb-3" style="border-radius: 25px; padding: 8px 16px;">
-            <i class="fas fa-arrow-left me-1"></i> Kembali ke Daftar Restoran
-        </a>
-        <h2 class="fw-bold mb-2 text-white display-5">
-            {{ $restaurant['name'] }}
-        </h2>
-        <p class="mb-0 text-white fs-5">Pesan makanan lezat sekarang juga!</p>
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="{{ route('customer.kuliner') }}" class="btn btn-sm"
+               style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
+        </div>
+        <div class="d-flex align-items-start justify-content-between gap-3 flex-wrap">
+            <div>
+                <h1>{{ $restaurant->name }}</h1>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                    <span class="{{ $restaurant->is_open ? 'badge-open' : 'badge-close' }}">
+                        {{ $restaurant->is_open ? 'Buka' : 'Tutup' }}
+                    </span>
+                    <span class="info-pill"><i class="fas fa-star" style="color:#F59E0B"></i> {{ number_format($restaurant->rating, 1) }}</span>
+                    <span class="info-pill"><i class="fas fa-clock"></i> {{ $restaurant->open_time }} – {{ $restaurant->close_time }}</span>
+                    @if($restaurant->delivery_time)
+                        <span class="info-pill"><i class="fas fa-motorcycle"></i> ~{{ $restaurant->delivery_time }} menit</span>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="container py-5">
-    <!-- Restaurant Header -->
-    <div class="card mb-5 border-0 shadow-sm" style="border-radius: 20px; overflow: hidden;">
-        <div class="position-relative" style="height: 300px; overflow: hidden;">
-            <img src="{{ $restaurant['image'] }}" class="w-100 h-100" alt="{{ $restaurant['name'] }}" style="object-fit: cover;">
-            
-            @if($restaurant['promo'])
-            <span class="badge bg-danger position-absolute" style="top: 20px; left: 20px; padding: 12px 16px; border-radius: 25px; font-size: 14px;">
-                <i class="fas fa-tag me-1"></i> {{ $restaurant['promo'] }}
-            </span>
-            @endif
+<div class="page-body">
+    <div class="container">
+        <div class="row g-4">
 
-            <div class="position-absolute bottom-0 start-0 end-0" style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); padding: 30px 20px 20px;">
-                <div class="row text-white">
-                    <div class="col-md-6">
-                        <h4 class="fw-bold mb-2">{{ $restaurant['name'] }}</h4>
-                        <div class="d-flex gap-3 flex-wrap">
-                            <div>
-                                <small class="text-white-50">Rating</small>
-                                <div class="fw-bold">
-                                    <i class="fas fa-star text-warning"></i> {{ $restaurant['rating'] }}
+            {{-- Left: Menu --}}
+            <div class="col-lg-8">
+
+                {{-- Restaurant Info Card --}}
+                <div class="jp-card mb-4 overflow-hidden">
+                    @if($restaurant->image)
+                        <img src="{{ $restaurant->image_url }}" alt="{{ $restaurant->name }}" class="restaurant-banner">
+                    @else
+                        <div class="restaurant-banner-placeholder">🍽️</div>
+                    @endif
+                    <div class="jp-card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div style="font-size:.78rem;color:var(--jp-gray-400);margin-bottom:3px">Kategori</div>
+                                <div style="font-weight:600;font-size:.875rem">{{ $restaurant->category }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="font-size:.78rem;color:var(--jp-gray-400);margin-bottom:3px">Alamat</div>
+                                <div style="font-weight:600;font-size:.875rem">{{ $restaurant->address }}</div>
+                            </div>
+                            @if($restaurant->min_order > 0)
+                                <div class="col-md-6">
+                                    <div style="font-size:.78rem;color:var(--jp-gray-400);margin-bottom:3px">Min. Order</div>
+                                    <div style="font-weight:600;font-size:.875rem;color:var(--jp-green)">
+                                        Rp {{ number_format($restaurant->min_order, 0, ',', '.') }}
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <small class="text-white-50">Jarak</small>
-                                <div class="fw-bold">{{ $restaurant['distance'] }} km</div>
-                            </div>
-                            <div>
-                                <small class="text-white-50">Pengiriman</small>
-                                <div class="fw-bold">{{ $restaurant['delivery_time'] }}</div>
-                            </div>
+                            @endif
+                            @if($restaurant->phone)
+                                <div class="col-md-6">
+                                    <div style="font-size:.78rem;color:var(--jp-gray-400);margin-bottom:3px">Telepon</div>
+                                    <div style="font-weight:600;font-size:.875rem">{{ $restaurant->phone }}</div>
+                                </div>
+                            @endif
+                            @if($restaurant->description)
+                                <div class="col-12">
+                                    <div style="font-size:.875rem;color:var(--jp-gray-600);line-height:1.6">
+                                        {{ $restaurant->description }}
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <!-- Info Restoran -->
-        <div class="col-lg-8">
-            <!-- Restaurant Details -->
-            <div class="card mb-4 border-0 shadow-sm" style="border-radius: 15px;">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-3">
-                        <i class="fas fa-info-circle text-danger me-2"></i> Informasi Restoran
-                    </h5>
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
-                            <small class="text-muted">Alamat</small>
-                            <p class="fw-bold mb-0">{{ $restaurant['address'] }}</p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <small class="text-muted">No. Telepon</small>
-                            <p class="fw-bold mb-0">{{ $restaurant['phone'] }}</p>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6 mb-3">
-                            <small class="text-muted">Jam Operasional</small>
-                            <p class="fw-bold mb-0">{{ $restaurant['open_time'] }} - {{ $restaurant['close_time'] }}</p>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <small class="text-muted">Minimal Order</small>
-                            <p class="fw-bold mb-0">Rp {{ number_format($restaurant['min_order'], 0, ',', '.') }}</p>
-                        </div>
-                    </div>
-                    <hr>
-                    <p class="text-muted mb-0">{{ $restaurant['description'] }}</p>
-                </div>
-            </div>
-
-            <!-- Menu Items -->
-            <h4 class="fw-bold mb-4">
-                <i class="fas fa-list me-2 text-danger"></i> Menu
-            </h4>
-            <div class="row" id="menuContainer">
-                @foreach($restaurant['menus'] as $menu)
-                <div class="col-12 col-md-6 mb-4">
-                    <div class="card border-0 shadow-sm hover-item" style="border-radius: 15px; overflow: hidden;">
-                        <!-- Menu Image -->
-                        <div style="height: 180px; overflow: hidden;">
-                            <img src="{{ $menu['image'] }}" class="w-100 h-100" alt="{{ $menu['name'] }}" style="object-fit: cover;">
-                        </div>
-
-                        <!-- Menu Details -->
-                        <div class="card-body p-3">
-                            <!-- Name -->
-                            <h6 class="fw-bold mb-2" style="font-size: 15px; line-height: 1.3;">{{ $menu['name'] }}</h6>
-                            
-                            <!-- Description -->
-                            <p class="small text-muted mb-2">{{ $menu['description'] }}</p>
-
-                            <!-- Rating -->
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="fas fa-star text-warning me-1" style="font-size: 12px;"></i>
-                                <small class="fw-bold">{{ $menu['rating'] }}</small>
+                {{-- Menu by Category --}}
+                @if($menus->count() > 0)
+                    @foreach($menus as $category => $items)
+                        <div class="mb-4">
+                            <div class="category-section-title">
+                                <i class="fas fa-utensils me-2" style="color:var(--jp-green)"></i>{{ $category ?: 'Menu Utama' }}
                             </div>
-
-                            <!-- Price -->
-                            <p class="text-danger fw-bold mb-2" style="font-size: 16px;">Rp {{ number_format($menu['price'], 0, ',', '.') }}</p>
-
-                            <!-- Add to Cart Button -->
-                            <button class="btn btn-outline-danger w-100 rounded-2 fw-bold" 
-                                    onclick="addToCart('{{ $menu['name'] }}', {{ $menu['price'] }}, '{{ $menu['image'] }}')">
-                                <i class="fas fa-shopping-cart me-1"></i> Tambah ke Keranjang
-                            </button>
+                            <div class="row g-3">
+                                @foreach($items as $menu)
+                                    <div class="col-6 col-md-4">
+                                        <div class="menu-card">
+                                            @if($menu->image)
+                                                <img src="{{ $menu->image_url }}" alt="{{ $menu->name }}">
+                                            @else
+                                                <div class="menu-img-placeholder">🍛</div>
+                                            @endif
+                                            <div style="padding:.75rem">
+                                                <div style="font-weight:700;font-size:.8375rem;margin-bottom:.25rem;line-height:1.3">
+                                                    {{ $menu->name }}
+                                                </div>
+                                                @if($menu->description)
+                                                    <div style="font-size:.75rem;color:var(--jp-gray-400);margin-bottom:.5rem;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">
+                                                        {{ $menu->description }}
+                                                    </div>
+                                                @endif
+                                                <div style="font-weight:700;color:var(--jp-green);font-size:.9rem">
+                                                    Rp {{ number_format($menu->price, 0, ',', '.') }}
+                                                </div>
+                                                @if(!$menu->is_available)
+                                                    <div style="font-size:.72rem;color:var(--jp-red);margin-top:3px">Habis</div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
+                    @endforeach
+                @else
+                    <div class="jp-empty">
+                        <div class="empty-icon"><i class="fas fa-bowl-food"></i></div>
+                        <p>Menu belum tersedia</p>
                     </div>
-                </div>
-                @endforeach
+                @endif
             </div>
-        </div>
 
-        <!-- Cart Summary -->
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm" style="border-radius: 15px; position: sticky; top: 20px;">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-4">
-                        <i class="fas fa-shopping-cart text-danger me-2"></i> Keranjang Belanja
-                    </h5>
-
-                    <!-- Cart Items -->
-                    <div id="cartItems" style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
-                        <p class="text-muted text-center py-4">
-                            <i class="fas fa-inbox fa-2x mb-2 d-block text-secondary"></i>
-                            Keranjang kosong
+            {{-- Right: Order via WA --}}
+            <div class="col-lg-4">
+                <div class="jp-card" style="position:sticky;top:80px">
+                    <div class="jp-card-header">
+                        <span><i class="fab fa-whatsapp me-2" style="color:#25D366"></i>Pesan via WhatsApp</span>
+                    </div>
+                    <div class="jp-card-body">
+                        <p style="font-size:.875rem;color:var(--jp-gray-600);line-height:1.6;margin-bottom:1rem">
+                            Pilih menu yang ingin Anda pesan, lalu hubungi restoran langsung via WhatsApp.
                         </p>
+
+                        @php
+                            $waNumber = $restaurant->phone ? preg_replace('/[^0-9]/', '', $restaurant->phone) : null;
+                            $waNumber = $waNumber ? ('62' . ltrim($waNumber, '0')) : null;
+                            $waMessage = 'Halo, saya ingin pesan dari ' . $restaurant->name . '. Mohon info menu yang tersedia hari ini.';
+                        @endphp
+
+                        @if($waNumber)
+                            <a href="https://api.whatsapp.com/send?phone={{ $waNumber }}&text={{ urlencode($waMessage) }}"
+                               target="_blank"
+                               class="btn btn-jp-primary w-100"
+                               style="background:#25D366;border:none">
+                                <i class="fab fa-whatsapp me-2"></i> Pesan via WhatsApp
+                            </a>
+                        @else
+                            <div style="background:var(--jp-gray-50);border:1.5px dashed var(--jp-gray-200);border-radius:10px;padding:1rem;text-align:center;font-size:.8rem;color:var(--jp-gray-400)">
+                                <i class="fas fa-phone-slash mb-2 d-block" style="font-size:1.5rem"></i>
+                                Nomor WhatsApp tidak tersedia
+                            </div>
+                        @endif
+
+                        <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--jp-gray-100)">
+                            <div style="font-size:.72rem;color:var(--jp-gray-400);text-align:center;line-height:1.6">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Fitur keranjang belanja in-app akan segera hadir
+                            </div>
+                        </div>
                     </div>
 
-                    <hr id="cartDivider" style="display: none;">
-
-                    <!-- Total -->
-                    <div id="cartSummary" style="display: none;">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Subtotal</span>
-                            <span id="subtotal" class="fw-bold">Rp 0</span>
+                    {{-- Quick Info --}}
+                    <div style="padding:0 1.25rem 1.25rem">
+                        <div style="background:var(--jp-gray-50);border-radius:10px;padding:.85rem">
+                            <div class="d-flex justify-content-between" style="font-size:.8125rem;margin-bottom:.4rem">
+                                <span style="color:var(--jp-gray-500)">Total Menu</span>
+                                <span style="font-weight:600">{{ $menus->flatten()->count() }} item</span>
+                            </div>
+                            <div class="d-flex justify-content-between" style="font-size:.8125rem;margin-bottom:.4rem">
+                                <span style="color:var(--jp-gray-500)">Kategori</span>
+                                <span style="font-weight:600">{{ $menus->keys()->count() }} kategori</span>
+                            </div>
+                            @if($restaurant->min_order > 0)
+                                <div class="d-flex justify-content-between" style="font-size:.8125rem">
+                                    <span style="color:var(--jp-gray-500)">Min. Order</span>
+                                    <span style="font-weight:600;color:var(--jp-green)">
+                                        Rp {{ number_format($restaurant->min_order, 0, ',', '.') }}
+                                    </span>
+                                </div>
+                            @endif
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Ongkir</span>
-                            <span id="shipping" class="fw-bold">Rp 0</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3 pt-3 border-top">
-                            <span class="fw-bold">Total</span>
-                            <span id="total" class="fw-bold text-danger" style="font-size: 18px;">Rp 0</span>
-                        </div>
-
-                        <!-- Checkout Button -->
-                        <button class="btn btn-danger w-100 fw-bold py-3" style="border-radius: 15px;" onclick="checkout()">
-                            <i class="fas fa-check-circle me-2"></i> Lanjut ke Pembayaran
-                        </button>
-
-                        <!-- Continue Shopping Button -->
-                        <button class="btn btn-outline-secondary w-100 fw-bold mt-2 py-2" style="border-radius: 15px;" onclick="clearCart()">
-                            <i class="fas fa-redo me-1"></i> Lanjut Belanja
-                        </button>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
-
-<style>
-    .hover-item {
-        transition: all 0.3s ease;
-    }
-
-    .hover-item:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 8px 16px rgba(220, 53, 69, 0.15) !important;
-    }
-
-    .cart-item {
-        padding: 12px;
-        background: #f8f9fa;
-        border-radius: 10px;
-        margin-bottom: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .cart-item img {
-        width: 50px;
-        height: 50px;
-        border-radius: 8px;
-        object-fit: cover;
-    }
-
-    .cart-item-info {
-        flex: 1;
-    }
-
-    .cart-item-name {
-        font-weight: bold;
-        font-size: 13px;
-    }
-
-    .cart-item-price {
-        color: #dc3545;
-        font-weight: bold;
-        font-size: 12px;
-    }
-
-    .cart-item-qty {
-        display: flex;
-        gap: 4px;
-        align-items: center;
-    }
-
-    .qty-btn {
-        width: 22px;
-        height: 22px;
-        padding: 0 !important;
-        font-size: 11px;
-        line-height: 1;
-        border-radius: 4px;
-    }
-
-    .qty-display {
-        font-weight: bold;
-        min-width: 20px;
-        text-align: center;
-    }
-</style>
-
-<script>
-let cart = [];
-const restaurantId = {{ $restaurant['id'] }};
-
-function addToCart(name, price, image) {
-    // Check if item already in cart
-    const existingItem = cart.find(item => item.name === name && item.price === price);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            name: name,
-            price: price,
-            image: image,
-            quantity: 1
-        });
-    }
-    
-    updateCartDisplay();
-    showNotification('✅ ' + name + ' ditambahkan ke keranjang!');
-}
-
-function updateCartDisplay() {
-    const cartContainer = document.getElementById('cartItems');
-    const cartSummary = document.getElementById('cartSummary');
-    const cartDivider = document.getElementById('cartDivider');
-
-    if (cart.length === 0) {
-        cartContainer.innerHTML = '<p class="text-muted text-center py-4"><i class="fas fa-inbox fa-2x mb-2 d-block text-secondary"></i>Keranjang kosong</p>';
-        cartSummary.style.display = 'none';
-        cartDivider.style.display = 'none';
-        return;
-    }
-
-    let html = '';
-    let subtotal = 0;
-
-    cart.forEach((item, index) => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
-        
-        html += `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')}</div>
-                </div>
-                <div class="cart-item-qty">
-                    <button class="btn btn-danger qty-btn" onclick="decreaseQty(${index})">−</button>
-                    <span class="qty-display">${item.quantity}</span>
-                    <button class="btn btn-danger qty-btn" onclick="increaseQty(${index})">+</button>
-                </div>
-                <button class="btn btn-sm btn-light" onclick="removeFromCart(${index})" style="border-radius: 6px;">
-                    <i class="fas fa-trash text-danger"></i>
-                </button>
-            </div>
-        `;
-    });
-
-    cartContainer.innerHTML = html;
-    
-    // Update summary
-    const shipping = 10000; // Fixed shipping
-    const total = subtotal + shipping;
-    
-    document.getElementById('subtotal').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
-    document.getElementById('shipping').textContent = 'Rp ' + shipping.toLocaleString('id-ID');
-    document.getElementById('total').textContent = 'Rp ' + total.toLocaleString('id-ID');
-    
-    cartSummary.style.display = 'block';
-    cartDivider.style.display = 'block';
-}
-
-function increaseQty(index) {
-    cart[index].quantity += 1;
-    updateCartDisplay();
-}
-
-function decreaseQty(index) {
-    if (cart[index].quantity > 1) {
-        cart[index].quantity -= 1;
-    } else {
-        removeFromCart(index);
-    }
-    updateCartDisplay();
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCartDisplay();
-    showNotification('❌ Item dihapus dari keranjang');
-}
-
-function clearCart() {
-    cart = [];
-    updateCartDisplay();
-    showNotification('🛒 Keranjang dikosongkan');
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        alert('Pilih menu terlebih dahulu!');
-        return;
-    }
-
-    // Store cart to session via fetch
-    const cartData = cart;
-    localStorage.setItem('japlo_cart', JSON.stringify(cartData));
-    
-    // Redirect to checkout
-    window.location.href = '/payment/checkout';
-}
-
-function showNotification(message) {
-    // Create toast notification
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: white;
-        padding: 16px 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 9999;
-        animation: slideIn 0.3s ease;
-    `;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-// Add animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-</script>
 @endsection
+

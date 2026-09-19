@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <rect width="80" height="80" rx="16" fill="#EFF6FF"/>
+  <!-- Shield/Perisai -->
+  <path d="M40 12 L58 20 L58 40 C58 52 50 60 40 64 C30 60 22 52 22 40 L22 20 Z" fill="#3B82F6"/>
+  <path d="M40 12 L58 20 L58 40 C58 52 50 60 40 64 C30 60 22 52 22 40 L22 20 Z" stroke="#2563EB" stroke-width="1.5"/>
+  <!-- Dalam shield -->
+  <path d="M40 18 L54 25 L54 40 C54 50 48 56 40 60 C32 56 26 50 26 40 L26 25 Z" fill="#DBEAFE"/>
+  <!-- Orang tengah -->
+  <circle cx="40" cy="33" r="6" fill="#3B82F6"/>
+  <path d="M28 52 C28 44 33 40 40 40 C47 40 52 44 52 52" fill="#3B82F6"/>
+  <!-- Checkmark / verified -->
+  <circle cx="52" cy="24" r="8" fill="#22C55E"/>
+  <path d="M49 24 L51 26 L55 21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bintang kecil -->
+  <text x="20" y="70" font-size="9" fill="#3B82F6">★</text>
+  <text x="55" y="68" font-size="7" fill="#3B82F6">★</text>
+</svg>
